@@ -5,16 +5,28 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Générateur · Calendrier social media 2027</title>
 <style>
+/*IMPORTS*/
 /*CSS*/
+/*THEMES*/
 /* ================= interface (écran uniquement) ================= */
-:root { --ui:#F1F2F7; --line:#DCE0EE; }
+:root { --ui:#F1F2F7; --uiline:#DCE0EE; }
 body { background: var(--ui); }
+.ui { --line: var(--uiline); }
+#f { border-top: 1px solid var(--uiline); padding-top: 18px; margin-top: 18px; }
+.themes { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 8px; }
+.themes label { margin: 0; cursor: pointer; position: relative; }
+.themes input { position: absolute; opacity: 0; pointer-events: none; }
+.themes .sw { display: block; height: 46px; border-radius: 6px; border: 1.5px solid var(--uiline); }
+.themes .nm { display: block; font-size: 12px; font-weight: 700; margin-top: 5px; }
+.themes .ds { display: block; font-size: 11px; color: var(--soft); font-weight: 400; line-height: 1.3; }
+.themes input:checked + .sw { outline: 2.5px solid var(--pink); outline-offset: 2px; }
+.themes input:focus-visible + .sw { outline: 2.5px dashed var(--pink); outline-offset: 2px; }
 .app { display: grid; grid-template-columns: 360px 1fr; height: 100vh; }
 .ui { background: #fff; border-right: 1px solid var(--line); overflow-y: auto; padding: 24px 22px 40px; font-size: 14px; }
 .ui h2 { font-family: 'Bagel Fat One', sans-serif; font-weight: 400; font-size: 30px; line-height: 1; margin-bottom: 6px; }
 .ui .intro { color: var(--soft); font-size: 13px; line-height: 1.45; margin-bottom: 22px; }
 .ui section { border-top: 1px solid var(--line); padding: 18px 0 6px; }
-.ui .lbl { font-size: 11px; margin-bottom: 10px; }
+.ui .lbl { font-family: 'Martian Mono', monospace; font-size: 11px; font-weight: 700; letter-spacing: .3mm; text-transform: uppercase; color: var(--pink); margin-bottom: 10px; }
 .ui label { display: block; font-size: 12px; font-weight: 600; margin: 10px 0 5px; }
 .ui input[type=date], .ui input[type=text] { width: 100%; font: inherit; color: var(--blue); padding: 9px 10px; border: 1.5px solid var(--line); border-radius: 6px; background: #fff; }
 .ui input:focus-visible, .ui button:focus-visible, .ui select:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
@@ -67,6 +79,11 @@ body { background: var(--ui); }
   <aside class="ui">
     <h2>Mes dates</h2>
     <p class="intro">Ajoutez vos lancements, anniversaires clients ou journées maison. Le calendrier se met à jour tout de suite.</p>
+
+    <section style="border-top:0;padding-top:0">
+      <div class="lbl" id="themes-lbl">Style du calendrier</div>
+      <div class="themes" id="themes" role="radiogroup" aria-labelledby="themes-lbl"></div>
+    </section>
 
     <form id="f" novalidate>
       <div class="lbl">Ajouter une date</div>
@@ -125,14 +142,26 @@ const { YEAR, events, tips, perles, recap } = DATA;
 const MONTHS = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
 const WD = ["lun","mar","mer","jeu","ven","sam","dim"];
 const KEY = "calendrier-social-media-2027";
+const WDFULL = ["Lundi","Mardi","Mercredi","Jeudi","Vendredi","Samedi","Dimanche"];
+// [id, nom, description, aperçu CSS]
+const THEMES = [
+  ["riso", "Riso", "2 encres fluo", "radial-gradient(circle at 42% 58%, rgba(50,85,164,.95) 0 12px, transparent 13px), radial-gradient(circle at 58% 42%, rgba(255,72,176,.85) 0 12px, transparent 13px), #fff"],
+  ["suisse", "Suisse", "sobre, aplat", "repeating-linear-gradient(180deg, transparent 0 10px, #111 10px 11px) 38% 0 / 62% 100% no-repeat, linear-gradient(90deg, #E4572E 0 34%, #fff 34%)"],
+  ["cahier", "Cahier", "Seyès, surligneur", "linear-gradient(90deg, transparent 12px, #E4474C 12px 13px, transparent 13px), linear-gradient(rgba(250,255,40,.9), rgba(250,255,40,.9)) 20px 19px / 44% 7px no-repeat, repeating-linear-gradient(180deg, transparent 0 8px, #B3ACE0 8px 9px), #FDFDFB"],
+  ["heatmap", "Heatmap", "densité de dates", "linear-gradient(90deg, #F1F3F8 0 20%, #FFE4CE 20% 40%, #FFC89E 40% 60%, #FFA066 60% 80%, #F57A3D 80%)"],
+  ["timbres", "Timbres", "rétro postal", "linear-gradient(#DFE7EC, #DFE7EC) center / calc(100% - 12px) calc(100% - 12px) no-repeat, repeating-linear-gradient(135deg, #C8372B 0 6px, #fff 6px 9px, #1F3A7A 9px 15px, #fff 15px 18px)"],
+  ["ecran", "Écran", "notifications", "linear-gradient(#fff, #fff) 10px 12px / 62% 8px no-repeat, linear-gradient(#fff, #fff) 10px 25px / 44% 8px no-repeat, #2330D9"],
+];
+const SUISSE = ["#1F5BD6","#D6336C","#2B9348","#7048E8","#E8590C","#0B8A8A","#E03131","#B7791F","#9C4221","#E4572E","#6741D9","#1A7F5A"];
 
 // ---------- état ----------
 function load() {
   try {
     const s = JSON.parse(localStorage.getItem(KEY));
-    if (s && Array.isArray(s.items)) return { items: s.items.filter(validItem), name: String(s.name || ""), showFun: s.showFun !== false };
+    if (s && Array.isArray(s.items)) return { items: s.items.filter(validItem), name: String(s.name || ""), showFun: s.showFun !== false,
+      theme: THEMES.some(t => t[0] === s.theme) ? s.theme : "riso" };
   } catch (e) {}
-  return { items: [], name: "", showFun: true };
+  return { items: [], name: "", showFun: true, theme: "riso" };
 }
 function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
 function validItem(it) {
@@ -140,6 +169,9 @@ function validItem(it) {
     && /^2027-\d\d-\d\d$/.test(it.d) && !isNaN(new Date(it.d + "T12:00"));
 }
 const state = load();
+// ?style=heatmap : ouvre directement le générateur dans ce style
+const qStyle = new URLSearchParams(location.search).get("style");
+if (THEMES.some(t => t[0] === qStyle)) state.theme = qStyle;
 
 // ---------- typographie ----------
 const esc = s => s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
@@ -243,21 +275,145 @@ function back() {
   <div class="bfoot">${who}Calendrier social media ${YEAR} · rendez-vous en 2028</div></section>`;
 }
 
-// Réduit le texte d'un mois si une colonne déborde
+// ---------- thèmes « gen » (Suisse, Cahier, Heatmap, Timbres, Écran) ----------
+function monthInfo(m) {
+  const n = new Date(YEAR, m, 0).getDate();
+  const days = Array.from({ length: n }, (_, i) => new Date(YEAR, m - 1, i + 1));
+  let total = 0, fun = 0, hasAst = false, hasPerso = false, busy = days[0], bn = -1;
+  for (const d of days) {
+    const evs = dayEvents(m, d.getDate());
+    total += evs.length;
+    if (evs.length > bn) { bn = evs.length; busy = d; }
+    for (const e of evs) {
+      if (e.k === "fun") fun++;
+      if (e.k === "perso") hasPerso = true;
+      if (e.html.includes('class="ast"')) hasAst = true;
+    }
+  }
+  const ouvres = days.filter(d => wday(d) < 5 && !isFerie(m, d.getDate())).length;
+  return { n, days, total, fun, hasAst, hasPerso, busy, bn, ouvres };
+}
+const numHtml = d => d < 10 ? `<span class="z">0</span>${d}` : String(d);
+const perleOf = m => { const [[pm, pd], name, idea] = perles[m - 1]; return { date: `${pad(pd)}.${pad(pm)}`, name: fr(esc(name)), idea: fr(esc(idea)) }; };
+const tipOf = m => { const [b, r] = tips[m - 1]; return `<b>${fr(esc(b))}</b>${fr(esc(r))}`; };
+function legend(I) {
+  return (I.hasPerso ? '<span><i class="mk-perso"></i> vos dates</span>' : "") +
+    '<span><i class="mk-fun"></i> date décalée</span><span><i class="mk-fer">01</i> férié</span>' +
+    (I.hasAst ? '<span><sup class="ast">*</sup> date à confirmer</span>' : "");
+}
+
+function monthGrid(m) {
+  const I = monthInfo(m), name = MONTHS[m - 1], P = perleOf(m);
+  const lead = wday(new Date(YEAR, m - 1, 1));
+  const rows = Math.ceil((lead + I.n) / 7);
+  const cells = [];
+  for (let i = 0; i < rows * 7; i++) {
+    const cur = new Date(YEAR, m - 1, 1 - lead + i), dd = cur.getDate(), we = i % 7 >= 5;
+    if (cur.getMonth() !== m - 1) { cells.push(`<div class="c out${we ? " we" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span></div></div>`); continue; }
+    const evs = dayEvents(m, dd), fer = isFerie(m, dd);
+    cells.push(`<div class="c l${Math.min(evs.length, 4)}${we ? " we" : ""}${fer ? " fer" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span>` +
+      (evs.length ? `<span class="cnt">×${evs.length}</span>` : "") +
+      evs.map(e => `<p class="ev ${e.k}"><span>${e.html}</span></p>`).join("") +
+      `</div>${fer ? '<div class="pm"><span>FÉRIÉ</span></div>' : ""}</div>`);
+  }
+  const heads = WDFULL.map((n, i) => `<div class="h${i >= 5 ? " we" : ""}">${n}</div>`).join("");
+  const ramp = [0, 1, 2, 3, 4].map(i => `<i class="l${i}"></i>`).join("");
+  const acc = state.theme === "suisse" ? `;--acc:${SUISSE[m - 1]}` : "";
+  return `<section class="page month" id="p${m}" style="--rows:${rows};--len:${name.length}${acc}">
+  <div class="side">
+    <div class="ttl"><div class="mt">${ov(name)}</div><div class="my">${YEAR}</div>
+      <div class="sub">Émission du mois · ${I.n} valeurs${I.fun ? ` · dont ${I.fun} fantaisie` : ""}</div></div>
+    <div class="kpi"><div class="kbig">${I.total}</div><div class="bl">dates à exploiter ce mois-ci</div>
+      <ul class="stats"><li><b>${I.fun}</b> décalées</li><li><b>${I.ouvres}</b> jours ouvrés</li>
+      <li><b>${WDFULL[wday(I.busy)].toLowerCase()} ${I.busy.getDate()}</b> jour le plus chargé (${I.bn})</li></ul>
+      <div class="ramp">moins ${ramp} plus</div></div>
+    <div class="note tip"><div class="k">Le conseil</div><p>${tipOf(m)}</p></div>
+    <div class="note idea"><div class="k">Idée de post<span class="kd"> · ${P.date}</span></div><div class="pd">${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
+  </div>
+  <div class="bignum"><span>${m}</span></div>
+  <div class="g">${heads}${cells.join("")}</div>
+  <div class="leg">${legend(I)}</div>
+</section>`;
+}
+
+function monthEcran(m) {
+  const I = monthInfo(m), name = MONTHS[m - 1], P = perleOf(m);
+  const weeks = [];
+  for (const d of I.days) {
+    const w = isoWeek(d);
+    if (!weeks.length || weeks[weeks.length - 1].w !== w) weeks.push({ w, days: [] });
+    weeks[weeks.length - 1].days.push(d);
+  }
+  const cols = weeks.map(({ w, days }) => `<div class="col"><div class="wk">sem. ${pad(w)}</div>` + days.map(d => {
+    const dd = d.getDate(), wd = wday(d);
+    return `<div class="dh${wd >= 5 ? " we" : ""}">${WD[wd]} ${pad(dd)}</div>` + dayEvents(m, dd).map(e =>
+      `<div class="nt ${e.k}"><i class="ic ${e.html.includes("(férié)") ? "fer" : e.k}"></i><div>${e.html}</div></div>`).join("");
+  }).join("") + "</div>").join("");
+  const lg = (I.hasPerso ? '<span class="lg"><i class="ic perso"></i> vos dates</span>' : "") +
+    '<span class="lg"><i class="ic fun"></i> décalée</span><span class="lg"><i class="ic fer"></i> férié</span>' +
+    (I.hasAst ? '<span class="lg"><sup class="ast">*</sup> à confirmer</span>' : "");
+  return `<section class="page month" id="p${m}" style="--len:${name.length};--n:${weeks.length}">
+  <div class="clockm">${name}</div>
+  <div class="date">${YEAR} · ${I.n} jours · ${I.ouvres} ouvrés · ${I.total} notifications ${lg}</div>
+  <div class="widgets">
+    <div class="wg"><div class="k">Conseil du mois</div><p>${tipOf(m)}</p></div>
+    <div class="wg"><div class="k">Idée de post · ${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
+  </div>
+  <div class="cols">${cols}</div>
+</section>`;
+}
+
+function yearHeat() {
+  const start = new Date(YEAR - 1, 11, 28); // lundi 28/12/2026
+  let cells = "";
+  for (let i = 0; i < 53 * 7; i++) {
+    const d = new Date(start.getFullYear(), start.getMonth(), start.getDate() + i);
+    cells += d.getFullYear() !== YEAR ? '<i class="x"></i>' : `<i class="l${Math.min(dayEvents(d.getMonth() + 1, d.getDate()).length, 4)}"></i>`;
+  }
+  const lab = MONTHS.map(n => `<span>${n.slice(0, 3).toLowerCase()}.</span>`).join("");
+  return `<div class="yh">${cells}</div><div class="yl">${lab}</div>`;
+}
+
+function coverGen() {
+  let tot = 0, fun = 0;
+  for (let m = 1; m <= 12; m++) for (let d = 1; d <= new Date(YEAR, m, 0).getDate(); d++)
+    for (const e of dayEvents(m, d)) { tot++; if (e.k === "fun") fun++; }
+  const who = state.name.trim() ? ` · ${fr(esc(state.name.trim()))}` : "";
+  const funTxt = fun ? `, et ${fun} dates franchement décalées pour les jours où l’inspiration fait grève.` : ".";
+  const txt = `<div class="cv-txt"><div class="k">Calendrier social media${who}</div><h1>${tot} dates pour publier en ${YEAR}.</h1>
+    <p>Des journées officielles, des événements à ne pas rater${funTxt}</p>
+    <ul><li>12 mois, jour par jour</li><li>Un conseil et une idée de post par mois</li><li>Fériés, vacances scolaires, grands rendez-vous</li></ul></div>`;
+  const ramp = [0, 1, 2, 3, 4].map(i => `<i class="l${i}"></i>`).join("");
+  const art = {
+    suisse: `<div class="cv-art"><div class="cv-num">20<br>27</div></div>`,
+    cahier: `<div class="cv-art"><div class="cv-cur">2027</div><div class="cv-sub">mon année de publications</div></div>`,
+    heatmap: `<div class="cv-art"><div class="cv-y">2027</div>${yearHeat()}<div class="cv-cap">moins ${ramp} plus · une case = un jour</div></div>`,
+    timbres: `<div class="cv-art"><div class="stamp"><div class="sv">Émission annuelle · 365 valeurs</div><div><div class="sy">2027</div><div class="sn">Calendrier<br>social media</div></div></div><div class="cv-pm">1<sup>er</sup> JANV.<br>2027</div></div>`,
+    ecran: `<div class="clock">20:27</div><div class="cdate">vendredi 1 janvier</div><div class="nts">
+      <div class="nt"><i class="ic fer"></i><div><b>Jour de l’an</b> — la première date de l’année</div></div>
+      <div class="nt"><i class="ic"></i><div><b>Journée des Community Managers</b> · lundi 25 janvier</div></div>
+      <div class="nt"><i class="ic fun"></i><div><b>Journée du papier bulle</b> · le même jour</div></div></div>`,
+  }[state.theme];
+  return `<section class="page cover" id="p0">${art}${txt}</section>`;
+}
+
+// Réduit le texte d'un mois si une colonne ou une case déborde
 function fit(page) {
   let k = 1;
   page.style.setProperty("--k", k);
-  const cols = [...page.querySelectorAll(".col")];
-  const over = () => cols.some(c => c.scrollHeight > c.clientHeight + 1);
-  while (over() && k > 0.62) { k -= 0.04; page.style.setProperty("--k", k.toFixed(2)); }
+  const els = [...page.querySelectorAll(".col, .in")];
+  const over = () => els.some(c => c.scrollHeight > c.clientHeight + 1);
+  while (over() && k > 0.6) { k -= 0.04; page.style.setProperty("--k", k.toFixed(2)); }
 }
 
 const $ = id => document.getElementById(id);
 function render() {
-  const html = [cover()];
-  for (let m = 1; m <= 12; m++) html.push(monthPage(m));
+  const t = state.theme, riso = t === "riso";
+  const html = [riso ? cover() : coverGen()];
+  for (let m = 1; m <= 12; m++) html.push(riso ? monthPage(m) : t === "ecran" ? monthEcran(m) : monthGrid(m));
   html.push(recap.replace('class="page recap"', 'class="page recap" id="p13"'), back());
   const y = $("preview").scrollTop;
+  $("pages").className = riso ? "th-riso" : `gen th-${t}`;
   $("pages").innerHTML = html.join("");
   document.querySelectorAll(".page.month").forEach(fit);
   $("preview").scrollTop = y;
@@ -297,6 +453,14 @@ $("fn").value = state.name;
 $("fn").addEventListener("input", e => { state.name = e.target.value; save(); render(); });
 $("fun").checked = state.showFun;
 $("fun").addEventListener("change", e => { state.showFun = e.target.checked; save(); render(); });
+$("themes").innerHTML = THEMES.map(([id, nm, ds, sw]) =>
+  `<label><input type="radio" name="theme" value="${id}"${id === state.theme ? " checked" : ""}>` +
+  `<span class="sw" style="background:${sw}"></span><span class="nm">${nm}</span><span class="ds">${ds}</span></label>`).join("");
+$("themes").addEventListener("change", e => {
+  if (e.target.name !== "theme") return;
+  state.theme = e.target.value; save(); render();
+  toast(`Style « ${THEMES.find(t => t[0] === state.theme)[1]} » appliqué`);
+});
 $("print").addEventListener("click", () => window.print());
 $("exp").addEventListener("click", () => {
   const blob = new Blob([JSON.stringify({ version: 1, ...state }, null, 2)], { type: "application/json" });

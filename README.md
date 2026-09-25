@@ -4,7 +4,13 @@ Générateur de calendrier social media 2027 : 424 dates (journées mondiales, �
 
 - `index.html` : le générateur, autonome (aucune dépendance, aucun serveur). C'est ce qui est déployé sur Vercel.
 - `src/build.py` : les données (dates, conseils, idées de post) et le rendu. Il régénère `index.html`.
-- `src/app_template.html` : l'interface du générateur (formulaire, aperçu, impression).
+- `src/app_template.html` : l'interface du générateur (formulaire, aperçu, impression) et le rendu des pages.
+- `src/themes.css` : les styles Suisse, Cahier, Heatmap, Timbres et Écran (le style Riso vient de `build.py`).
+
+## Styles
+
+Six styles au choix dans le formulaire : Riso, Suisse, Cahier, Heatmap, Timbres, Écran.
+Un lien peut ouvrir directement un style : `?style=heatmap` (valeurs : `riso`, `suisse`, `cahier`, `heatmap`, `timbres`, `ecran`).
 
 ## Modifier les dates de base
 

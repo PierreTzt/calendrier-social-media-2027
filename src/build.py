@@ -688,7 +688,34 @@ data = {
     "perles": [[list(md), n, i] for md, n, i in PERLES],
     "recap": recap(),
 }
+THEME_FONTS = ("@import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900"
+               "&family=Playwrite+FR+Trad:wght@300;400&family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400"
+               "&family=Unbounded:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600"
+               "&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alfa+Slab+One"
+               "&family=Libre+Franklin:ital,wght@0,400;0,500;0,700;1,400&family=Albert+Sans:wght@200;300;500;600;700&display=swap');")
+
+
+def scope(css, prefix):
+    """Préfixe chaque sélecteur par `prefix` (sauf :root, html, body, *, @page) et sort les @import."""
+    css = re.sub(r"/\*.*?\*/", "", css, flags=re.S)
+    imp = r"@import\s+url\('[^']*'\)\s*;"
+    imports = re.findall(imp, css)
+    css = re.sub(imp, "", css)
+    out = []
+    for sel, body in re.findall(r"([^{}]+)\{([^{}]*)\}", css):
+        sel = sel.strip()
+        if not sel.startswith("@"):
+            sel = ", ".join(x if x in (":root", "html", "body", "*") else f"{prefix} {x}"
+                            for x in (y.strip() for y in sel.split(",")))
+        out.append(f"{sel} {{{body}}}")
+    return "\n".join(imports), "\n".join(out)
+
+
+RISO_IMPORTS, RISO_CSS = scope(CSS, ".th-riso")
 tpl = (HERE / "app_template.html").read_text(encoding="utf-8")
-app = tpl.replace("/*CSS*/", CSS).replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/"))
+app = (tpl.replace("/*IMPORTS*/", RISO_IMPORTS + "\n" + THEME_FONTS)
+          .replace("/*CSS*/", RISO_CSS)
+          .replace("/*THEMES*/", (HERE / "themes.css").read_text(encoding="utf-8"))
+          .replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/")))
 (ROOT / "index.html").write_text(app, encoding="utf-8")
 print("app ok", len(app) // 1024, "Ko")
