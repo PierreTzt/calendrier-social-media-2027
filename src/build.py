@@ -692,7 +692,11 @@ THEME_FONTS = ("@import url('https://fonts.googleapis.com/css2?family=Archivo:wd
                "&family=Playwrite+FR+Trad:wght@300;400&family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400"
                "&family=Unbounded:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600"
                "&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alfa+Slab+One"
-               "&family=Libre+Franklin:ital,wght@0,400;0,500;0,700;1,400&family=Albert+Sans:wght@200;300;500;600;700&display=swap');")
+               "&family=Libre+Franklin:ital,wght@0,400;0,500;0,700;1,400&family=Albert+Sans:wght@200;300;500;600;700&display=swap');\n"
+               "@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400"
+               "&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700"
+               "&family=Overpass:wght@400;600;700;800&family=Bangers&family=Comic+Neue:wght@400;700&family=Press+Start+2P"
+               "&family=Pixelify+Sans:wght@400;500;700&display=swap');")
 
 
 def scope(css, prefix):
@@ -715,7 +719,7 @@ RISO_IMPORTS, RISO_CSS = scope(CSS, ".th-riso")
 tpl = (HERE / "app_template.html").read_text(encoding="utf-8")
 app = (tpl.replace("/*IMPORTS*/", RISO_IMPORTS + "\n" + THEME_FONTS)
           .replace("/*CSS*/", RISO_CSS)
-          .replace("/*THEMES*/", (HERE / "themes.css").read_text(encoding="utf-8"))
+          .replace("/*THEMES*/", "\n".join((HERE / f).read_text(encoding="utf-8") for f in ("themes.css", "themes-serie2.css")))
           .replace("/*DATA*/", json.dumps(data, ensure_ascii=False).replace("</", "<\\/")))
 (ROOT / "index.html").write_text(app, encoding="utf-8")
 print("app ok", len(app) // 1024, "Ko")

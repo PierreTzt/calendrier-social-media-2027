@@ -6,11 +6,12 @@ Générateur de calendrier social media 2027 : 424 dates (journées mondiales, �
 - `src/build.py` : les données (dates, conseils, idées de post) et le rendu. Il régénère `index.html`.
 - `src/app_template.html` : l'interface du générateur (formulaire, aperçu, impression) et le rendu des pages.
 - `src/themes.css` : les styles Suisse, Cahier, Heatmap, Timbres et Écran (le style Riso vient de `build.py`).
+- `src/themes-serie2.css` : les styles Ticket, Départs, Ardoise, Métro, BD et Game Boy.
 
 ## Styles
 
-Six styles au choix dans le formulaire : Riso, Suisse, Cahier, Heatmap, Timbres, Écran.
-Un lien peut ouvrir directement un style : `?style=heatmap` (valeurs : `riso`, `suisse`, `cahier`, `heatmap`, `timbres`, `ecran`).
+Douze styles au choix dans le formulaire : Riso, Suisse, Cahier, Heatmap, Timbres, Écran, Ticket, Départs, Ardoise, Métro, BD, Game Boy.
+Un lien peut ouvrir directement un style : `?style=heatmap` (valeurs : `riso`, `suisse`, `cahier`, `heatmap`, `timbres`, `ecran`, `ticket`, `departs`, `ardoise`, `metro`, `bd`, `gameboy`).
 
 ## Modifier les dates de base
 

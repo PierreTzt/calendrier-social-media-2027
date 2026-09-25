@@ -7,6 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Martian+Mono:wdth,wght@87.5,400;87.5,600;87.5,700&display=block');
 @import url('https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,300..900&family=Playwrite+FR+Trad:wght@300;400&family=Karla:ital,wght@0,400;0,500;0,700;0,800;1,400&family=Unbounded:wght@500;700;800&family=IBM+Plex+Mono:wght@500;600&family=Public+Sans:ital,wght@0,400;0,500;0,700;1,400&family=Alfa+Slab+One&family=Libre+Franklin:ital,wght@0,400;0,500;0,700;1,400&family=Albert+Sans:wght@200;300;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Barlow+Semi+Condensed:wght@400;500;600;700&family=Cabin+Sketch:wght@400;700&family=Kalam:wght@300;400;700&family=Overpass:wght@400;600;700;800&family=Bangers&family=Comic+Neue:wght@400;700&family=Press+Start+2P&family=Pixelify+Sans:wght@400;500;700&display=swap');
 @page { size: 297mm 210mm; margin: 0; }
 :root { --blue:#3255A4; --pink:#FF48B0; --pinkt:#FFE2F1; --paper:#FFFFFF; --soft:#7D90C4; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -321,6 +322,291 @@ html, body { font-family: 'Schibsted Grotesk', sans-serif; color: var(--blue); -
 .th-ecran .cv-txt { background: rgba(255,255,255,.14); border-radius: 5mm; padding: 9mm 8mm; top: 30mm !important; bottom: auto !important; }
 .th-ecran .rc { background: rgba(255,255,255,.12); border-radius: 4mm; padding: 5mm; }
 
+/* =====================================================================
+   Série 2 : Ticket, Départs, Ardoise (mise en page liste) ;
+   Métro, BD, Game Boy (mise en page grille)
+   ===================================================================== */
+.th-riso .vt { font-size: var(--fs); }
+.th-riso .st, .gen .st { display: none; }
+
+/* ---- base commune des styles en liste ---- */
+.gen .vt { position: absolute; z-index: 2; }
+.gen .vt .ov { white-space: nowrap; }
+.gen .info { position: absolute; display: flex; flex-direction: column; }
+.gen .cols { position: absolute; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gen .col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; position: relative; }
+.gen .day { flex: 1 0 auto; display: grid; grid-template-columns: 11mm minmax(0, 1fr); column-gap: 1.2mm; }
+.gen .dn { display: flex; flex-direction: column; align-items: flex-start; }
+.gen .evs p { font-size: calc(var(--evfs, 2.2mm) * var(--k, 1)); line-height: 1.22; margin-bottom: .7mm; }
+.gen .evs p i { opacity: .65; }
+.gen .evs p.perso { font-weight: 700; }
+.gen .legend { display: flex; flex-direction: column; gap: 1.6mm; }
+.gen .legend span { display: flex; align-items: center; gap: 1.6mm; }
+.gen .pdate .ov { line-height: 1; }
+
+/* ================= TICKET ================= */
+.th-ticket { --bg: #CFCAC0; --ink: #2A2826; --acc: #C8312A; --tint: #F1EFE8; --line: #BDB9B0; --paper: #FCFCF8;
+  --font: 'Courier Prime', monospace; --disp: 'Courier Prime', monospace; --dispw: 700; --evfs: 2.15mm; }
+.th-ticket .info, .th-ticket .col { background: var(--paper); }
+.th-ticket .info::after, .th-ticket .col::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.6mm;
+  background: linear-gradient(45deg, var(--bg) 50%, transparent 50%) 0 100% / 3mm 1.6mm repeat-x,
+              linear-gradient(-45deg, var(--bg) 50%, transparent 50%) 0 100% / 3mm 1.6mm repeat-x; }
+.th-ticket .vt { left: 10mm; width: 66mm; top: 20mm; text-align: center; font-size: 7.4mm; }
+.th-ticket .vt .ov { text-transform: uppercase; letter-spacing: .9mm; }
+.th-ticket .info { left: 10mm; top: 10mm; width: 66mm; padding: 6mm 5.5mm 8mm; gap: 3.2mm; }
+.th-ticket .info::before { content: "*** CALENDRIER SOCIAL MEDIA ***"; font-size: 2.3mm; letter-spacing: .2mm; text-align: center; margin-bottom: 10.5mm; }
+.th-ticket .meta { font-size: 2.45mm; line-height: 1.6; border-top: .3mm dashed var(--ink); border-bottom: .3mm dashed var(--ink); padding: 2mm 0; }
+.th-ticket .lbl { font-weight: 700; font-size: 2.35mm; text-transform: uppercase; letter-spacing: .3mm; margin-bottom: 1.2mm; }
+.th-ticket .tip, .th-ticket .perle p { font-size: 2.4mm; line-height: 1.36; }
+.th-ticket .perle { border-top: .3mm dashed var(--ink); padding-top: 2.6mm; }
+.th-ticket .pdate { font-size: 6.5mm; margin-bottom: 1mm; }
+.th-ticket .pname { font-weight: 700; font-size: 2.5mm; margin-bottom: 1mm; }
+.th-ticket .legend { font-size: 2.2mm; border-top: .3mm dashed var(--ink); padding-top: 2.6mm; }
+.th-ticket .legend::after { content: ""; display: block; height: 9mm; margin-top: 2.5mm;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 .3mm, transparent .3mm .7mm, var(--ink) .7mm 1.4mm, transparent 1.4mm 1.8mm, var(--ink) 1.8mm 2mm, transparent 2mm 2.7mm); }
+.th-ticket .dot::before { content: "☆"; color: var(--acc); }
+.th-ticket .dia::before { content: "▶"; }
+.th-ticket .fr, .th-ticket .num.fer { background: var(--ink); color: var(--paper); padding: 0 .8mm; font-style: normal; }
+.th-ticket .cols { left: 84mm; right: 10mm; top: 10mm; bottom: 10mm; gap: 6mm; }
+.th-ticket .col { padding: 4mm 4mm 5mm; }
+.th-ticket .wk { text-align: center; font-size: 1.95mm; color: #8A857C; text-transform: uppercase; letter-spacing: .3mm; margin: 1mm 0 .6mm; }
+.th-ticket .wk::before { content: "---- "; }
+.th-ticket .wk::after { content: " ----"; }
+.th-ticket .day { padding: .9mm 0 .5mm; border-bottom: .25mm dashed var(--line); }
+.th-ticket .num { font-weight: 700; font-size: 3.2mm; line-height: 1.1; }
+.th-ticket .wd { font-size: 1.8mm; text-transform: uppercase; color: #8A857C; margin-top: .4mm; }
+.th-ticket .day.we .wd { color: var(--acc); }
+.th-ticket .evs p.fun::before { content: "☆ "; color: var(--acc); }
+.th-ticket .evs p.perso::before { content: "▶ "; }
+.th-ticket .cover .cv-art { position: absolute; left: 34mm; top: 0; width: 86mm; }
+.th-ticket .rcpt { position: relative; background: var(--paper); padding: 12mm 8mm 14mm; font-size: 2.9mm; line-height: 1.55; }
+.th-ticket .rcpt::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.4mm;
+  background: linear-gradient(45deg, var(--bg) 50%, transparent 50%) 0 100% / 4mm 2.4mm repeat-x, linear-gradient(-45deg, var(--bg) 50%, transparent 50%) 0 100% / 4mm 2.4mm repeat-x; }
+.th-ticket .rh { font-weight: 700; font-size: 6mm; line-height: 1.2; text-align: center; letter-spacing: .6mm; margin-bottom: 2mm; }
+.th-ticket .rl { text-align: center; font-size: 2.5mm; }
+.th-ticket .rsep { border-top: .35mm dashed var(--ink); margin: 3mm 0; }
+.th-ticket .rr { display: flex; justify-content: space-between; }
+.th-ticket .rtot { font-weight: 700; font-size: 4.2mm; margin: 1mm 0 2mm; }
+.th-ticket .bar { height: 12mm; margin: 5mm 6mm 3mm;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 .35mm, transparent .35mm .8mm, var(--ink) .8mm 1.6mm, transparent 1.6mm 2mm, var(--ink) 2mm 2.3mm, transparent 2.3mm 3mm); }
+.th-ticket .rc { background: var(--paper); padding: 4mm; }
+
+/* ================= DÉPARTS ================= */
+.th-departs { --bg: #15171C; --ink: #F2F1EA; --acc: #FFC600; --tint: #23262D; --line: #2C3038; --tile: #262A32; --red: #FF5A4F; --green: #37D67A;
+  --font: 'Barlow Semi Condensed', sans-serif; --disp: 'Martian Mono', monospace; --dispw: 700; --evfs: 2.3mm; }
+.th-departs .month::after { content: "✈ DÉPARTS · DEPARTURES"; position: absolute; right: 10mm; top: 13mm; font-family: 'Martian Mono', monospace; font-size: 2.8mm; font-weight: 700; letter-spacing: .5mm; color: #8C93A0; }
+.th-departs .vt { left: 10mm; top: 8mm; font-size: 11mm; }
+.th-departs .vt .ov { color: var(--acc); text-transform: uppercase; padding: .8mm 0;
+  background: repeating-linear-gradient(90deg, var(--tile) 0 calc(1ch - .5mm), transparent calc(1ch - .5mm) 1ch); }
+.th-departs .vt::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .35mm; background: var(--bg); }
+.th-departs .info { right: 10mm; top: 29mm; bottom: 9mm; width: 62mm; gap: 4mm; }
+.th-departs .meta { font-family: 'Martian Mono', monospace; font-size: 2.2mm; line-height: 1.7; color: #9BA1AD; }
+.th-departs .lbl { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 2.1mm; text-transform: uppercase; color: var(--acc); margin-bottom: 1.4mm; }
+.th-departs .blk { border: .5mm solid var(--acc); padding: 3mm; }
+.th-departs .tip, .th-departs .perle p { font-size: 2.6mm; line-height: 1.38; }
+.th-departs .perle { background: var(--tint); padding: 3mm; }
+.th-departs .pdate { font-size: 8mm; color: var(--acc); margin-bottom: 1.2mm; }
+.th-departs .pname { font-weight: 700; font-size: 2.8mm; margin-bottom: 1mm; }
+.th-departs .legend { margin-top: auto; font-size: 2.3mm; }
+.th-departs .legend i { font-family: 'Martian Mono', monospace; font-size: 1.9mm; font-weight: 700; font-style: normal; }
+.th-departs .dot::before { content: "DÉCALÉ"; color: var(--acc); }
+.th-departs .fr { font-size: 0 !important; }
+.th-departs .fr::before { content: "FÉRIÉ"; font-size: 1.9mm; color: var(--red); }
+.th-departs .dia::before { content: "◆"; color: #7FD1FF; }
+.th-departs .cols { left: 10mm; right: 78mm; top: 29mm; bottom: 9mm; gap: 3mm; }
+.th-departs .wk { font-family: 'Martian Mono', monospace; font-size: 1.9mm; color: #6C7280; text-transform: uppercase; padding: .9mm 0 .5mm; }
+.th-departs .day { grid-template-columns: 9.5mm minmax(0, 1fr) 13mm; background: var(--tile); padding: 1.1mm 1.4mm .5mm; margin-bottom: .6mm; }
+.th-departs .num { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.3mm; line-height: 1; }
+.th-departs .num.fer { color: var(--red); }
+.th-departs .wd { font-family: 'Martian Mono', monospace; font-size: 1.75mm; text-transform: uppercase; color: #8C93A0; margin-top: .6mm; }
+.th-departs .day.we .wd { color: var(--acc); }
+.th-departs .evs p { text-transform: uppercase; letter-spacing: .1mm; font-weight: 500; }
+.th-departs .evs p.perso { color: #7FD1FF; }
+.th-departs .st { display: block; font-family: 'Martian Mono', monospace; font-size: 1.75mm; font-weight: 700; text-align: right; padding-top: .4mm; }
+.th-departs .st-ok { color: var(--green); }
+.th-departs .st-fun { color: var(--acc); }
+.th-departs .st-fer { color: var(--red); }
+.th-departs .st-none { color: #4C525E; }
+.th-departs .cover .cv-art { position: absolute; left: 12mm; top: 30mm; width: 172mm; }
+.th-departs .board { background: #0E1014; padding: 7mm; }
+.th-departs .bh { display: flex; justify-content: space-between; font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.6mm; color: #8C93A0; letter-spacing: .5mm; margin-bottom: 5mm; }
+.th-departs .flap { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 34mm; line-height: 1.1; color: var(--acc); width: fit-content; position: relative; margin-bottom: 7mm;
+  background: repeating-linear-gradient(90deg, var(--tile) 0 calc(1ch - 1.2mm), transparent calc(1ch - 1.2mm) 1ch); }
+.th-departs .flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .7mm; background: #0E1014; }
+.th-departs .brow { display: grid; grid-template-columns: 20mm 1fr 26mm; gap: 3mm; background: var(--tile); padding: 2.6mm 3mm; margin-bottom: 1.2mm; font-size: 3.4mm; text-transform: uppercase; }
+.th-departs .brow b { font-family: 'Martian Mono', monospace; }
+.th-departs .brow em { font-family: 'Martian Mono', monospace; font-style: normal; font-weight: 700; font-size: 2.8mm; text-align: right; }
+.th-departs .rc { background: var(--tint); padding: 4mm; }
+
+/* ================= ARDOISE ================= */
+.th-ardoise { --bg: #2B3632; --ink: #EEECE3; --acc: #F3C969; --pinkc: #F4A6B8; --tint: rgba(255,255,255,.07); --line: rgba(238,236,227,.2);
+  --font: 'Kalam', cursive; --disp: 'Cabin Sketch', cursive; --dispw: 700; --evfs: 2.45mm; }
+.th-ardoise .page { background: radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.08), transparent 55%), radial-gradient(ellipse at 78% 82%, rgba(255,255,255,.05), transparent 50%), var(--bg);
+  box-shadow: inset 0 0 0 5mm #7A5234, inset 0 0 0 6.2mm #56381F; }
+.th-ardoise .vt { left: 0; right: 0; top: 9mm; text-align: center; font-size: 13mm; }
+.th-ardoise .vt::before, .th-ardoise .vt::after { content: "~"; font-family: var(--disp); color: var(--acc); margin: 0 4mm; }
+.th-ardoise .info { right: 14mm; top: 33mm; bottom: 14mm; width: 62mm; gap: 5mm; }
+.th-ardoise .meta { font-size: 2.6mm; line-height: 1.5; opacity: .8; text-align: center; }
+.th-ardoise .blk { border: .45mm dashed rgba(238,236,227,.55); border-radius: 3mm; padding: 3.5mm; }
+.th-ardoise .lbl { font-family: var(--disp); font-weight: 700; font-size: 4mm; color: var(--acc); margin-bottom: 1mm; }
+.th-ardoise .perle .lbl { color: var(--pinkc); }
+.th-ardoise .tip, .th-ardoise .perle p { font-size: 2.6mm; line-height: 1.35; }
+.th-ardoise .pdate { font-size: 9mm; color: var(--acc); }
+.th-ardoise .pname { font-weight: 700; font-size: 3mm; margin: 1mm 0; }
+.th-ardoise .legend { margin-top: auto; font-size: 2.4mm; }
+.th-ardoise .dot::before { content: "✿"; color: var(--pinkc); }
+.th-ardoise .fr, .th-ardoise .num.fer { border: .35mm solid var(--ink); border-radius: 50%; padding: .1mm 1mm; font-style: normal; }
+.th-ardoise .dia::before { content: "→"; color: var(--acc); }
+.th-ardoise .cols { left: 14mm; right: 84mm; top: 33mm; bottom: 14mm; gap: 6mm; }
+.th-ardoise .wk { font-family: var(--disp); font-size: 2.8mm; opacity: .5; padding: .8mm 0 .3mm; border-bottom: .3mm solid var(--line); margin-bottom: .6mm; }
+.th-ardoise .day { grid-template-columns: 12mm minmax(0, 1fr); padding: .9mm 0 .2mm; }
+.th-ardoise .num { font-family: var(--disp); font-weight: 700; font-size: 4.3mm; line-height: 1; color: var(--acc); }
+.th-ardoise .wd { font-size: 2mm; text-transform: uppercase; opacity: .7; }
+.th-ardoise .day.we .wd { color: var(--pinkc); opacity: 1; }
+.th-ardoise .evs p { line-height: 1.15; }
+.th-ardoise .evs p.fun::before { content: "✿ "; color: var(--pinkc); }
+.th-ardoise .evs p.perso::before { content: "→ "; color: var(--acc); }
+.th-ardoise .cover .cv-art { position: absolute; left: 20mm; top: 26mm; width: 160mm; text-align: center; }
+.th-ardoise .ch-t { font-family: var(--disp); font-size: 9mm; color: var(--pinkc); }
+.th-ardoise .ch-y { font-family: var(--disp); font-weight: 700; font-size: 46mm; line-height: 1.1; color: var(--acc); }
+.th-ardoise .ch-l { list-style: none; font-size: 4.2mm; line-height: 1.8; margin: 5mm auto; width: fit-content; text-align: left; }
+.th-ardoise .ch-l b { font-family: var(--disp); color: var(--acc); margin-right: 3mm; }
+.th-ardoise .ch-s { font-size: 3.2mm; opacity: .7; }
+.th-ardoise .recap .rtitle, .th-ardoise .back .bmsg { color: var(--acc); }
+
+/* ================= MÉTRO ================= */
+.th-metro { --bg: #FFFFFF; --ink: #1D2A5C; --acc: #CF009E; --tint: #EEF1F8; --line: #DDE2EE; --font: 'Overpass', sans-serif; --disp: 'Overpass', sans-serif; --dispw: 800; --evfs: 2.05mm; --hh: 5mm; }
+.th-metro .r1 { --ml: #FFCD00; --mt: #1D2A5C; }
+.th-metro .r2 { --ml: #003CA6; --mt: #fff; }
+.th-metro .r3 { --ml: #837902; --mt: #fff; }
+.th-metro .r4 { --ml: #CF009E; --mt: #fff; }
+.th-metro .r5 { --ml: #FF7E2E; --mt: #1D2A5C; }
+.th-metro .r6 { --ml: #6ECA97; --mt: #1D2A5C; }
+.th-metro .month .side { position: absolute; left: 10mm; right: 10mm; top: 9mm; height: 34mm; display: flex; gap: 5mm; align-items: stretch; }
+.th-metro .ttl { flex: none; min-width: 78mm; background: var(--ink); color: #fff; border-radius: 2mm; padding: 0 7mm; display: flex; flex-direction: column; justify-content: center;
+  box-shadow: inset 0 0 0 .7mm var(--ink), inset 0 0 0 1.2mm #fff; }
+.th-metro .mt { font-size: min(13mm, calc(92mm / var(--len) / .62)); line-height: 1; }
+.th-metro .my { font-size: 3mm; font-weight: 600; letter-spacing: .6mm; opacity: .8; margin-top: 1.5mm; }
+.th-metro .note { flex: 1; border: .35mm solid var(--line); border-radius: 2mm; padding: 3mm 4mm; font-size: 2.4mm; line-height: 1.38; }
+.th-metro .note .k { display: flex; align-items: center; gap: 1.6mm; font-weight: 800; font-size: 2.4mm; text-transform: uppercase; letter-spacing: .3mm; margin-bottom: 1.3mm; }
+.th-metro .note .k::before { content: "M"; width: 4.6mm; height: 4.6mm; border-radius: 50%; background: var(--ink); color: #fff; display: inline-flex; align-items: center; justify-content: center; font-size: 2.6mm; }
+.th-metro .tip .k::before { content: "!"; background: #E3051B; }
+.th-metro .g { position: absolute; left: 25mm; right: 8mm; top: 50mm; bottom: 14mm; row-gap: 2mm; }
+.th-metro .h { font-weight: 700; font-size: 2.1mm; text-transform: uppercase; letter-spacing: .3mm; color: #8A93AE; padding-left: 1mm; }
+.th-metro .h.we { color: var(--acc); }
+.th-metro .c::before { content: ""; position: absolute; left: 0; right: 0; top: 3.1mm; height: 1.8mm; background: var(--ml); }
+.th-metro .c.out::before { background: repeating-linear-gradient(90deg, #D5DAE6 0 1.5mm, transparent 1.5mm 3mm); height: .8mm; top: 3.6mm; }
+.th-metro .in { position: relative; padding: 0 1.6mm 0 .8mm; }
+.th-metro .n { display: flex; align-items: center; justify-content: center; width: 8mm; height: 8mm; border-radius: 50%; background: #fff; border: 1mm solid var(--ml);
+  font-weight: 800; font-size: 2.8mm; margin-bottom: 1.3mm; }
+.th-metro .we .n { color: var(--acc); }
+.th-metro .fer .n { border-color: var(--ink); border-width: 1.3mm; box-shadow: 0 0 0 .5mm #fff, 0 0 0 1mm var(--ink); }
+.th-metro .out .n { visibility: hidden; }
+.th-metro .c[data-w]::after { content: attr(data-w); position: absolute; left: -14mm; top: 0; width: 8mm; height: 8mm; border-radius: 50%; background: var(--ml); color: var(--mt);
+  font-weight: 800; font-size: 3mm; display: flex; align-items: center; justify-content: center; }
+.th-metro .ev.fun::before { content: "◇ "; color: var(--acc); font-weight: 800; }
+.th-metro .leg { position: absolute; left: 25mm; bottom: 6mm; }
+.th-metro .leg .mk-fun::before { content: "◇"; color: var(--acc); font-weight: 800; }
+.th-metro .leg .mk-fer { font-size: 0; width: 3.4mm; height: 3.4mm; border: .8mm solid var(--ink); border-radius: 50%; }
+.th-metro .leg .mk-perso::before { content: "◆"; color: var(--acc); }
+.th-metro .cover .cv-art { position: absolute; left: 14mm; top: 36mm; width: 168mm; }
+.th-metro .plaque { display: inline-block; background: var(--ink); color: #fff; font-weight: 800; font-size: 40mm; line-height: 1; padding: 7mm 14mm 5mm; border-radius: 3mm;
+  box-shadow: inset 0 0 0 1mm var(--ink), inset 0 0 0 1.8mm #fff; }
+.th-metro .mline { display: flex; margin-top: 20mm; }
+.th-metro .mline span { flex: 1; position: relative; padding-top: 10mm; text-align: center; font-size: 2.6mm; font-weight: 700; }
+.th-metro .mline span::before { content: ""; position: absolute; left: 0; right: 0; top: 2.4mm; height: 2mm; background: var(--line); }
+.th-metro .mline i { position: absolute; left: 50%; top: 0; width: 6.8mm; height: 6.8mm; margin-left: -3.4mm; border-radius: 50%; background: #fff; border: 1mm solid var(--line); }
+.th-metro .rc .lbl::before { content: "M "; }
+
+/* ================= BD ================= */
+.th-bd { --bg: #FFFFFF; --ink: #111; --acc: #E6332A; --yel: #FFE11A; --cy: #1FB6E6; --tint: #FFF6B8; --line: #111;
+  --font: 'Comic Neue', sans-serif; --disp: 'Bangers', cursive; --dispw: 400; --evfs: 2.2mm; --hh: 6mm; }
+.th-bd .page { font-weight: 700; }
+.th-bd .month .side { position: absolute; left: 8mm; top: 8mm; bottom: 8mm; width: 78mm; border: .8mm solid var(--ink); padding: 8mm 6mm; display: flex; flex-direction: column; gap: 5mm;
+  background: #D8F2FB; }
+.th-bd .mt { font-size: min(17mm, calc(64mm / var(--len) / .46)); color: var(--acc); -webkit-text-stroke: .45mm var(--ink); text-shadow: .9mm .9mm 0 var(--ink); letter-spacing: .5mm; transform: rotate(-3deg); }
+.th-bd .my { display: inline-block; width: fit-content; font-family: var(--disp); font-size: 6mm; background: var(--yel); border: .5mm solid var(--ink); padding: .3mm 2.5mm; margin-top: 3mm; transform: rotate(2deg); }
+.th-bd .note { font-size: 2.5mm; line-height: 1.36; border: .6mm solid var(--ink); padding: 3.5mm 4mm; position: relative; }
+.th-bd .tip { background: #fff; border-radius: 5mm; }
+.th-bd .tip::after { content: ""; position: absolute; left: 9mm; bottom: -2.6mm; width: 4.4mm; height: 4.4mm; background: #fff; border-right: .6mm solid var(--ink); border-bottom: .6mm solid var(--ink); transform: rotate(45deg); }
+.th-bd .idea { background: var(--yel); margin-top: 3mm; }
+.th-bd .note .k { font-family: var(--disp); font-size: 3.6mm; color: var(--acc); letter-spacing: .3mm; margin-bottom: 1mm; }
+.th-bd .g { position: absolute; left: 92mm; right: 8mm; top: 8mm; bottom: 13mm; gap: 2.2mm; }
+.th-bd .h { font-family: var(--disp); font-size: 3mm; letter-spacing: .4mm; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; }
+.th-bd .h.we { color: var(--yel); }
+.th-bd .c { border: .7mm solid var(--ink); background: #fff; overflow: hidden; }
+.th-bd .c.we { background: #E3F6FC; }
+.th-bd .c.out { border: .35mm dashed #C8C8C8; background: none; }
+.th-bd .in { padding: 1.4mm 1.6mm; }
+.th-bd .n { display: inline-block; font-family: var(--disp); font-size: 4.2mm; line-height: 1.1; background: var(--yel); border-right: .5mm solid var(--ink); border-bottom: .5mm solid var(--ink);
+  padding: 0 1.3mm; margin: -1.4mm 0 1.2mm -1.6mm; }
+.th-bd .out .n { background: none; border: 0; color: #C8C8C8; }
+.th-bd .ev { font-weight: 700; }
+.th-bd .ev.fun span { display: inline-block; background: var(--tint); border: .35mm solid var(--ink); border-radius: 2.4mm; padding: .2mm 1.3mm; }
+.th-bd .ev.perso::before { content: "★ "; color: var(--acc); }
+.th-bd .fer .pm { display: flex; position: absolute; right: -2mm; bottom: -2mm; width: 17mm; height: 12mm; align-items: center; justify-content: center; background: var(--acc); transform: rotate(-8deg);
+  clip-path: polygon(50% 0, 60% 22%, 82% 6%, 76% 30%, 100% 30%, 82% 48%, 100% 66%, 76% 66%, 82% 94%, 60% 76%, 50% 100%, 40% 76%, 18% 94%, 24% 66%, 0 66%, 18% 48%, 0 30%, 24% 30%, 18% 6%, 40% 22%); }
+.th-bd .pm span { font-family: var(--disp); font-size: 2.6mm; color: var(--yel); letter-spacing: .2mm; }
+.th-bd .pm span::after { content: " !"; }
+.th-bd .leg { position: absolute; left: 92mm; bottom: 5mm; font-weight: 700; }
+.th-bd .leg .mk-fun { width: 5mm; height: 3mm; background: var(--tint); border: .35mm solid var(--ink); border-radius: 1.5mm; }
+.th-bd .leg .mk-fer { font-size: 0; width: 4.4mm; height: 3.4mm; background: var(--acc); clip-path: polygon(50% 0, 62% 30%, 100% 30%, 70% 55%, 82% 100%, 50% 72%, 18% 100%, 30% 55%, 0 30%, 38% 30%); }
+.th-bd .leg .mk-perso::before { content: "★"; color: var(--acc); }
+.th-bd .cover .cv-art { position: absolute; left: 10mm; top: 14mm; width: 172mm; height: 184mm; }
+.th-bd .burst { width: 160mm; height: 128mm; background: var(--yel); display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(50% 0, 58% 18%, 74% 4%, 74% 24%, 96% 16%, 86% 36%, 100% 46%, 84% 56%, 98% 76%, 76% 72%, 74% 96%, 58% 80%, 48% 100%, 40% 80%, 20% 94%, 24% 72%, 2% 76%, 16% 56%, 0 44%, 16% 36%, 4% 16%, 26% 24%, 26% 4%, 42% 18%); }
+.th-bd .burst span { font-family: var(--disp); font-size: 40mm; color: var(--acc); -webkit-text-stroke: .9mm var(--ink); text-shadow: 1.6mm 1.6mm 0 var(--ink); transform: rotate(-6deg); }
+.th-bd .bubble { position: absolute; left: 26mm; top: 134mm; width: 118mm; background: #fff; border: .8mm solid var(--ink); border-radius: 50%; padding: 9mm 12mm; font-size: 5mm; text-align: center; }
+.th-bd .cv-txt { border: .8mm solid var(--ink); padding: 8mm 7mm; top: 30mm !important; bottom: auto !important; background: #fff; }
+.th-bd .rc { border: .7mm solid var(--ink); padding: 4mm; }
+.th-bd .recap .rtitle, .th-bd .back .bmsg { color: var(--acc); -webkit-text-stroke: .4mm var(--ink); text-shadow: .8mm .8mm 0 var(--ink); }
+
+/* ================= GAME BOY ================= */
+.th-gameboy { --bg: #9BBC0F; --ink: #0F380F; --acc: #306230; --d2: #8BAC0F; --tint: #8BAC0F; --line: #306230; --px: .6mm;
+  --font: 'Pixelify Sans', sans-serif; --disp: 'Press Start 2P', monospace; --dispw: 400; --evfs: 2.25mm; --hh: 6mm;
+  --pix: 0 calc(-1 * var(--px)) 0 0 var(--line), 0 var(--px) 0 0 var(--line), calc(-1 * var(--px)) 0 0 0 var(--line), var(--px) 0 0 0 var(--line); }
+.th-gameboy .month .side { position: absolute; left: 10mm; top: 10mm; bottom: 18mm; width: 68mm; display: flex; flex-direction: column; gap: 5mm; }
+.th-gameboy .mt { font-size: min(7mm, calc(66mm / var(--len))); line-height: 1.3; text-transform: uppercase; }
+.th-gameboy .my { font-family: var(--disp); font-size: 2.6mm; margin-top: 1.5mm; }
+.th-gameboy .my::before { content: "WORLD "; }
+.th-gameboy .kpi { display: block; }
+.th-gameboy .kbig { font-family: var(--disp); font-size: 4.2mm; }
+.th-gameboy .kbig::before { content: "SCORE "; }
+.th-gameboy .bl { font-size: 2.5mm; margin-top: 1mm; }
+.th-gameboy .stats { list-style: none; font-size: 2.5mm; line-height: 1.6; margin-top: 2mm; }
+.th-gameboy .stats li::before { content: "▸ "; }
+.th-gameboy .ramp { display: none; }
+.th-gameboy .note { box-shadow: var(--pix), inset 0 0 0 .6mm var(--bg), inset 0 0 0 1.1mm var(--line); padding: 3.5mm; font-size: 2.5mm; line-height: 1.4; }
+.th-gameboy .note .k { font-family: var(--disp); font-size: 2.1mm; margin-bottom: 1.6mm; }
+.th-gameboy .idea .k::before { content: "★ "; }
+.th-gameboy .g { position: absolute; left: 86mm; right: 10mm; top: 10mm; bottom: 14mm; gap: 2.2mm; }
+.th-gameboy .h { font-family: var(--disp); font-size: 1.7mm; text-align: center; text-transform: uppercase; }
+.th-gameboy .c { box-shadow: var(--pix); }
+.th-gameboy .c.we { background: var(--d2); }
+.th-gameboy .c.out { opacity: .3; }
+.th-gameboy .in { padding: 1.6mm; }
+.th-gameboy .n { display: inline-block; font-family: var(--disp); font-size: 2.8mm; margin-bottom: 1.5mm; }
+.th-gameboy .fer .n::after { content: " ♥"; }
+.th-gameboy .ev.fun::before { content: "◉ "; }
+.th-gameboy .ev.perso::before { content: "▶ "; }
+.th-gameboy .leg { position: absolute; left: 10mm; bottom: 9mm; font-size: 2.4mm; }
+.th-gameboy .leg .mk-fun::before { content: "◉"; }
+.th-gameboy .leg .mk-fer { font-size: 0; }
+.th-gameboy .leg .mk-fer::before { content: "♥"; font-size: 3mm; }
+.th-gameboy .leg .mk-perso::before { content: "▶"; }
+.th-gameboy .cover .cv-art { position: absolute; left: 16mm; top: 16mm; width: 158mm; height: 178mm; background: #C9C5C0; border-radius: 4mm 4mm 24mm 4mm; padding: 10mm; }
+.th-gameboy .gb-screen { background: var(--bg); border: 8mm solid #5A5A66; border-radius: 2mm 2mm 10mm 2mm; padding: 10mm 8mm; font-family: var(--disp); text-align: center; }
+.th-gameboy .gb-t { font-size: 5.4mm; }
+.th-gameboy .gb-y { font-size: 20mm; line-height: 1.3; margin: 3mm 0; }
+.th-gameboy .gb-p { font-size: 3.2mm; margin: 4mm 0; }
+.th-gameboy .gb-h { font-size: 5mm; letter-spacing: 2mm; }
+.th-gameboy .gb-logo { font-family: 'Bangers', cursive; font-style: italic; font-size: 8mm; color: #2B2B8C; letter-spacing: .6mm; margin-top: 6mm; }
+.th-gameboy .gb-logo i { display: none; }
+.th-gameboy .cv-txt h1 { font-size: 5.2mm; line-height: 1.5; }
+.th-gameboy .rc li b, .th-gameboy .rc .lbl, .th-gameboy .recap th { font-family: var(--disp); font-size: 2mm; }
+.th-gameboy .back .bmsg { font-size: 15mm; line-height: 1.5; }
+.th-gameboy .recap .rtitle { font-size: 9mm; }
+
 /* ================= interface (écran uniquement) ================= */
 :root { --ui:#F1F2F7; --uiline:#DCE0EE; }
 body { background: var(--ui); }
@@ -464,7 +750,27 @@ const THEMES = [
   ["heatmap", "Heatmap", "densité de dates", "linear-gradient(90deg, #F1F3F8 0 20%, #FFE4CE 20% 40%, #FFC89E 40% 60%, #FFA066 60% 80%, #F57A3D 80%)"],
   ["timbres", "Timbres", "rétro postal", "linear-gradient(#DFE7EC, #DFE7EC) center / calc(100% - 12px) calc(100% - 12px) no-repeat, repeating-linear-gradient(135deg, #C8372B 0 6px, #fff 6px 9px, #1F3A7A 9px 15px, #fff 15px 18px)"],
   ["ecran", "Écran", "notifications", "linear-gradient(#fff, #fff) 10px 12px / 62% 8px no-repeat, linear-gradient(#fff, #fff) 10px 25px / 44% 8px no-repeat, #2330D9"],
+  ["ticket", "Ticket", "ticket de caisse", "repeating-linear-gradient(180deg, transparent 0 7px, #BDB9B0 7px 8px) 50% 6px / 58% 70% no-repeat, linear-gradient(#FCFCF8, #FCFCF8) 50% 0 / 64% 100% no-repeat, #CFCAC0"],
+  ["departs", "Départs", "tableau de gare", "linear-gradient(90deg, #FFC600 0 30%, transparent 30%) 8px 10px / 80% 7px no-repeat, linear-gradient(90deg, #37D67A 0 22%, transparent 22%) 8px 24px / 80% 7px no-repeat, repeating-linear-gradient(180deg, #23262D 0 12px, #16181D 12px 14px)"],
+  ["ardoise", "Ardoise", "menu de brasserie", "linear-gradient(rgba(241,239,230,.85), rgba(241,239,230,.85)) 50% 14px / 50% 3px no-repeat, linear-gradient(rgba(243,201,105,.9), rgba(243,201,105,.9)) 50% 24px / 36% 3px no-repeat, #2E3A36"],
+  ["metro", "Métro", "plan de lignes", "radial-gradient(circle at 28% 50%, #fff 0 3px, #003CA6 3.5px 5.5px, transparent 6px), radial-gradient(circle at 70% 50%, #fff 0 3px, #003CA6 3.5px 5.5px, transparent 6px), linear-gradient(#003CA6, #003CA6) 50% 50% / 100% 4px no-repeat, #fff"],
+  ["bd", "BD", "bande dessinée", "linear-gradient(#FFE11A, #FFE11A) 6px 6px / 40% 42% no-repeat, linear-gradient(#1FB6E6, #1FB6E6) right 6px bottom 6px / 44% 40% no-repeat, #fff"],
+  ["gameboy", "Game Boy", "écran 8 bits", "linear-gradient(#0F380F, #0F380F) 12px 14px / 18px 6px no-repeat, linear-gradient(#306230, #306230) 12px 26px / 34px 6px no-repeat, #9BBC0F"],
 ];
+// Mise en page de chaque style : liste (colonnes de jours), grille (semaines), ou notifications
+const LAYOUT = { riso: "list", ticket: "list", departs: "list", ardoise: "list", ecran: "ecran" };
+const layoutOf = t => LAYOUT[t] || "grid";
+// Libellés propres à chaque style
+const LABELS = {
+  ticket: { tip: "Note du caissier", idea: "Offre du mois" },
+  departs: { tip: "Information voyageurs", idea: "Correspondance" },
+  ardoise: { tip: "Suggestion du chef", idea: "Plat du jour" },
+  metro: { tip: "Info trafic", idea: "Station du mois" },
+  bd: { tip: "Le conseil", idea: "L’idée du mois" },
+  gameboy: { tip: "Conseil", idea: "Bonus" },
+};
+const labels = () => ({ tip: "Le conseil", idea: "Idée de post", ...(LABELS[state.theme] || {}) });
+const METRO = ["#FFCD00", "#003CA6", "#837902", "#CF009E", "#FF7E2E", "#6ECA97"];
 const SUISSE = ["#1F5BD6","#D6336C","#2B9348","#7048E8","#E8590C","#0B8A8A","#E03131","#B7791F","#9C4221","#E4572E","#6741D9","#1A7F5A"];
 
 // ---------- état ----------
@@ -528,9 +834,12 @@ const wday = date => (date.getDay() + 6) % 7;
 // ---------- pages ----------
 function dayRow(date) {
   const m = date.getMonth() + 1, d = date.getDate(), w = wday(date);
-  const evs = dayEvents(m, d).map(e => `<p class="${e.k}">${e.html}</p>`).join("");
-  return `<div class="day${w >= 5 ? " we" : ""}"><div class="dn"><span class="num${isFerie(m, d) ? " fer" : ""}">${pad(d)}</span>` +
-         `<span class="wd">${WD[w]}</span></div><div class="evs">${evs}</div></div>`;
+  const list = dayEvents(m, d), fer = isFerie(m, d);
+  const evs = list.map(e => `<p class="${e.k}">${e.html}</p>`).join("");
+  // statut affiché par le thème « Départs »
+  const st = fer ? ["fer", "FÉRIÉ"] : list.some(e => e.k === "fun") ? ["fun", "DÉCALÉ"] : list.length ? ["ok", "À L’HEURE"] : ["none", "—"];
+  return `<div class="day${w >= 5 ? " we" : ""}"><div class="dn"><span class="num${fer ? " fer" : ""}">${pad(d)}</span>` +
+         `<span class="wd">${WD[w]}</span></div><div class="evs">${evs}</div><span class="st st-${st[0]}">${st[1]}</span></div>`;
 }
 function monthPage(m) {
   const n = new Date(YEAR, m, 0).getDate();
@@ -549,12 +858,13 @@ function monthPage(m) {
   const [tb, tr] = tips[m - 1];
   const name = MONTHS[m - 1];
   const fs = Math.min(40, 178 / (name.length * 0.74));
-  return `<section class="page month" id="p${m}">
-  <div class="vt" style="font-size:${fs.toFixed(1)}mm">${ov(name)}</div>
+  const L = labels();
+  return `<section class="page month" id="p${m}" style="--len:${name.length}">
+  <div class="vt" style="--fs:${fs.toFixed(1)}mm">${ov(name)}</div>
   <div class="info">
     <div class="meta">${YEAR}<br>${n} jours · ${ouvres} ouvrés<br>${nFun} date${nFun > 1 ? "s" : ""} décalée${nFun > 1 ? "s" : ""}</div>
-    <div class="blk"><div class="lbl">Le conseil</div><p class="tip"><b>${fr(esc(tb))}</b>${fr(esc(tr))}</p></div>
-    <div class="perle"><div class="lbl">Idée de post</div><div class="pdate">${ov(`${pad(pd)}.${pad(pm)}`)}</div>
+    <div class="blk"><div class="lbl">${L.tip}</div><p class="tip"><b>${fr(esc(tb))}</b>${fr(esc(tr))}</p></div>
+    <div class="perle"><div class="lbl">${L.idea}</div><div class="pdate">${ov(`${pad(pd)}.${pad(pm)}`)}</div>
       <div class="pname">${fr(esc(pname))}</div><p>${fr(esc(pidea))}</p></div>
     <div class="legend">
       ${hasPerso ? '<span><i class="dia"></i> vos dates</span>' : ""}
@@ -622,9 +932,10 @@ function monthGrid(m) {
   const cells = [];
   for (let i = 0; i < rows * 7; i++) {
     const cur = new Date(YEAR, m - 1, 1 - lead + i), dd = cur.getDate(), we = i % 7 >= 5;
-    if (cur.getMonth() !== m - 1) { cells.push(`<div class="c out${we ? " we" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span></div></div>`); continue; }
+    const row = ` r${Math.floor(i / 7) + 1}${i % 7 === 5 ? " sat" : ""}`, wk = i % 7 === 0 ? ` data-w="${isoWeek(cur)}"` : "";
+    if (cur.getMonth() !== m - 1) { cells.push(`<div class="c out${we ? " we" : ""}${row}"${wk}><div class="in"><span class="n">${numHtml(dd)}</span></div></div>`); continue; }
     const evs = dayEvents(m, dd), fer = isFerie(m, dd);
-    cells.push(`<div class="c l${Math.min(evs.length, 4)}${we ? " we" : ""}${fer ? " fer" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span>` +
+    cells.push(`<div class="c l${Math.min(evs.length, 4)}${we ? " we" : ""}${fer ? " fer" : ""}${row}"${wk}><div class="in"><span class="n">${numHtml(dd)}</span>` +
       (evs.length ? `<span class="cnt">×${evs.length}</span>` : "") +
       evs.map(e => `<p class="ev ${e.k}"><span>${e.html}</span></p>`).join("") +
       `</div>${fer ? '<div class="pm"><span>FÉRIÉ</span></div>' : ""}</div>`);
@@ -632,6 +943,7 @@ function monthGrid(m) {
   const heads = WDFULL.map((n, i) => `<div class="h${i >= 5 ? " we" : ""}">${n}</div>`).join("");
   const ramp = [0, 1, 2, 3, 4].map(i => `<i class="l${i}"></i>`).join("");
   const acc = state.theme === "suisse" ? `;--acc:${SUISSE[m - 1]}` : "";
+  const L = labels();
   return `<section class="page month" id="p${m}" style="--rows:${rows};--len:${name.length}${acc}">
   <div class="side">
     <div class="ttl"><div class="mt">${ov(name)}</div><div class="my">${YEAR}</div>
@@ -640,8 +952,8 @@ function monthGrid(m) {
       <ul class="stats"><li><b>${I.fun}</b> décalées</li><li><b>${I.ouvres}</b> jours ouvrés</li>
       <li><b>${WDFULL[wday(I.busy)].toLowerCase()} ${I.busy.getDate()}</b> jour le plus chargé (${I.bn})</li></ul>
       <div class="ramp">moins ${ramp} plus</div></div>
-    <div class="note tip"><div class="k">Le conseil</div><p>${tipOf(m)}</p></div>
-    <div class="note idea"><div class="k">Idée de post<span class="kd"> · ${P.date}</span></div><div class="pd">${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
+    <div class="note tip"><div class="k">${L.tip}</div><p>${tipOf(m)}</p></div>
+    <div class="note idea"><div class="k">${L.idea}<span class="kd"> · ${P.date}</span></div><div class="pd">${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
   </div>
   <div class="bignum"><span>${m}</span></div>
   <div class="g">${heads}${cells.join("")}</div>
@@ -706,6 +1018,25 @@ function coverGen() {
       <div class="nt"><i class="ic fer"></i><div><b>Jour de l’an</b> — la première date de l’année</div></div>
       <div class="nt"><i class="ic"></i><div><b>Journée des Community Managers</b> · lundi 25 janvier</div></div>
       <div class="nt"><i class="ic fun"></i><div><b>Journée du papier bulle</b> · le même jour</div></div></div>`,
+    ticket: (() => {
+      const lines = MONTHS.map((n, i) => { let c = 0; for (let d = 1; d <= new Date(YEAR, i + 1, 0).getDate(); d++) c += dayEvents(i + 1, d).length;
+        return `<div class="rr"><span>${n.toUpperCase()}</span><span>${c}</span></div>`; }).join("");
+      return `<div class="cv-art"><div class="rcpt"><div class="rh">CALENDRIER<br>SOCIAL MEDIA</div><div class="rl">TICKET N° ${YEAR} · CAISSE 01</div>
+        <div class="rsep"></div>${lines}<div class="rsep"></div><div class="rr rtot"><span>TOTAL</span><span>${tot} DATES</span></div>
+        <div class="rl">dont ${fun} décalées · TVA non applicable</div><div class="bar"></div><div class="rl">MERCI DE VOTRE VISITE</div></div></div>`; })(),
+    departs: `<div class="cv-art"><div class="board"><div class="bh"><span>✈ DÉPARTS</span><span>20:27</span></div><div class="flap">${YEAR}</div>
+      <div class="brow"><b>01.01</b><span>JOUR DE L’AN</span><em class="st-fer">FÉRIÉ</em></div>
+      <div class="brow"><b>25.01</b><span>JOURNÉE DES COMMUNITY MANAGERS</span><em class="st-ok">À L’HEURE</em></div>
+      <div class="brow"><b>25.01</b><span>JOURNÉE DU PAPIER BULLE</span><em class="st-fun">DÉCALÉ</em></div>
+      <div class="brow"><b>14.02</b><span>SAINT-VALENTIN</span><em class="st-ok">À L’HEURE</em></div></div></div>`,
+    ardoise: `<div class="cv-art"><div class="ch-t">Au menu cette année</div><div class="ch-y">${YEAR}</div>
+      <ul class="ch-l"><li><b>Entrée</b> 12 mois de dates clés</li><li><b>Plat</b> un conseil et une idée de post par mois</li><li><b>Dessert</b> ${fun} dates décalées</li></ul>
+      <div class="ch-s">Service continu du 1er janvier au 31 décembre</div></div>`,
+    metro: `<div class="cv-art"><div class="plaque">${YEAR}</div><div class="mline">${MONTHS.map((n, i) =>
+      `<span style="--line:${METRO[i % 6]}"><i></i><b>${n.slice(0, 4)}.</b></span>`).join("")}</div></div>`,
+    bd: `<div class="cv-art"><div class="burst"><span>${YEAR}&nbsp;!</span></div><div class="bubble">${tot} dates pour publier&nbsp;? Challenge accepté&nbsp;!</div></div>`,
+    gameboy: `<div class="cv-art"><div class="gb-screen"><div class="gb-t">CALENDRIER</div><div class="gb-y">${YEAR}</div>
+      <div class="gb-p">▶ PRESS START</div><div class="gb-h">♥ ♥ ♥</div></div><div class="gb-logo">SOCIAL MEDIA <i>COLOR</i></div></div>`,
   }[state.theme];
   return `<section class="page cover" id="p0">${art}${txt}</section>`;
 }
@@ -723,7 +1054,8 @@ const $ = id => document.getElementById(id);
 function render() {
   const t = state.theme, riso = t === "riso";
   const html = [riso ? cover() : coverGen()];
-  for (let m = 1; m <= 12; m++) html.push(riso ? monthPage(m) : t === "ecran" ? monthEcran(m) : monthGrid(m));
+  const lay = layoutOf(t);
+  for (let m = 1; m <= 12; m++) html.push(lay === "list" ? monthPage(m) : lay === "ecran" ? monthEcran(m) : monthGrid(m));
   html.push(recap.replace('class="page recap"', 'class="page recap" id="p13"'), back());
   const y = $("preview").scrollTop;
   $("pages").className = riso ? "th-riso" : `gen th-${t}`;

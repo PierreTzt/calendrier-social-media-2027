@@ -151,7 +151,27 @@ const THEMES = [
   ["heatmap", "Heatmap", "densité de dates", "linear-gradient(90deg, #F1F3F8 0 20%, #FFE4CE 20% 40%, #FFC89E 40% 60%, #FFA066 60% 80%, #F57A3D 80%)"],
   ["timbres", "Timbres", "rétro postal", "linear-gradient(#DFE7EC, #DFE7EC) center / calc(100% - 12px) calc(100% - 12px) no-repeat, repeating-linear-gradient(135deg, #C8372B 0 6px, #fff 6px 9px, #1F3A7A 9px 15px, #fff 15px 18px)"],
   ["ecran", "Écran", "notifications", "linear-gradient(#fff, #fff) 10px 12px / 62% 8px no-repeat, linear-gradient(#fff, #fff) 10px 25px / 44% 8px no-repeat, #2330D9"],
+  ["ticket", "Ticket", "ticket de caisse", "repeating-linear-gradient(180deg, transparent 0 7px, #BDB9B0 7px 8px) 50% 6px / 58% 70% no-repeat, linear-gradient(#FCFCF8, #FCFCF8) 50% 0 / 64% 100% no-repeat, #CFCAC0"],
+  ["departs", "Départs", "tableau de gare", "linear-gradient(90deg, #FFC600 0 30%, transparent 30%) 8px 10px / 80% 7px no-repeat, linear-gradient(90deg, #37D67A 0 22%, transparent 22%) 8px 24px / 80% 7px no-repeat, repeating-linear-gradient(180deg, #23262D 0 12px, #16181D 12px 14px)"],
+  ["ardoise", "Ardoise", "menu de brasserie", "linear-gradient(rgba(241,239,230,.85), rgba(241,239,230,.85)) 50% 14px / 50% 3px no-repeat, linear-gradient(rgba(243,201,105,.9), rgba(243,201,105,.9)) 50% 24px / 36% 3px no-repeat, #2E3A36"],
+  ["metro", "Métro", "plan de lignes", "radial-gradient(circle at 28% 50%, #fff 0 3px, #003CA6 3.5px 5.5px, transparent 6px), radial-gradient(circle at 70% 50%, #fff 0 3px, #003CA6 3.5px 5.5px, transparent 6px), linear-gradient(#003CA6, #003CA6) 50% 50% / 100% 4px no-repeat, #fff"],
+  ["bd", "BD", "bande dessinée", "linear-gradient(#FFE11A, #FFE11A) 6px 6px / 40% 42% no-repeat, linear-gradient(#1FB6E6, #1FB6E6) right 6px bottom 6px / 44% 40% no-repeat, #fff"],
+  ["gameboy", "Game Boy", "écran 8 bits", "linear-gradient(#0F380F, #0F380F) 12px 14px / 18px 6px no-repeat, linear-gradient(#306230, #306230) 12px 26px / 34px 6px no-repeat, #9BBC0F"],
 ];
+// Mise en page de chaque style : liste (colonnes de jours), grille (semaines), ou notifications
+const LAYOUT = { riso: "list", ticket: "list", departs: "list", ardoise: "list", ecran: "ecran" };
+const layoutOf = t => LAYOUT[t] || "grid";
+// Libellés propres à chaque style
+const LABELS = {
+  ticket: { tip: "Note du caissier", idea: "Offre du mois" },
+  departs: { tip: "Information voyageurs", idea: "Correspondance" },
+  ardoise: { tip: "Suggestion du chef", idea: "Plat du jour" },
+  metro: { tip: "Info trafic", idea: "Station du mois" },
+  bd: { tip: "Le conseil", idea: "L’idée du mois" },
+  gameboy: { tip: "Conseil", idea: "Bonus" },
+};
+const labels = () => ({ tip: "Le conseil", idea: "Idée de post", ...(LABELS[state.theme] || {}) });
+const METRO = ["#FFCD00", "#003CA6", "#837902", "#CF009E", "#FF7E2E", "#6ECA97"];
 const SUISSE = ["#1F5BD6","#D6336C","#2B9348","#7048E8","#E8590C","#0B8A8A","#E03131","#B7791F","#9C4221","#E4572E","#6741D9","#1A7F5A"];
 
 // ---------- état ----------
@@ -215,9 +235,12 @@ const wday = date => (date.getDay() + 6) % 7;
 // ---------- pages ----------
 function dayRow(date) {
   const m = date.getMonth() + 1, d = date.getDate(), w = wday(date);
-  const evs = dayEvents(m, d).map(e => `<p class="${e.k}">${e.html}</p>`).join("");
-  return `<div class="day${w >= 5 ? " we" : ""}"><div class="dn"><span class="num${isFerie(m, d) ? " fer" : ""}">${pad(d)}</span>` +
-         `<span class="wd">${WD[w]}</span></div><div class="evs">${evs}</div></div>`;
+  const list = dayEvents(m, d), fer = isFerie(m, d);
+  const evs = list.map(e => `<p class="${e.k}">${e.html}</p>`).join("");
+  // statut affiché par le thème « Départs »
+  const st = fer ? ["fer", "FÉRIÉ"] : list.some(e => e.k === "fun") ? ["fun", "DÉCALÉ"] : list.length ? ["ok", "À L’HEURE"] : ["none", "—"];
+  return `<div class="day${w >= 5 ? " we" : ""}"><div class="dn"><span class="num${fer ? " fer" : ""}">${pad(d)}</span>` +
+         `<span class="wd">${WD[w]}</span></div><div class="evs">${evs}</div><span class="st st-${st[0]}">${st[1]}</span></div>`;
 }
 function monthPage(m) {
   const n = new Date(YEAR, m, 0).getDate();
@@ -236,12 +259,13 @@ function monthPage(m) {
   const [tb, tr] = tips[m - 1];
   const name = MONTHS[m - 1];
   const fs = Math.min(40, 178 / (name.length * 0.74));
-  return `<section class="page month" id="p${m}">
-  <div class="vt" style="font-size:${fs.toFixed(1)}mm">${ov(name)}</div>
+  const L = labels();
+  return `<section class="page month" id="p${m}" style="--len:${name.length}">
+  <div class="vt" style="--fs:${fs.toFixed(1)}mm">${ov(name)}</div>
   <div class="info">
     <div class="meta">${YEAR}<br>${n} jours · ${ouvres} ouvrés<br>${nFun} date${nFun > 1 ? "s" : ""} décalée${nFun > 1 ? "s" : ""}</div>
-    <div class="blk"><div class="lbl">Le conseil</div><p class="tip"><b>${fr(esc(tb))}</b>${fr(esc(tr))}</p></div>
-    <div class="perle"><div class="lbl">Idée de post</div><div class="pdate">${ov(`${pad(pd)}.${pad(pm)}`)}</div>
+    <div class="blk"><div class="lbl">${L.tip}</div><p class="tip"><b>${fr(esc(tb))}</b>${fr(esc(tr))}</p></div>
+    <div class="perle"><div class="lbl">${L.idea}</div><div class="pdate">${ov(`${pad(pd)}.${pad(pm)}`)}</div>
       <div class="pname">${fr(esc(pname))}</div><p>${fr(esc(pidea))}</p></div>
     <div class="legend">
       ${hasPerso ? '<span><i class="dia"></i> vos dates</span>' : ""}
@@ -309,9 +333,10 @@ function monthGrid(m) {
   const cells = [];
   for (let i = 0; i < rows * 7; i++) {
     const cur = new Date(YEAR, m - 1, 1 - lead + i), dd = cur.getDate(), we = i % 7 >= 5;
-    if (cur.getMonth() !== m - 1) { cells.push(`<div class="c out${we ? " we" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span></div></div>`); continue; }
+    const row = ` r${Math.floor(i / 7) + 1}${i % 7 === 5 ? " sat" : ""}`, wk = i % 7 === 0 ? ` data-w="${isoWeek(cur)}"` : "";
+    if (cur.getMonth() !== m - 1) { cells.push(`<div class="c out${we ? " we" : ""}${row}"${wk}><div class="in"><span class="n">${numHtml(dd)}</span></div></div>`); continue; }
     const evs = dayEvents(m, dd), fer = isFerie(m, dd);
-    cells.push(`<div class="c l${Math.min(evs.length, 4)}${we ? " we" : ""}${fer ? " fer" : ""}"><div class="in"><span class="n">${numHtml(dd)}</span>` +
+    cells.push(`<div class="c l${Math.min(evs.length, 4)}${we ? " we" : ""}${fer ? " fer" : ""}${row}"${wk}><div class="in"><span class="n">${numHtml(dd)}</span>` +
       (evs.length ? `<span class="cnt">×${evs.length}</span>` : "") +
       evs.map(e => `<p class="ev ${e.k}"><span>${e.html}</span></p>`).join("") +
       `</div>${fer ? '<div class="pm"><span>FÉRIÉ</span></div>' : ""}</div>`);
@@ -319,6 +344,7 @@ function monthGrid(m) {
   const heads = WDFULL.map((n, i) => `<div class="h${i >= 5 ? " we" : ""}">${n}</div>`).join("");
   const ramp = [0, 1, 2, 3, 4].map(i => `<i class="l${i}"></i>`).join("");
   const acc = state.theme === "suisse" ? `;--acc:${SUISSE[m - 1]}` : "";
+  const L = labels();
   return `<section class="page month" id="p${m}" style="--rows:${rows};--len:${name.length}${acc}">
   <div class="side">
     <div class="ttl"><div class="mt">${ov(name)}</div><div class="my">${YEAR}</div>
@@ -327,8 +353,8 @@ function monthGrid(m) {
       <ul class="stats"><li><b>${I.fun}</b> décalées</li><li><b>${I.ouvres}</b> jours ouvrés</li>
       <li><b>${WDFULL[wday(I.busy)].toLowerCase()} ${I.busy.getDate()}</b> jour le plus chargé (${I.bn})</li></ul>
       <div class="ramp">moins ${ramp} plus</div></div>
-    <div class="note tip"><div class="k">Le conseil</div><p>${tipOf(m)}</p></div>
-    <div class="note idea"><div class="k">Idée de post<span class="kd"> · ${P.date}</span></div><div class="pd">${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
+    <div class="note tip"><div class="k">${L.tip}</div><p>${tipOf(m)}</p></div>
+    <div class="note idea"><div class="k">${L.idea}<span class="kd"> · ${P.date}</span></div><div class="pd">${P.date}</div><p><b>${P.name}</b> — ${P.idea}</p></div>
   </div>
   <div class="bignum"><span>${m}</span></div>
   <div class="g">${heads}${cells.join("")}</div>
@@ -393,6 +419,25 @@ function coverGen() {
       <div class="nt"><i class="ic fer"></i><div><b>Jour de l’an</b> — la première date de l’année</div></div>
       <div class="nt"><i class="ic"></i><div><b>Journée des Community Managers</b> · lundi 25 janvier</div></div>
       <div class="nt"><i class="ic fun"></i><div><b>Journée du papier bulle</b> · le même jour</div></div></div>`,
+    ticket: (() => {
+      const lines = MONTHS.map((n, i) => { let c = 0; for (let d = 1; d <= new Date(YEAR, i + 1, 0).getDate(); d++) c += dayEvents(i + 1, d).length;
+        return `<div class="rr"><span>${n.toUpperCase()}</span><span>${c}</span></div>`; }).join("");
+      return `<div class="cv-art"><div class="rcpt"><div class="rh">CALENDRIER<br>SOCIAL MEDIA</div><div class="rl">TICKET N° ${YEAR} · CAISSE 01</div>
+        <div class="rsep"></div>${lines}<div class="rsep"></div><div class="rr rtot"><span>TOTAL</span><span>${tot} DATES</span></div>
+        <div class="rl">dont ${fun} décalées · TVA non applicable</div><div class="bar"></div><div class="rl">MERCI DE VOTRE VISITE</div></div></div>`; })(),
+    departs: `<div class="cv-art"><div class="board"><div class="bh"><span>✈ DÉPARTS</span><span>20:27</span></div><div class="flap">${YEAR}</div>
+      <div class="brow"><b>01.01</b><span>JOUR DE L’AN</span><em class="st-fer">FÉRIÉ</em></div>
+      <div class="brow"><b>25.01</b><span>JOURNÉE DES COMMUNITY MANAGERS</span><em class="st-ok">À L’HEURE</em></div>
+      <div class="brow"><b>25.01</b><span>JOURNÉE DU PAPIER BULLE</span><em class="st-fun">DÉCALÉ</em></div>
+      <div class="brow"><b>14.02</b><span>SAINT-VALENTIN</span><em class="st-ok">À L’HEURE</em></div></div></div>`,
+    ardoise: `<div class="cv-art"><div class="ch-t">Au menu cette année</div><div class="ch-y">${YEAR}</div>
+      <ul class="ch-l"><li><b>Entrée</b> 12 mois de dates clés</li><li><b>Plat</b> un conseil et une idée de post par mois</li><li><b>Dessert</b> ${fun} dates décalées</li></ul>
+      <div class="ch-s">Service continu du 1er janvier au 31 décembre</div></div>`,
+    metro: `<div class="cv-art"><div class="plaque">${YEAR}</div><div class="mline">${MONTHS.map((n, i) =>
+      `<span style="--line:${METRO[i % 6]}"><i></i><b>${n.slice(0, 4)}.</b></span>`).join("")}</div></div>`,
+    bd: `<div class="cv-art"><div class="burst"><span>${YEAR}&nbsp;!</span></div><div class="bubble">${tot} dates pour publier&nbsp;? Challenge accepté&nbsp;!</div></div>`,
+    gameboy: `<div class="cv-art"><div class="gb-screen"><div class="gb-t">CALENDRIER</div><div class="gb-y">${YEAR}</div>
+      <div class="gb-p">▶ PRESS START</div><div class="gb-h">♥ ♥ ♥</div></div><div class="gb-logo">SOCIAL MEDIA <i>COLOR</i></div></div>`,
   }[state.theme];
   return `<section class="page cover" id="p0">${art}${txt}</section>`;
 }
@@ -410,7 +455,8 @@ const $ = id => document.getElementById(id);
 function render() {
   const t = state.theme, riso = t === "riso";
   const html = [riso ? cover() : coverGen()];
-  for (let m = 1; m <= 12; m++) html.push(riso ? monthPage(m) : t === "ecran" ? monthEcran(m) : monthGrid(m));
+  const lay = layoutOf(t);
+  for (let m = 1; m <= 12; m++) html.push(lay === "list" ? monthPage(m) : lay === "ecran" ? monthEcran(m) : monthGrid(m));
   html.push(recap.replace('class="page recap"', 'class="page recap" id="p13"'), back());
   const y = $("preview").scrollTop;
   $("pages").className = riso ? "th-riso" : `gen th-${t}`;
