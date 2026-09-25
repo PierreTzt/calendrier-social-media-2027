@@ -112,3 +112,7 @@ Les dates qui changent chaque année (Pâques, fête des Mères, Black Friday…
 - **Grands événements** (Oscars, Grammy Awards, Super Bowl, Cannes, Eurovision, Ligue des champions, Coupes du monde, Tour de France…) : dates annoncées par les organisateurs, vérifiées en septembre 2026.
 - Les dates encore incertaines (Ramadan, Roland-Garros, Marathon de Paris…) sont **marquées d'un astérisque** dans le calendrier.
 - Beaucoup de journées décalées viennent de la culture américaine ou d'internet : vérifiez qu'elles parlent à votre audience avant de publier.
+
+## Licence
+
+[MIT](LICENSE) : vous pouvez réutiliser, modifier et redistribuer ce projet librement, en conservant la mention de copyright.
