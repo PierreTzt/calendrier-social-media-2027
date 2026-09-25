@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Générateur · Calendrier social media 2027</title>
+<style>
+
+@import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&family=Schibsted+Grotesk:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Martian+Mono:wdth,wght@87.5,400;87.5,600;87.5,700&display=block');
+@page { size: 297mm 210mm; margin: 0; }
+:root { --blue:#3255A4; --pink:#FF48B0; --pinkt:#FFE2F1; --paper:#FFFFFF; --soft:#7D90C4; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Schibsted Grotesk', sans-serif; color: var(--blue); -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+.page { width: 297mm; height: 210mm; position: relative; overflow: hidden; page-break-after: always; background: var(--paper); }
+/* surimpression riso */
+.ov { position: relative; display: inline-block; font-family: 'Bagel Fat One', sans-serif; font-weight: 400; line-height: .9; }
+.ov .b { color: var(--blue); }
+.ov .p { position: absolute; left: 0; top: 0; color: var(--pink); mix-blend-mode: multiply; transform: translate(.08em, -.05em); }
+.lbl { font-family: 'Martian Mono', monospace; font-size: 2.2mm; font-weight: 700; letter-spacing: .3mm; text-transform: uppercase; color: var(--pink); margin-bottom: 1.6mm; }
+sup.ast { color: var(--pink); font-weight: 800; font-size: 1.15em; vertical-align: 0; }
+/* ---- mois ---- */
+.vt { position: absolute; left: 7mm; top: 10mm; bottom: 10mm; width: 36mm; display: flex; align-items: flex-end; justify-content: center; }
+.vt .ov { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.vt .ov .p { transform: translate(-.06em, .08em); }
+.info { position: absolute; left: 47mm; top: 11mm; bottom: 10mm; width: 56mm; display: flex; flex-direction: column; }
+.meta { font-family: 'Martian Mono', monospace; font-size: 2.3mm; line-height: 1.7; color: var(--blue); margin-bottom: 8mm; }
+.blk { margin-bottom: 7mm; }
+.tip { font-size: 2.9mm; line-height: 1.42; }
+.tip b { font-weight: 800; }
+.perle { background: var(--pinkt); padding: 4mm 4.2mm 4.4mm; }
+.pdate { font-size: 13mm; margin: 1mm 0 2mm; }
+.pname { font-weight: 800; font-size: 3.1mm; line-height: 1.25; margin-bottom: 1.6mm; }
+.perle p { font-size: 2.8mm; line-height: 1.42; }
+.legend { margin-top: auto; display: flex; flex-direction: column; gap: 1.8mm; font-family: 'Martian Mono', monospace; font-size: 2.1mm; }
+.legend span { display: flex; align-items: center; gap: 2mm; }
+.dot { display: inline-block; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--pink); }
+.legend .fr, .num.fer { background: var(--pink); color: #fff; border-radius: 50%; }
+.legend .fr { font-style: normal; font-weight: 700; font-size: 1.9mm; width: 4.4mm; height: 4.4mm; display: inline-flex; align-items: center; justify-content: center; }
+.cols { position: absolute; left: 110mm; right: 9mm; top: 9mm; bottom: 9mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4.5mm; }
+.col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.wk { font-family: 'Martian Mono', monospace; font-size: 1.8mm; color: var(--soft); letter-spacing: .2mm; text-transform: uppercase; padding: 1.3mm 0 .6mm 1.4mm; }
+.day { flex: 1 0 auto; display: grid; grid-template-columns: 10mm 1fr; column-gap: 1.2mm; padding: 1.1mm 1.4mm .6mm; min-height: 9mm; }
+.day.we { background: var(--pinkt); }
+.dn { display: flex; flex-direction: column; align-items: flex-start; }
+.num { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.7mm; line-height: 1; }
+.num.fer { width: 6.6mm; height: 6.6mm; display: flex; align-items: center; justify-content: center; font-size: 3.1mm; margin: -.8mm 0 0 -.9mm; }
+.wd { font-family: 'Martian Mono', monospace; font-size: 1.8mm; text-transform: uppercase; color: var(--soft); margin-top: .8mm; }
+.day.we .wd { color: var(--pink); }
+.evs p { font-size: calc(2.25mm * var(--k, 1)); line-height: 1.2; font-weight: 500; margin-bottom: .75mm; }
+.evs p i { font-style: normal; color: var(--soft); }
+.evs p.fun, .evs p.perso { padding-left: 2.3mm; position: relative; }
+.evs p.perso { font-weight: 700; }
+.evs p.perso::before { content: ""; position: absolute; left: .1mm; top: .8mm; width: 1.1mm; height: 1.1mm; background: var(--blue); transform: rotate(45deg); }
+.dia { display: inline-block; width: 1.4mm; height: 1.4mm; margin: 0 .1mm; background: var(--blue); transform: rotate(45deg); }
+.evs p.fun::before { content: ""; position: absolute; left: 0; top: .75mm; width: 1.25mm; height: 1.25mm; border-radius: 50%; background: var(--pink); }
+/* ---- couverture ---- */
+.cyear { position: absolute; left: 8mm; top: 6mm; font-size: 96mm; display: flex; flex-direction: column; }
+.cyear .l2 { margin-left: 24mm; margin-top: -4mm; }
+.cright { position: absolute; left: 184mm; top: 0; bottom: 0; width: 96mm; display: flex; flex-direction: column; justify-content: center; }
+.cright .lbl { font-size: 2.8mm; margin-bottom: 4mm; }
+.cright h1 { font-weight: 800; font-size: 8.6mm; line-height: 1.08; letter-spacing: -.2mm; margin-bottom: 5mm; }
+.cright p { font-size: 3.8mm; line-height: 1.45; margin-bottom: 7mm; }
+.cright ul { list-style: none; font-family: 'Martian Mono', monospace; font-size: 2.6mm; line-height: 2.1; }
+.cright li::before { content: "→ "; color: var(--pink); }
+/* ---- dos ---- */
+.bmsg { position: absolute; left: 20mm; top: 40mm; font-size: 40mm; }
+.bmsg .ov { line-height: 1; }
+.bfoot { position: absolute; left: 20mm; bottom: 16mm; font-family: 'Martian Mono', monospace; font-size: 2.6mm; }
+/* ---- récap ---- */
+.rtitle { position: absolute; left: 10mm; top: 10mm; font-size: 17mm; }
+.rgrid { position: absolute; left: 10mm; right: 10mm; top: 38mm; bottom: 10mm; display: grid; grid-template-columns: 66mm 1fr 84mm; gap: 9mm; }
+.rc { display: flex; flex-direction: column; }
+.rc ul { list-style: none; flex: 1; display: flex; flex-direction: column; }
+.rc li { flex: 1; }
+.rc li { font-size: 3.5mm; padding: 0; display: flex; align-items: center; font-weight: 500; }
+.rc li:nth-child(odd) { background: var(--pinkt); }
+.rc li b { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 2.8mm; min-width: 15mm; padding-left: 1.5mm; }
+.rc li .w { font-family: 'Martian Mono', monospace; color: var(--soft); min-width: 10mm; font-size: 2.3mm; text-transform: uppercase; }
+.big li b { min-width: 31mm; }
+
+table { width: 100%; border-collapse: collapse; font-size: 3.1mm; margin-top: 1mm; }
+.rc td { height: 17mm; }
+th { font-family: 'Martian Mono', monospace; font-size: 2.4mm; text-transform: uppercase; color: var(--pink); padding: 2mm 1mm; text-align: center; }
+td { padding: 3.2mm 1mm; text-align: center; font-weight: 500; font-family: 'Martian Mono', monospace; font-size: 2.6mm; }
+tr:nth-child(even) td { background: var(--pinkt); }
+td:first-child { text-align: left; font-family: 'Schibsted Grotesk'; font-weight: 800; font-size: 3.1mm; padding-left: 1.5mm; }
+.small { margin-top: auto; padding-top: 5mm; font-size: 2.4mm; line-height: 1.5; color: var(--soft); }
+.extra { display: flex; gap: 8mm; margin-top: 5mm; background: var(--pinkt); padding: 4mm 5mm; font-family: 'Martian Mono', monospace; font-size: 2.5mm; line-height: 1.8; }
+.extra b { display: block; font-family: 'Schibsted Grotesk'; font-weight: 800; font-size: 3mm; }
+
+/* ================= interface (écran uniquement) ================= */
+:root { --ui:#F1F2F7; --line:#DCE0EE; }
+body { background: var(--ui); }
+.app { display: grid; grid-template-columns: 360px 1fr; height: 100vh; }
+.ui { background: #fff; border-right: 1px solid var(--line); overflow-y: auto; padding: 24px 22px 40px; font-size: 14px; }
+.ui h2 { font-family: 'Bagel Fat One', sans-serif; font-weight: 400; font-size: 30px; line-height: 1; margin-bottom: 6px; }
+.ui .intro { color: var(--soft); font-size: 13px; line-height: 1.45; margin-bottom: 22px; }
+.ui section { border-top: 1px solid var(--line); padding: 18px 0 6px; }
+.ui .lbl { font-size: 11px; margin-bottom: 10px; }
+.ui label { display: block; font-size: 12px; font-weight: 600; margin: 10px 0 5px; }
+.ui input[type=date], .ui input[type=text] { width: 100%; font: inherit; color: var(--blue); padding: 9px 10px; border: 1.5px solid var(--line); border-radius: 6px; background: #fff; }
+.ui input:focus-visible, .ui button:focus-visible, .ui select:focus-visible { outline: 2px solid var(--pink); outline-offset: 2px; }
+.seg { display: flex; border: 1.5px solid var(--line); border-radius: 6px; overflow: hidden; }
+.seg label { flex: 1; margin: 0; text-align: center; font-weight: 600; font-size: 12px; cursor: pointer; }
+.seg input { position: absolute; opacity: 0; pointer-events: none; }
+.seg span { display: flex; align-items: center; justify-content: center; gap: 6px; padding: 9px 4px; }
+.seg input:checked + span { background: var(--pinkt); }
+.seg input:focus-visible + span { outline: 2px solid var(--pink); outline-offset: -2px; }
+.mk { display: inline-block; width: 7px; height: 7px; }
+.mk.fun { border-radius: 50%; background: var(--pink); }
+.mk.perso { background: var(--blue); transform: rotate(45deg); }
+.mk.none { border: 1.5px solid var(--soft); border-radius: 50%; }
+.btn { font: inherit; font-weight: 700; font-size: 14px; border: 0; border-radius: 6px; padding: 10px 14px; cursor: pointer; }
+.btn.main { background: var(--pink); color: #fff; width: 100%; margin-top: 14px; }
+.btn.main:hover { background: #F0309F; }
+.btn.sec { background: #fff; color: var(--blue); border: 1.5px solid var(--line); }
+.btn.sec:hover { border-color: var(--blue); }
+.row { display: flex; gap: 8px; margin-top: 8px; }
+.row .btn { flex: 1; }
+.err { color: #C4127A; font-size: 12px; min-height: 16px; margin-top: 6px; }
+.mine { list-style: none; margin-top: 4px; }
+.mine li { display: grid; grid-template-columns: 44px 12px 1fr 26px; align-items: center; gap: 6px; padding: 7px 0; border-bottom: 1px solid #EEF0F6; font-size: 13px; }
+.mine .d { font-family: 'Martian Mono', monospace; font-size: 11px; font-weight: 700; }
+.mine button { border: 0; background: none; color: var(--soft); font-size: 18px; line-height: 1; cursor: pointer; border-radius: 4px; }
+.mine button:hover { color: var(--pink); }
+.empty { color: var(--soft); font-size: 13px; padding: 6px 0; }
+.check { display: flex; gap: 8px; align-items: center; font-weight: 500 !important; }
+.help { color: var(--soft); font-size: 12px; line-height: 1.5; margin-top: 10px; }
+.help b { color: var(--blue); }
+.preview { overflow-y: auto; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 22px; }
+.preview .page { zoom: var(--z, .62); box-shadow: 0 2px 14px rgba(50,85,164,.14); flex: none; }
+.bar { position: sticky; top: -28px; z-index: 5; align-self: stretch; display: flex; gap: 10px; justify-content: center; align-items: center;
+  background: var(--ui); padding: 10px 0; font-size: 13px; }
+.bar select { font: inherit; color: var(--blue); padding: 6px 8px; border: 1.5px solid var(--line); border-radius: 6px; background: #fff; }
+.toast { position: fixed; bottom: 18px; left: 50%; transform: translateX(-50%); background: var(--blue); color: #fff; padding: 9px 16px; border-radius: 6px; font-size: 13px; opacity: 0; transition: opacity .2s; pointer-events: none; }
+.toast.on { opacity: 1; }
+@media (max-width: 900px) { .app { grid-template-columns: 1fr; height: auto; } .preview { --z: .3; } }
+@media print {
+  body { background: #fff; }
+  .ui, .bar, .toast { display: none !important; }
+  .app { display: block; height: auto; }
+  .preview { display: block; padding: 0; overflow: visible; }
+  .preview .page { zoom: 1; box-shadow: none; }
+}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="ui">
+    <h2>Mes dates</h2>
+    <p class="intro">Ajoutez vos lancements, anniversaires clients ou journées maison. Le calendrier se met à jour tout de suite.</p>
+
+    <form id="f" novalidate>
+      <div class="lbl">Ajouter une date</div>
+      <label for="fd">Date</label>
+      <input id="fd" type="date" min="2027-01-01" max="2027-12-31" value="2027-01-01" required>
+      <label for="ft">Intitulé</label>
+      <input id="ft" type="text" maxlength="90" placeholder="Ex. : Lancement de la collection printemps" required>
+      <label>Type</label>
+      <div class="seg" role="radiogroup">
+        <label><input type="radio" name="k" value="perso" checked><span><i class="mk perso"></i>Perso</span></label>
+        <label><input type="radio" name="k" value="fun"><span><i class="mk fun"></i>Décalée</span></label>
+        <label><input type="radio" name="k" value="none"><span><i class="mk none"></i>Classique</span></label>
+      </div>
+      <button class="btn main" type="submit">Ajouter au calendrier</button>
+      <div class="err" id="err" role="alert"></div>
+    </form>
+
+    <section>
+      <div class="lbl">Vos dates (<span id="cnt">0</span>)</div>
+      <ul class="mine" id="mine"></ul>
+    </section>
+
+    <section>
+      <div class="lbl">Personnaliser</div>
+      <label for="fn">Nom sur la couverture (facultatif)</label>
+      <input id="fn" type="text" maxlength="40" placeholder="Ex. : Studio Pierre">
+      <label class="check"><input id="fun" type="checkbox" checked> Afficher les dates décalées intégrées</label>
+    </section>
+
+    <section>
+      <div class="lbl">Exporter</div>
+      <button class="btn main" id="print" type="button">Télécharger le PDF</button>
+      <p class="help">Dans la fenêtre qui s'ouvre : destination <b>Enregistrer au format PDF</b>, puis dans « Plus de paramètres », cochez <b>Graphiques d'arrière-plan</b>.</p>
+      <div class="row">
+        <button class="btn sec" id="exp" type="button">Sauvegarder mes dates</button>
+        <button class="btn sec" id="imp" type="button">Importer</button>
+      </div>
+      <input id="file" type="file" accept="application/json,.json" hidden>
+      <p class="help">Vos dates restent enregistrées dans ce navigateur. Sauvegardez-les en fichier pour les retrouver ailleurs.</p>
+    </section>
+  </aside>
+
+  <main class="preview" id="preview">
+    <div class="bar">
+      <label for="go">Aller à</label>
+      <select id="go"></select>
+    </div>
+    <div id="pages" style="display:contents"></div>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+const DATA = {"YEAR": 2027, "events": {"1-1": ["Jour de l'an (férié)", "Journée mondiale de la Paix", "Dry January (mois sans alcool)"], "1-2": ["Journée mondiale de la science-fiction", "~Journée mondiale des introvertis"], "1-3": ["~Galette des Rois (Épiphanie fêtée)", "~Festival du sommeil"], "1-4": ["Rentrée scolaire (toutes zones)", "Journée mondiale du braille", "~Journée du spaghetti"], "1-6": ["Épiphanie", "Début des Soldes d'hiver (jusqu'au 02/02)", "CES Las Vegas*"], "1-8": ["~Journée internationale du bain moussant"], "1-10": ["~Journée mondiale de Tintin"], "1-11": ["Journée mondiale du « merci »"], "1-12": ["~Kiss a Ginger Day"], "1-13": ["Journée nationale de l'hypersensibilité", "Mondial de handball masculin en Allemagne (jusqu'au 31/01)"], "1-14": ["Journée mondiale de la logique"], "1-16": ["~Journée internationale de la nourriture pimentée/épicée"], "1-17": ["Journée internationale de la cuisine italienne", "~Journée où l'on abandonne ses bonnes résolutions"], "1-18": ["~Blue Monday", "~Journée de Winnie l'Ourson"], "1-19": ["~Journée internationale du pop-corn"], "1-21": ["~Journée internationale des câlins"], "1-22": ["Journée franco-allemande"], "1-23": ["Journée mondiale de l'écriture manuscrite"], "1-24": ["Journée internationale de l'éducation", "Journée mondiale de la culture africaine et afro-descendante"], "1-25": ["Journée des Community Managers", "~Journée du papier bulle"], "1-27": ["Journée internationale dédiée à la mémoire des victimes de l'Holocauste"], "1-28": ["Journée européenne de la protection des données", "~Journée du LEGO"], "1-29": ["~Journée du puzzle"], "1-31": ["Journée mondiale des lépreux", "~Journée internationale du zèbre"], "2-2": ["Chandeleur", "Journée mondiale des zones humides", "~Jour de la marmotte"], "2-3": ["Journée internationale sans paille"], "2-4": ["Journée mondiale contre le cancer", "Journée internationale de la fraternité humaine"], "2-5": ["Carnaval de Rio (jusqu'au 09/02)", "~Journée mondiale du Nutella"], "2-6": ["Nouvel An chinois (année de la Chèvre)", "Début vacances scolaires Zone C (jusqu'au 22/02)", "Journée mondiale sans téléphone portable"], "2-7": ["Grammy Awards 2027"], "2-8": ["Début du Ramadan* (jusqu'au 09/03)", "Journée internationale de l'épilepsie"], "2-9": ["Mardi gras", "Safer Internet Day", "~Journée de la pizza"], "2-10": ["Mercredi des Cendres", "Journée mondiale des légumineuses"], "2-11": ["Journée internationale des femmes et des filles de science", "Journée européenne du 112"], "2-13": ["Début vacances scolaires Zone A (jusqu'au 01/03)", "Journée mondiale de la radio", "~Galentine's Day (la Saint-Valentin entre copines)"], "2-14": ["Saint-Valentin", "Super Bowl LXI (Los Angeles)"], "2-15": ["Journée internationale du cancer de l'enfant"], "2-17": ["Journée des actes de gentillesse"], "2-20": ["Début vacances scolaires Zone B (jusqu'au 08/03)", "Journée mondiale de la justice sociale", "~Journée « Aimez votre animal »"], "2-21": ["Journée internationale de la langue maternelle"], "2-22": ["Journée mondiale du scoutisme", "~Journée du chat au Japon (« nyan nyan nyan »)"], "2-26": ["~Journée internationale du conte de fées"], "2-27": ["~Journée internationale de l'ours polaire", "Journée mondiale des ONG", "~Journée Pokémon"], "2-28": ["Journée mondiale des maladies rares", "Journée mondiale sans Facebook"], "3-1": ["Journée mondiale du compliment", "Journée zéro discrimination"], "3-3": ["Journée mondiale de la vie sauvage"], "3-4": ["Journée mondiale de lutte contre l'obésité"], "3-7": ["Fête des Grands-Mères"], "3-8": ["Journée internationale des droits des femmes"], "3-10": ["Aïd el-Fitr*", "Journée internationale des femmes juges", "~MAR10 Day (journée de Mario)"], "3-11": ["Journée mondiale de la plomberie"], "3-12": ["Journée mondiale contre la censure sur Internet"], "3-14": ["Cérémonie des Oscars", "~Journée de Pi (π)"], "3-15": ["Journée mondiale des droits des consommateurs"], "3-16": ["~Journée du panda"], "3-17": ["Saint-Patrick"], "3-18": ["Journée mondiale du recyclage"], "3-19": ["Journée mondiale du sommeil"], "3-20": ["Printemps", "Journée internationale du bonheur", "Journée mondiale sans viande", "Digital Cleanup Day"], "3-21": ["Dimanche des Rameaux", "Journée mondiale de la trisomie 21", "Journée internationale des forêts"], "3-22": ["Journée mondiale de l'eau"], "3-23": ["Journée météorologique mondiale"], "3-24": ["Journée mondiale de lutte contre la tuberculose", "Journée européenne de la glace artisanale"], "3-25": ["Journée de commémoration des victimes de l'esclavage", "~Journée de la procrastination", "~Journée internationale de la gaufre"], "3-26": ["Journée violette (« Purple Day »)", "~Journée pour inventer sa propre journée"], "3-27": ["Earth Hour", "Journée mondiale du théâtre"], "3-28": ["Pâques", "Passage à l'heure d'été"], "3-29": ["Lundi de Pâques (férié)", "Journée du piano"], "3-30": ["Journée mondiale de la bipolarité"], "3-31": ["Journée mondiale de la sauvegarde informatique", "Journée internationale de la visibilité trans"], "4-1": ["~Poisson d'avril"], "4-2": ["Journée mondiale de sensibilisation à l'autisme"], "4-3": ["Début vacances scolaires Zone C (jusqu'au 19/04)", "~Journée mondiale des batailles d'oreillers"], "4-5": ["Journée internationale de la conscience"], "4-6": ["Journée internationale du sport au service du développement et de la paix"], "4-7": ["Journée mondiale de la santé"], "4-9": ["~Journée mondiale de la licorne"], "4-10": ["Début vacances scolaires Zone A (jusqu'au 26/04)"], "4-11": ["Journée mondiale de la maladie de Parkinson", "Marathon de Paris*", "~Journée des animaux de compagnie"], "4-12": ["Journée internationale du vol spatial habité", "~Journée du croque-monsieur (Grilled Cheese Day)"], "4-13": ["~Journée du Scrabble"], "4-15": ["Journée mondiale de l'art", "Fête des secrétaires"], "4-17": ["Début vacances scolaires Zone B (jusqu'au 03/05)"], "4-18": ["Élection présidentielle : 1er tour", "Journée du patrimoine mondial"], "4-20": ["Journée de la langue chinoise"], "4-21": ["Journée mondiale de la créativité et de l'innovation"], "4-22": ["Journée internationale de la Terre nourricière"], "4-23": ["Journée mondiale du livre et du droit d'auteur", "Journée de la langue anglaise et espagnole"], "4-25": ["Journée mondiale de lutte contre le paludisme", "~Journée mondiale des manchots"], "4-26": ["Journée mondiale de la propriété intellectuelle", "~Alien Day (LV-426)"], "4-28": ["Journée mondiale de la sécurité et de la santé au travail"], "4-29": ["Journée internationale de la danse"], "4-30": ["Journée internationale du jazz", "~Journée de l'honnêteté"], "5-1": ["Fête du Travail (férié)"], "5-2": ["Élection présidentielle : 2nd tour", "Journée mondiale du rire", "~Journée mondiale du thon"], "5-3": ["Journée mondiale de la liberté de la presse"], "5-4": ["~Star Wars Day", "Journée internationale des pompiers"], "5-5": ["Journée internationale des sages-femmes", "Journée mondiale de la langue portugaise"], "5-6": ["Ascension (férié)", "Journée mondiale du mot de passe"], "5-7": ["~Journée mondiale sans pantalon"], "5-8": ["Victoire du 8 mai 1945 (férié)", "Journée mondiale de la Croix-Rouge", "Journée mondiale du commerce équitable et des oiseaux migrateurs"], "5-9": ["Journée de l'Europe"], "5-10": ["Journée des mémoires de la traite, de l'esclavage et de leurs abolitions"], "5-11": ["Festival de Cannes, 80e édition (jusqu'au 22/05)", "Eurovision : 1re demi-finale"], "5-12": ["Journée internationale des infirmières"], "5-13": ["Eurovision : 2e demi-finale"], "5-14": ["~Journée de la danse du poulet"], "5-15": ["Finale de l'Eurovision (Burgas)", "Nuit européenne des musées*", "Journée internationale des familles"], "5-16": ["Pentecôte", "Journée internationale de la lumière"], "5-17": ["Lundi de Pentecôte (férié)", "Journée mondiale des télécommunications", "Journée contre l'homophobie et la transphobie"], "5-18": ["Journée internationale des musées"], "5-20": ["Journée mondiale des abeilles"], "5-21": ["Journée internationale du thé"], "5-22": ["Journée internationale de la biodiversité"], "5-23": ["Roland-Garros* (jusqu'au 06/06)", "Journée mondiale de la tortue"], "5-25": ["Journée de l'Afrique", "~Geek Pride Day", "~Towel Day (journée de la serviette)"], "5-27": ["Journée nationale de la Résistance"], "5-28": ["Fête des voisins", "Journée mondiale de l'hygiène menstruelle"], "5-29": ["Journée internationale des Casques bleus"], "5-30": ["Fête des Mères", "Journée mondiale de la sclérose en plaques"], "5-31": ["Journée mondiale sans tabac"], "6-1": ["Journée mondiale des parents", "Journée mondiale du lait"], "6-2": ["Journée mondiale du running"], "6-3": ["Journée mondiale de la bicyclette"], "6-4": ["~National Donut Day", "~Journée « Faites un câlin à votre chat »"], "6-5": ["Finale de la Ligue des champions (Madrid)", "Journée mondiale de l'environnement"], "6-6": ["~Journée du yo-yo"], "6-8": ["Journée mondiale de l'océan", "~Journée des meilleurs amis"], "6-10": ["Fête nationale du Portugal"], "6-12": ["Journée mondiale contre le travail des enfants"], "6-13": ["Journée internationale de sensibilisation à l'albinisme"], "6-14": ["Journée mondiale du donneur de sang"], "6-16": ["~Bloomsday"], "6-17": ["Hellfest (jusqu'au 20/06)", "Journée mondiale de lutte contre la désertification"], "6-18": ["~International Sushi Day", "Journée de la gastronomie durable"], "6-19": ["Journée internationale du surf", "Journée mondiale de lutte contre la drépanocytose", "~Anniversaire de Garfield"], "6-20": ["Fête des Pères", "Journée mondiale des réfugiés"], "6-21": ["Fête de la musique", "Été", "Journée internationale du yoga"], "6-23": ["Début des Soldes d'été (jusqu'au 20/07)", "Fête nationale du Luxembourg", "Journée de la fonction publique (ONU)"], "6-24": ["Coupe du monde féminine de football au Brésil (jusqu'au 25/07)", "Fête nationale du Québec"], "6-26": ["Journée contre l'abus et le trafic de drogues", "Journée de soutien aux victimes de la torture"], "6-27": ["Journée des micro, petites et moyennes entreprises"], "6-28": ["~Journée de Tau (τ = 6,28)"], "6-29": ["Journée internationale des tropiques", "Journée de l'appareil photo"], "6-30": ["Journée mondiale des réseaux sociaux", "Journée internationale des astéroïdes"], "7-1": ["Journée mondiale du reggae"], "7-2": ["Tour de France : Grand Départ d'Édimbourg (jusqu'au 25/07)", "~Journée mondiale des OVNIS", "~Journée de l'oubli (I Forgot Day)"], "7-3": ["Vacances d'été (toutes zones)", "Journée internationale sans sac plastique"], "7-6": ["~Journée internationale du baiser"], "7-7": ["~Journée mondiale du chocolat"], "7-11": ["Journée mondiale de la population"], "7-13": ["~Journée mondiale du rock"], "7-14": ["Fête nationale (férié)"], "7-15": ["Festival des Vieilles Charrues à Carhaix (jusqu'au 18/07)", "Journée mondiale des compétences des jeunes"], "7-16": ["Journée mondiale des serpents"], "7-17": ["~Journée mondiale des émojis (World Emoji Day)"], "7-20": ["Journée internationale de la Lune", "Journée mondiale des échecs"], "7-21": ["Fête nationale belge"], "7-22": ["~Journée de l'approximation de Pi (22/7)"], "7-23": ["Journée mondiale des dauphins"], "7-24": ["Journée internationale des cousins et cousines"], "7-25": ["Journée mondiale des grands-parents et des personnes âgées", "Journée mondiale de la prévention de la noyade"], "7-27": ["~Journée « Promenez vos plantes vertes »"], "7-28": ["Journée mondiale contre l'hépatite"], "7-29": ["Journée internationale du tigre"], "7-30": ["Journée internationale de l'amitié", "Journée mondiale contre la traite des êtres humains", "SysAdmin Day"], "8-1": ["Fête nationale suisse", "Journée du World Wide Web"], "8-2": ["Éclipse totale de Soleil (partielle en France, vers 11 h)"], "8-3": ["~Journée de la pastèque"], "8-6": ["~Journée internationale de la bière"], "8-8": ["Journée internationale du chat"], "8-9": ["Journée internationale des peuples autochtones"], "8-10": ["Journée mondiale du lion"], "8-12": ["Journée internationale de la jeunesse", "Journée mondiale de l'éléphant"], "8-13": ["Journée internationale des gauchers"], "8-15": ["Assomption (férié)"], "8-16": ["~Journée de la blague"], "8-17": ["~Journée internationale du chat noir"], "8-18": ["~Journée du mauvais poète"], "8-19": ["Journée mondiale de l'aide humanitaire, des orangs-outans et de la photographie"], "8-20": ["Journée mondiale du moustique"], "8-21": ["Journée internationale du souvenir, en hommage aux victimes du terrorisme"], "8-23": ["Journée internationale du souvenir de la traite négrière et de son abolition"], "8-26": ["Journée mondiale du chien"], "8-28": ["~Journée du nœud papillon"], "8-30": ["US Open de tennis* (jusqu'au 12/09)", "Journée internationale des victimes de disparition forcée"], "8-31": ["Journée mondiale du blog"], "9-2": ["Rentrée des classes"], "9-4": ["Journée mondiale de la santé sexuelle", "~Journée mondiale de la barbe", "Grande Braderie de Lille* (jusqu'au 05/09)"], "9-5": ["Journée internationale de la charité"], "9-6": ["~Journée « Lisez un livre »"], "9-7": ["Journée internationale de l'air pur pour des ciels bleus"], "9-8": ["Journée internationale de l'alphabétisation", "Fête nationale d'Andorre"], "9-9": ["~Journée mondiale de la peluche (Teddy Bear Day)"], "9-11": ["Journée mondiale des premiers secours"], "9-13": ["Journée des programmeurs et développeurs"], "9-15": ["Journée internationale de la démocratie", "Journée mondiale des lymphomes"], "9-16": ["Journée internationale de la protection de la couche d'ozone", "Semaine européenne de la mobilité (jusqu'au 22/09)"], "9-18": ["Journées européennes du patrimoine (jusqu'au 19/09)"], "9-19": ["~Journée internationale du parler pirate"], "9-21": ["Journée internationale de la paix", "Journée mondiale de la maladie d'Alzheimer"], "9-22": ["Journée mondiale sans voiture", "~Journée des Hobbits"], "9-23": ["Automne", "Journée internationale des langues des signes"], "9-25": ["~Journée mondiale du rêve"], "9-26": ["Journée mondiale de la contraception", "Journée internationale pour l'élimination totale des armes nucléaires"], "9-27": ["Journée mondiale du tourisme"], "9-28": ["Journée mondiale du droit à l'avortement", "Journée internationale de l'accès universel à l'information"], "9-29": ["Journée mondiale du cœur", "Journée de sensibilisation aux pertes et gaspillages de nourriture"], "9-30": ["Journée internationale du podcast", "Journée internationale de la traduction"], "10-1": ["Début d'Octobre Rose (jusqu'au 31/10)", "Coupe du monde de rugby en Australie (jusqu'au 13/11)", "Journée du café, du sourire et du végétarisme"], "10-2": ["Journée internationale de la non-violence"], "10-3": ["Fête des Grands-Pères", "Jour de l'Unité allemande"], "10-4": ["Journée mondiale des animaux", "Journée mondiale de l'habitat et de l'architecture", "~Journée du roulé à la cannelle"], "10-5": ["Journée mondiale des enseignants"], "10-6": ["~Journée du Chapelier fou (10/6)"], "10-7": ["Journée mondiale du coton"], "10-8": ["Journée mondiale de l'œuf", "~Journée mondiale du poulpe"], "10-9": ["Journée mondiale de la poste"], "10-10": ["Journée mondiale de la santé mentale", "Journée nationale des Dys"], "10-12": ["Fête nationale espagnole"], "10-14": ["Journée mondiale de la vue"], "10-15": ["Journée mondiale de sensibilisation au deuil périnatal"], "10-16": ["Journée mondiale de l'alimentation", "Journée mondiale du pain"], "10-17": ["Fête des parrains et marraines"], "10-18": ["Journée mondiale de la ménopause"], "10-19": ["Journée mondiale contre le cancer du sein"], "10-20": ["Journée internationale des cuisiniers"], "10-21": ["~Journée « Retour vers le futur »"], "10-22": ["~Journée mondiale du champagne"], "10-23": ["Vacances de la Toussaint (jusqu'au 08/11)"], "10-24": ["Journée des Nations unies"], "10-25": ["~Journée mondiale des pâtes"], "10-27": ["Journée mondiale du patrimoine audiovisuel"], "10-28": ["Journée internationale de la langue et de la culture créoles"], "10-31": ["~Halloween", "Passage à l'heure d'hiver", "Journée mondiale des villes"], "11-1": ["Toussaint (férié)", "Journée mondiale du véganisme", "Movember et Mois sans tabac"], "11-3": ["Journée de la gentillesse"], "11-4": ["Journée nationale de lutte contre le harcèlement scolaire"], "11-5": ["Journée mondiale sans papier (World Paper Free Day)"], "11-8": ["Journée internationale de la radiologie"], "11-10": ["Journée mondiale de la science au service de la paix"], "11-11": ["Armistice 1918 (férié)", "~Singles' Day (fête des célibataires)"], "11-13": ["Finale de la Coupe du monde de rugby"], "11-14": ["Journée mondiale du diabète"], "11-16": ["Journée internationale de la tolérance"], "11-17": ["Journée mondiale de la prématurité"], "11-18": ["Journée mondiale de la philosophie", "Journée pour la protection des enfants contre l'exploitation et les abus sexuels"], "11-19": ["Journée mondiale des toilettes", "Fête nationale monégasque"], "11-20": ["Journée internationale des droits de l'enfant"], "11-21": ["Journée mondiale de la télévision", "~Journée mondiale du « Bonjour »"], "11-23": ["~Journée de Fibonacci (1-1-2-3)"], "11-25": ["Thanksgiving", "Journée internationale pour l'élimination de la violence à l'égard des femmes"], "11-26": ["Black Friday"], "11-27": ["Journée mondiale sans achat"], "11-29": ["Cyber Monday"], "11-30": ["Giving Tuesday", "Saint-Andrew's Day (fête nationale écossaise)", "Mondial de handball féminin en Hongrie (jusqu'au 19/12)"], "12-1": ["Début du calendrier de l'Avent", "Journée mondiale de lutte contre le sida"], "12-2": ["Journée internationale pour l'abolition de l'esclavage"], "12-3": ["Journée internationale des personnes handicapées"], "12-4": ["Journée internationale des banques", "~Journée du cookie"], "12-5": ["Journée mondiale du bénévolat et des sols"], "12-6": ["Saint-Nicolas"], "12-7": ["Journée de l'aviation civile internationale"], "12-8": ["~Fête des Lumières à Lyon*"], "12-9": ["Journée nationale de la laïcité"], "12-10": ["Journée des droits de l'Homme", "Journée internationale des droits des animaux"], "12-11": ["Journée internationale de la montagne"], "12-13": ["~Journée de la raclette"], "12-15": ["Journée de l'espéranto"], "12-17": ["~Journée du pull de Noël*"], "12-18": ["Vacances de Noël (jusqu'au 03/01/2028)", "Journée mondiale de la langue arabe"], "12-20": ["Journée internationale de la solidarité humaine"], "12-21": ["~Journée des mots croisés"], "12-22": ["Hiver"], "12-23": ["~Festivus (« la fête pour le reste d'entre nous »)"], "12-24": ["Réveillon de Noël"], "12-25": ["Noël (férié)"], "12-26": ["~Boxing Day"], "12-27": ["Journée internationale de la préparation aux épidémies"], "12-31": ["Saint-Sylvestre", "~Journée « Décidez-vous enfin »"]}, "tips": [["Faites le bilan de 2026 avant de planifier 2027.", " Analysez vos 10 meilleures publications de l'année : format, sujet, jour et heure de publication. Ce sont vos meilleurs indices pour construire votre ligne éditoriale."], ["Constituez une réserve de contenus « evergreen ».", " Astuces, FAQ, coulisses… Des posts intemporels, prêts à dégainer les semaines où l'actu vous manque ou le temps vous fait défaut."], ["Un contenu, plusieurs formats !", " Un article de blog peut devenir un carrousel, une vidéo courte, un post LinkedIn et une newsletter. Recyclez vos meilleures idées plutôt que de repartir de zéro."], ["Période électorale : préparez votre ligne de conduite.", " Avec la présidentielle, le climat en ligne sera tendu. Définissez à l'avance les sujets à éviter, vos règles de modération et vos réponses types."], ["Soignez vos 3 premières secondes.", " Sur les vidéos courtes, tout se joue dès l'accroche : un texte à l'écran, une question, un mouvement. Testez plusieurs « hooks » pour un même contenu."], ["Anticipez l'été dès maintenant.", " Programmez vos publications de juillet-août avant de partir et organisez un relais pour la modération. Votre communauté, elle, ne part pas en vacances !"], ["Donnez la parole à votre communauté.", " Avis clients, reposts, contenus créés par vos abonnés (UGC) : c'est la preuve sociale la plus crédible. Demandez toujours l'autorisation et créditez les auteurs."], ["Profitez du calme estival pour faire un audit.", " Bios, liens, photos de profil, stories à la une, posts épinglés : vérifiez que tout est à jour et cohérent sur l'ensemble de vos comptes."], ["Fixez des objectifs mesurables.", " Plutôt que « gagner en visibilité », visez « +15 % d'engagement sur LinkedIn d'ici décembre ». Un objectif clair rend chaque décision plus simple."], ["Préparez votre plan de gestion de crise.", " Qui répond ? En combien de temps ? Avec quel message ? Un bad buzz se gère beaucoup mieux quand le process est écrit à l'avance."], ["Black Friday, fêtes : planifiez tôt !", " Visuels, codes promo, calendrier de publication… Fin novembre et décembre sont les semaines les plus chargées : bloquez vos contenus clés dès maintenant."], ["Remerciez votre communauté.", " Un récap de l'année, un best-of, un merci sincère : les contenus de fin d'année créent de la proximité. Et ensuite… déconnectez ! 🎄"]], "perles": [[[1, 17], "Journée où l'on abandonne ses bonnes résolutions", "Sondage en story : « Votre résolution a tenu combien de jours ? » 1 · 7 · 17 · Elle tient encore."], [[2, 22], "Journée du chat au Japon", "Demandez à votre communauté la photo de son chat en plein télétravail. Du contenu UGC sans effort."], [[3, 26], "Journée pour inventer sa propre journée", "Inventez la journée mondiale de votre marque et laissez vos abonnés voter pour son nom."], [[4, 13], "Journée du Scrabble", "Un mot de votre secteur posé sur un plateau : le premier qui calcule le bon score gagne."], [[5, 25], "Towel Day", "Montrez l'objet dont chaque membre de l'équipe ne se sépare jamais. Clin d'œil geek, 10 minutes de prépa."], [[6, 19], "Anniversaire de Garfield", "Lundi, lasagnes, sieste : le mème « nous, le lundi matin » avec vos propres visuels."], [[7, 27], "Journée « Promenez vos plantes vertes »", "Baladez la plante du bureau et filmez-la façon documentaire animalier. Absurde, donc partagé."], [[8, 18], "Journée du mauvais poète", "Concours du pire poème sur votre produit. Les pires en story, le « gagnant » en post."], [[9, 22], "Journée des Hobbits", "Célébrez le second petit-déjeuner : photo du plateau de l'équipe et sondage « 1 ou 2 petits-déj ? »."], [[10, 21], "Journée « Retour vers le futur »", "Carrousel avant/après : votre marque en 2015, aujourd'hui, et comment vous l'imaginez en 2045."], [[11, 21], "Journée mondiale du « Bonjour »", "Allez dire bonjour en commentaire à 10 comptes que vous suivez sans jamais interagir."], [[12, 23], "Festivus", "Version douce du « déballage des griefs » : vos abonnés listent les petits agacements de 2027, vous répondez avec humour."]], "recap": "\n<section class=\"page recap\">\n  <div class=\"rtitle\"><span class=\"ov \"><span class=\"b\">L’essentiel de 2027<\/span><span class=\"p\" aria-hidden=\"true\">L’essentiel de 2027<\/span><\/span><\/div>\n  <div class=\"rgrid\">\n    <div class=\"rc\"><div class=\"lbl\">Jours fériés<\/div><ul class=\"fer\"><li><b>01.01<\/b><span class='w'>ven<\/span>Jour de l'an<\/li><li><b>29.03<\/b><span class='w'>lun<\/span>Lundi de Pâques<\/li><li><b>01.05<\/b><span class='w'>sam<\/span>Fête du Travail<\/li><li><b>06.05<\/b><span class='w'>jeu<\/span>Ascension<\/li><li><b>08.05<\/b><span class='w'>sam<\/span>Victoire 1945<\/li><li><b>17.05<\/b><span class='w'>lun<\/span>Lundi de Pentecôte<\/li><li><b>14.07<\/b><span class='w'>mer<\/span>Fête nationale<\/li><li><b>15.08<\/b><span class='w'>dim<\/span>Assomption<\/li><li><b>01.11<\/b><span class='w'>lun<\/span>Toussaint<\/li><li><b>11.11<\/b><span class='w'>jeu<\/span>Armistice 1918<\/li><li><b>25.12<\/b><span class='w'>sam<\/span>Noël<\/li><\/ul><\/div>\n    <div class=\"rc\"><div class=\"lbl\">Vacances scolaires 2026-2027<\/div>\n<table>\n<tr><th><\/th><th>Zone A<\/th><th>Zone B<\/th><th>Zone C<\/th><\/tr>\n<tr><td>Hiver<\/td><td>13.02 → 01.03<\/td><td>20.02 → 08.03<\/td><td>06.02 → 22.02<\/td><\/tr>\n<tr><td>Printemps<\/td><td>10.04 → 26.04<\/td><td>17.04 → 03.05<\/td><td>03.04 → 19.04<\/td><\/tr>\n<tr><td>Été<\/td><td colspan=\"3\">à partir du 03.07, toutes zones<\/td><\/tr>\n<tr><td>Toussaint<\/td><td colspan=\"3\">23.10 → 08.11, toutes zones<\/td><\/tr>\n<tr><td>Noël<\/td><td colspan=\"3\">18.12 → 03.01.2028, toutes zones<\/td><\/tr>\n<\/table>\n<p class=\"small\">Fin des vacances de Noël 2026 : lundi 04.01. Rentrée 2027 : jeudi 02.09.<br>\nZone A : Besançon, Bordeaux, Clermont-Ferrand, Dijon, Grenoble, Limoges, Lyon, Poitiers. Zone B : Aix-Marseille, Amiens, Lille, Nancy-Metz, Nantes, Nice, Normandie, Orléans-Tours, Reims, Rennes, Strasbourg. Zone C : Créteil, Montpellier, Paris, Toulouse, Versailles.<\/p>\n<div class=\"extra\">\n  <div><b>Changement d'heure<\/b>28.03 heure d'été<br>31.10 heure d'hiver<\/div>\n  <div><b>Saisons<\/b>20.03 printemps · 21.06 été<br>23.09 automne · 22.12 hiver<\/div>\n<\/div><\/div>\n    <div class=\"rc\"><div class=\"lbl\">Les grands rendez-vous<\/div><ul class=\"big\"><li><b>07.02<\/b>Grammy Awards<\/li><li><b>14.02<\/b>Super Bowl LXI<\/li><li><b>14.03<\/b>Cérémonie des Oscars<\/li><li><b>18.04 + 02.05<\/b>Élection présidentielle<\/li><li><b>11 → 22.05<\/b>Festival de Cannes, 80e<\/li><li><b>15.05<\/b>Finale de l'Eurovision<\/li><li><b>05.06<\/b>Finale de la Ligue des champions<\/li><li><b>24.06 → 25.07<\/b>Coupe du monde féminine de football<\/li><li><b>02 → 25.07<\/b>Tour de France<\/li><li><b>02.08<\/b>Éclipse totale de Soleil<\/li><li><b>01.10 → 13.11<\/b>Coupe du monde de rugby<\/li><li><b>26.11<\/b>Black Friday<\/li><\/ul><\/div>\n  <\/div>\n<\/section>"};
+const { YEAR, events, tips, perles, recap } = DATA;
+const MONTHS = ["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const WD = ["lun","mar","mer","jeu","ven","sam","dim"];
+const KEY = "calendrier-social-media-2027";
+
+// ---------- état ----------
+function load() {
+  try {
+    const s = JSON.parse(localStorage.getItem(KEY));
+    if (s && Array.isArray(s.items)) return { items: s.items.filter(validItem), name: String(s.name || ""), showFun: s.showFun !== false };
+  } catch (e) {}
+  return { items: [], name: "", showFun: true };
+}
+function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+function validItem(it) {
+  return it && typeof it.t === "string" && it.t.trim() && ["perso","fun","none"].includes(it.k)
+    && /^2027-\d\d-\d\d$/.test(it.d) && !isNaN(new Date(it.d + "T12:00"));
+}
+const state = load();
+
+// ---------- typographie ----------
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;" }[c]));
+function fr(t) {
+  t = t.replace(/'/g, "’");
+  for (const [a, b] of [[" ?"," ?"],[" !"," !"],[" :"," :"],[" ;"," ;"],["« ","« "],[" »"," »"]]) t = t.split(a).join(b);
+  return t;
+}
+function fmt(t, user) {
+  t = fr(esc(t));
+  if (user) return t;
+  return t.replace(/\(([^)]*)\)/g, "<i>($1)</i>").replace(/\*/g, '<sup class="ast">*</sup>');
+}
+const ov = (text, cls = "") => `<span class="ov ${cls}"><span class="b">${text}</span><span class="p" aria-hidden="true">${text}</span></span>`;
+const pad = n => String(n).padStart(2, "0");
+
+// ---------- données ----------
+function dayEvents(m, d) {
+  const out = [];
+  for (const t of events[`${m}-${d}`] || []) {
+    const fun = t.startsWith("~");
+    if (fun && !state.showFun) continue;
+    out.push({ html: fmt(fun ? t.slice(1) : t), k: fun ? "fun" : "" });
+  }
+  for (const it of state.items) {
+    const [, mm, dd] = it.d.split("-").map(Number);
+    if (mm === m && dd === d) out.push({ html: fmt(it.t, true), k: it.k === "none" ? "" : it.k });
+  }
+  return out;
+}
+const isFerie = (m, d) => (events[`${m}-${d}`] || []).some(t => t.includes("(férié)"));
+function isoWeek(date) {
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const day = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - day);
+  const y0 = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
+  return Math.ceil(((d - y0) / 86400000 + 1) / 7);
+}
+const wday = date => (date.getDay() + 6) % 7;
+
+// ---------- pages ----------
+function dayRow(date) {
+  const m = date.getMonth() + 1, d = date.getDate(), w = wday(date);
+  const evs = dayEvents(m, d).map(e => `<p class="${e.k}">${e.html}</p>`).join("");
+  return `<div class="day${w >= 5 ? " we" : ""}"><div class="dn"><span class="num${isFerie(m, d) ? " fer" : ""}">${pad(d)}</span>` +
+         `<span class="wd">${WD[w]}</span></div><div class="evs">${evs}</div></div>`;
+}
+function monthPage(m) {
+  const n = new Date(YEAR, m, 0).getDate();
+  const days = Array.from({ length: n }, (_, i) => new Date(YEAR, m - 1, i + 1));
+  const per = Math.ceil(n / 3);
+  const cols = [days.slice(0, per), days.slice(per, 2 * per), days.slice(2 * per)].map(c =>
+    `<div class="col">${c.map((d, i) => (wday(d) === 0 || i === 0 ? `<div class="wk">sem. ${pad(isoWeek(d))}</div>` : "") + dayRow(d)).join("")}</div>`).join("");
+  const ouvres = days.filter(d => wday(d) < 5 && !isFerie(m, d.getDate())).length;
+  let nFun = 0, hasAst = false, hasPerso = false;
+  for (const d of days) for (const e of dayEvents(m, d.getDate())) {
+    if (e.k === "fun") nFun++;
+    if (e.k === "perso") hasPerso = true;
+    if (e.html.includes('class="ast"')) hasAst = true;
+  }
+  const [[pm, pd], pname, pidea] = perles[m - 1];
+  const [tb, tr] = tips[m - 1];
+  const name = MONTHS[m - 1];
+  const fs = Math.min(40, 178 / (name.length * 0.74));
+  return `<section class="page month" id="p${m}">
+  <div class="vt" style="font-size:${fs.toFixed(1)}mm">${ov(name)}</div>
+  <div class="info">
+    <div class="meta">${YEAR}<br>${n} jours · ${ouvres} ouvrés<br>${nFun} date${nFun > 1 ? "s" : ""} décalée${nFun > 1 ? "s" : ""}</div>
+    <div class="blk"><div class="lbl">Le conseil</div><p class="tip"><b>${fr(esc(tb))}</b>${fr(esc(tr))}</p></div>
+    <div class="perle"><div class="lbl">Idée de post</div><div class="pdate">${ov(`${pad(pd)}.${pad(pm)}`)}</div>
+      <div class="pname">${fr(esc(pname))}</div><p>${fr(esc(pidea))}</p></div>
+    <div class="legend">
+      ${hasPerso ? '<span><i class="dia"></i> vos dates</span>' : ""}
+      <span><i class="dot"></i> date décalée</span>
+      <span><i class="fr">01</i> férié</span>
+      ${hasAst ? '<span><sup class="ast">*</sup> date à confirmer</span>' : ""}
+    </div>
+  </div>
+  <div class="cols">${cols}</div>
+</section>`;
+}
+function cover() {
+  let tot = 0, fun = 0;
+  for (let m = 1; m <= 12; m++) for (let d = 1; d <= new Date(YEAR, m, 0).getDate(); d++)
+    for (const e of dayEvents(m, d)) { tot++; if (e.k === "fun") fun++; }
+  const who = state.name.trim() ? ` · ${fr(esc(state.name.trim()))}` : "";
+  const funTxt = fun ? `, et ${fun} dates franchement décalées pour les jours où l’inspiration fait grève.` : ".";
+  return `<section class="page cover" id="p0">
+  <div class="cyear">${ov("20", "l1")}${ov("27", "l2")}</div>
+  <div class="cright">
+    <div class="lbl">Calendrier social media${who}</div>
+    <h1>${tot} dates pour publier en ${YEAR}.</h1>
+    <p>Des journées officielles, des événements à ne pas rater${funTxt}</p>
+    <ul><li>12 mois, jour par jour</li><li>Un conseil et une idée de post par mois</li><li>Fériés, vacances scolaires, grands rendez-vous</li></ul>
+  </div>
+</section>`;
+}
+function back() {
+  const who = state.name.trim() ? `${fr(esc(state.name.trim()))} · ` : "";
+  return `<section class="page back" id="p14"><div class="bmsg">${ov("À l’année<br>prochaine.")}</div>
+  <div class="bfoot">${who}Calendrier social media ${YEAR} · rendez-vous en 2028</div></section>`;
+}
+
+// Réduit le texte d'un mois si une colonne déborde
+function fit(page) {
+  let k = 1;
+  page.style.setProperty("--k", k);
+  const cols = [...page.querySelectorAll(".col")];
+  const over = () => cols.some(c => c.scrollHeight > c.clientHeight + 1);
+  while (over() && k > 0.62) { k -= 0.04; page.style.setProperty("--k", k.toFixed(2)); }
+}
+
+const $ = id => document.getElementById(id);
+function render() {
+  const html = [cover()];
+  for (let m = 1; m <= 12; m++) html.push(monthPage(m));
+  html.push(recap.replace('class="page recap"', 'class="page recap" id="p13"'), back());
+  const y = $("preview").scrollTop;
+  $("pages").innerHTML = html.join("");
+  document.querySelectorAll(".page.month").forEach(fit);
+  $("preview").scrollTop = y;
+  renderList();
+}
+function renderList() {
+  const items = [...state.items].sort((a, b) => a.d.localeCompare(b.d));
+  $("cnt").textContent = items.length;
+  $("mine").innerHTML = items.length ? items.map(it => {
+    const [, mm, dd] = it.d.split("-");
+    return `<li><span class="d">${dd}.${mm}</span><i class="mk ${it.k}"></i><span>${esc(it.t)}</span>` +
+           `<button type="button" data-id="${it.id}" aria-label="Supprimer ${esc(it.t)}">×</button></li>`;
+  }).join("") : '<li class="empty">Aucune date pour l’instant.</li>';
+}
+function toast(msg) { const t = $("toast"); t.textContent = msg; t.classList.add("on"); clearTimeout(toast.h); toast.h = setTimeout(() => t.classList.remove("on"), 2200); }
+
+// ---------- interactions ----------
+$("f").addEventListener("submit", e => {
+  e.preventDefault();
+  const d = $("fd").value, t = $("ft").value.trim(), k = document.querySelector("input[name=k]:checked").value;
+  if (!/^2027-/.test(d)) { $("err").textContent = "Choisissez une date en 2027."; return; }
+  if (!t) { $("err").textContent = "Ajoutez un intitulé."; $("ft").focus(); return; }
+  $("err").textContent = "";
+  state.items.push({ id: Date.now().toString(36) + Math.random().toString(36).slice(2, 6), d, t, k });
+  save(); render();
+  $("ft").value = ""; $("ft").focus();
+  const m = Number(d.split("-")[1]);
+  $("p" + m).scrollIntoView({ behavior: "smooth", block: "start" });
+  toast(`Date ajoutée au ${d.split("-")[2]}.${d.split("-")[1]}`);
+});
+$("mine").addEventListener("click", e => {
+  const b = e.target.closest("button[data-id]"); if (!b) return;
+  state.items = state.items.filter(it => it.id !== b.dataset.id);
+  save(); render(); toast("Date supprimée");
+});
+$("fn").value = state.name;
+$("fn").addEventListener("input", e => { state.name = e.target.value; save(); render(); });
+$("fun").checked = state.showFun;
+$("fun").addEventListener("change", e => { state.showFun = e.target.checked; save(); render(); });
+$("print").addEventListener("click", () => window.print());
+$("exp").addEventListener("click", () => {
+  const blob = new Blob([JSON.stringify({ version: 1, ...state }, null, 2)], { type: "application/json" });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob); a.download = "mes-dates-2027.json"; a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+});
+$("imp").addEventListener("click", () => $("file").click());
+$("file").addEventListener("change", async e => {
+  const f = e.target.files[0]; if (!f) return;
+  try {
+    const s = JSON.parse(await f.text());
+    const items = (s.items || []).filter(validItem).map(it => ({ ...it, id: it.id || Math.random().toString(36).slice(2) }));
+    const known = new Set(state.items.map(it => it.d + "|" + it.t));
+    const added = items.filter(it => !known.has(it.d + "|" + it.t));
+    state.items.push(...added);
+    if (s.name && !state.name) { state.name = String(s.name); $("fn").value = state.name; }
+    save(); render(); toast(`${added.length} date${added.length > 1 ? "s" : ""} importée${added.length > 1 ? "s" : ""}`);
+  } catch (err) { toast("Fichier illisible : choisissez un export .json de ce générateur"); }
+  e.target.value = "";
+});
+$("go").innerHTML = ["Couverture", ...MONTHS, "L’essentiel", "Dos"].map((l, i) => `<option value="p${i}">${l}</option>`).join("");
+$("go").addEventListener("change", e => $(e.target.value).scrollIntoView({ behavior: "smooth", block: "start" }));
+
+document.fonts.ready.then(render);
+render();
+</script>
+</body>
+</html>

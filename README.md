@@ -1,0 +1,21 @@
+# Calendrier social media 2027
+
+Générateur de calendrier social media 2027 : 424 dates (journées mondiales, événements, dates décalées), un conseil et une idée de post par mois. On peut y ajouter ses propres dates et exporter le tout en PDF (A4 paysage).
+
+- `index.html` : le générateur, autonome (aucune dépendance, aucun serveur). C'est ce qui est déployé sur Vercel.
+- `src/build.py` : les données (dates, conseils, idées de post) et le rendu. Il régénère `index.html`.
+- `src/app_template.html` : l'interface du générateur (formulaire, aperçu, impression).
+
+## Modifier les dates de base
+
+Éditer `src/build.py`, puis :
+
+```bash
+python src/build.py
+```
+
+Les dates ajoutées depuis l'interface restent dans le navigateur de chaque visiteur (localStorage) ; elles s'exportent et s'importent en `.json`.
+
+## Exporter en PDF
+
+Bouton « Télécharger le PDF », puis « Enregistrer au format PDF » et cocher « Graphiques d'arrière-plan ».
