@@ -1,0 +1,78 @@
+/* RISO : fanzine imprimé en risographie, deux encres (bleu + rose fluo) qui se chevauchent.
+   Les sélecteurs sont préfixés automatiquement par .th-riso au build. */
+.page { width: 297mm; height: 210mm; position: relative; overflow: hidden; page-break-after: always; background: var(--paper); }
+/* surimpression riso */
+.ov { position: relative; display: inline-block; font-family: 'Bagel Fat One', sans-serif; font-weight: 400; line-height: .9; }
+.ov .b { color: var(--blue); }
+.ov .p { position: absolute; left: 0; top: 0; color: var(--pink); mix-blend-mode: multiply; transform: translate(.08em, -.05em); }
+.lbl { font-family: 'Martian Mono', monospace; font-size: 2.2mm; font-weight: 700; letter-spacing: .3mm; text-transform: uppercase; color: var(--pink); margin-bottom: 1.6mm; }
+sup.ast { color: var(--pink); font-weight: 800; font-size: 1.15em; vertical-align: 0; }
+/* ---- mois ---- */
+.vt { position: absolute; left: 7mm; top: 10mm; bottom: 10mm; width: 36mm; display: flex; align-items: flex-end; justify-content: center; }
+.vt .ov { writing-mode: vertical-rl; transform: rotate(180deg); white-space: nowrap; }
+.vt .ov .p { transform: translate(-.06em, .08em); }
+.info { position: absolute; left: 47mm; top: 11mm; bottom: 10mm; width: 56mm; display: flex; flex-direction: column; }
+.meta { font-family: 'Martian Mono', monospace; font-size: 2.3mm; line-height: 1.7; color: var(--blue); margin-bottom: 8mm; }
+.blk { margin-bottom: 7mm; }
+.tip { font-size: 2.9mm; line-height: 1.42; }
+.tip b { font-weight: 800; }
+.perle { background: var(--pinkt); padding: 4mm 4.2mm 4.4mm; }
+.pdate { font-size: 13mm; margin: 1mm 0 2mm; }
+.pname { font-weight: 800; font-size: 3.1mm; line-height: 1.25; margin-bottom: 1.6mm; }
+.perle p { font-size: 2.8mm; line-height: 1.42; }
+.legend { margin-top: auto; display: flex; flex-direction: column; gap: 1.8mm; font-family: 'Martian Mono', monospace; font-size: 2.1mm; }
+.legend span { display: flex; align-items: center; gap: 2mm; }
+.dot { display: inline-block; width: 1.6mm; height: 1.6mm; border-radius: 50%; background: var(--pink); }
+.legend .fr, .num.fer { background: var(--pink); color: #fff; border-radius: 50%; }
+.legend .fr { font-style: normal; font-weight: 700; font-size: 1.9mm; width: 4.4mm; height: 4.4mm; display: inline-flex; align-items: center; justify-content: center; }
+.cols { position: absolute; left: 110mm; right: 9mm; top: 9mm; bottom: 9mm; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4.5mm; }
+.col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; }
+.wk { font-family: 'Martian Mono', monospace; font-size: 1.8mm; color: var(--soft); letter-spacing: .2mm; text-transform: uppercase; padding: 1.3mm 0 .6mm 1.4mm; }
+.day { flex: 1 0 auto; display: grid; grid-template-columns: 10mm 1fr; column-gap: 1.2mm; padding: 1.1mm 1.4mm .6mm; min-height: 9mm; }
+.day.we { background: var(--pinkt); }
+.dn { display: flex; flex-direction: column; align-items: flex-start; }
+.num { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.7mm; line-height: 1; }
+.num.fer { width: 6.6mm; height: 6.6mm; display: flex; align-items: center; justify-content: center; font-size: 3.1mm; margin: -.8mm 0 0 -.9mm; }
+.wd { font-family: 'Martian Mono', monospace; font-size: 1.8mm; text-transform: uppercase; color: var(--soft); margin-top: .8mm; }
+.day.we .wd { color: var(--pink); }
+.evs p { font-size: calc(2.25mm * var(--k, 1)); line-height: 1.2; font-weight: 500; margin-bottom: .75mm; }
+.evs p i { font-style: normal; color: var(--soft); }
+.evs p.fun, .evs p.perso { padding-left: 2.3mm; position: relative; }
+.evs p.perso { font-weight: 700; }
+.evs p.perso::before { content: ""; position: absolute; left: .1mm; top: .8mm; width: 1.1mm; height: 1.1mm; background: var(--blue); transform: rotate(45deg); }
+.dia { display: inline-block; width: 1.4mm; height: 1.4mm; margin: 0 .1mm; background: var(--blue); transform: rotate(45deg); }
+.evs p.fun::before { content: ""; position: absolute; left: 0; top: .75mm; width: 1.25mm; height: 1.25mm; border-radius: 50%; background: var(--pink); }
+/* ---- couverture ---- */
+.cyear { position: absolute; left: 8mm; top: 6mm; font-size: 96mm; display: flex; flex-direction: column; }
+.cyear .l2 { margin-left: 24mm; margin-top: -4mm; }
+.cright { position: absolute; left: 184mm; top: 0; bottom: 0; width: 96mm; display: flex; flex-direction: column; justify-content: center; }
+.cright .lbl { font-size: 2.8mm; margin-bottom: 4mm; }
+.cright h1 { font-weight: 800; font-size: 8.6mm; line-height: 1.08; letter-spacing: -.2mm; margin-bottom: 5mm; }
+.cright p { font-size: 3.8mm; line-height: 1.45; margin-bottom: 7mm; }
+.cright ul { list-style: none; font-family: 'Martian Mono', monospace; font-size: 2.6mm; line-height: 2.1; }
+.cright li::before { content: "→ "; color: var(--pink); }
+/* ---- dos ---- */
+.bmsg { position: absolute; left: 20mm; top: 40mm; font-size: 40mm; }
+.bmsg .ov { line-height: 1; }
+.bfoot { position: absolute; left: 20mm; bottom: 16mm; font-family: 'Martian Mono', monospace; font-size: 2.6mm; }
+/* ---- récap ---- */
+.rtitle { position: absolute; left: 10mm; top: 10mm; font-size: 17mm; }
+.rgrid { position: absolute; left: 10mm; right: 10mm; top: 38mm; bottom: 10mm; display: grid; grid-template-columns: 66mm 1fr 84mm; gap: 9mm; }
+.rc { display: flex; flex-direction: column; }
+.rc ul { list-style: none; flex: 1; display: flex; flex-direction: column; }
+.rc li { flex: 1; font-size: 3.5mm; padding: 0; display: flex; align-items: center; font-weight: 500; }
+.rc li:nth-child(odd) { background: var(--pinkt); }
+.rc li b { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 2.8mm; min-width: 15mm; padding-left: 1.5mm; }
+.rc li .w { font-family: 'Martian Mono', monospace; color: var(--soft); min-width: 10mm; font-size: 2.3mm; text-transform: uppercase; }
+.big li b { min-width: 31mm; }
+table { width: 100%; border-collapse: collapse; font-size: 3.1mm; margin-top: 1mm; }
+.rc td { height: 17mm; }
+th { font-family: 'Martian Mono', monospace; font-size: 2.4mm; text-transform: uppercase; color: var(--pink); padding: 2mm 1mm; text-align: center; }
+td { padding: 3.2mm 1mm; text-align: center; font-weight: 500; font-family: 'Martian Mono', monospace; font-size: 2.6mm; }
+tr:nth-child(even) td { background: var(--pinkt); }
+td:first-child { text-align: left; font-family: 'Schibsted Grotesk'; font-weight: 800; font-size: 3.1mm; padding-left: 1.5mm; }
+.small { margin-top: auto; padding-top: 5mm; font-size: 2.4mm; line-height: 1.5; color: var(--soft); }
+.extra { display: flex; gap: 8mm; margin-top: 5mm; background: var(--pinkt); padding: 4mm 5mm; font-family: 'Martian Mono', monospace; font-size: 2.5mm; line-height: 1.8; }
+.extra b { display: block; font-family: 'Schibsted Grotesk'; font-weight: 800; font-size: 3mm; }
+.vt { font-size: var(--fs); }
+.st { display: none; }

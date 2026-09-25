@@ -1,0 +1,5 @@
+/* Base commune : format de page A4 paysage, couleurs de l'interface, remise à zéro */
+@page { size: 297mm 210mm; margin: 0; }
+:root { --blue:#3255A4; --pink:#FF48B0; --pinkt:#FFE2F1; --paper:#FFFFFF; --soft:#7D90C4; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-family: 'Schibsted Grotesk', sans-serif; color: var(--blue); -webkit-print-color-adjust: exact; print-color-adjust: exact; }

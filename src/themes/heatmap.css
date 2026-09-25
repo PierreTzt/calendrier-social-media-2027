@@ -1,0 +1,41 @@
+/* HEATMAP : la couleur de chaque case dit combien d'occasions de publier */
+.th-heatmap { --bg: #fff; --ink: #16213E; --acc: #F46A2B; --tint: #FFE4CE; --line: #E6E9F1; --font: 'Public Sans', sans-serif; --disp: 'Unbounded', sans-serif; --dispw: 700;
+  --mono: 'IBM Plex Mono', monospace; --evfs: 2.05mm; --hh: 5mm; }
+.th-heatmap .l0 { background: #F1F3F8; } .th-heatmap .l1 { background: #FFE4CE; } .th-heatmap .l2 { background: #FFC89E; }
+.th-heatmap .l3 { background: #FFA066; } .th-heatmap .l4 { background: #F57A3D; }
+.th-heatmap .month .side { position: absolute; left: 10mm; top: 10mm; bottom: 18mm; width: 68mm; display: flex; flex-direction: column; }
+.th-heatmap .mt { font-size: min(10.5mm, calc(66mm / var(--len) / .86)); line-height: 1; }
+.th-heatmap .my { font-family: var(--mono); font-size: 3mm; margin-top: 1.5mm; }
+.th-heatmap .kpi { display: block; }
+.th-heatmap .kbig { font-family: var(--disp); font-weight: 800; font-size: 26mm; line-height: 1; margin-top: 7mm; color: var(--acc); }
+.th-heatmap .bl { font-size: 3mm; font-weight: 500; }
+.th-heatmap .stats { list-style: none; margin: 4mm 0; font-size: 2.55mm; line-height: 1.7; }
+.th-heatmap .stats b { font-family: var(--mono); font-weight: 600; }
+.th-heatmap .ramp { font-family: var(--mono); font-size: 2.2mm; display: flex; align-items: center; gap: .8mm; margin-bottom: 5mm; color: #6B7390; }
+.th-heatmap .ramp i { width: 3.4mm; height: 3.4mm; border-radius: .6mm; display: inline-block; }
+.th-heatmap .note .k { font-family: var(--mono); font-weight: 600; font-size: 2.2mm; text-transform: uppercase; color: var(--acc); margin-bottom: 1.2mm; }
+.th-heatmap .note p { font-size: 2.5mm; line-height: 1.42; margin-bottom: 4mm; }
+.th-heatmap .g { position: absolute; left: 86mm; right: 9mm; top: 10mm; bottom: 12mm; gap: 1.4mm; }
+.th-heatmap .h { font-family: var(--mono); font-size: 2.1mm; text-transform: uppercase; color: #6B7390; }
+.th-heatmap .c { border-radius: 1.4mm; }
+.th-heatmap .in { padding: 1.8mm; }
+.th-heatmap .c.out { border: .3mm dashed #D7DBE6; background: none; }
+.th-heatmap .out .n { display: none; }
+.th-heatmap .n { font-family: var(--mono); font-weight: 600; font-size: 4mm; line-height: 1; display: inline-block; margin-bottom: 1.3mm; }
+.th-heatmap .fer .n { text-decoration: underline; text-decoration-thickness: .5mm; text-underline-offset: .8mm; }
+.th-heatmap .cnt { display: block; position: absolute; right: 1.6mm; top: 1.8mm; font-family: var(--mono); font-size: 2.1mm; font-weight: 600; opacity: .7; }
+.th-heatmap .ev.fun::before { content: "✦ "; }
+.th-heatmap .leg { position: absolute; left: 10mm; bottom: 10mm; font-family: var(--mono); flex-wrap: wrap; width: 70mm; row-gap: 1.5mm; }
+.th-heatmap .leg .mk-fun::before { content: "✦"; }
+.th-heatmap .leg .mk-fer { text-decoration: underline; font-weight: 600; }
+.th-heatmap .leg .mk-perso::before { content: "◆"; color: var(--acc); }
+.th-heatmap .cover .cv-art { position: absolute; left: 14mm; top: 24mm; width: 170mm; }
+.th-heatmap .cv-y { font-family: var(--disp); font-weight: 800; font-size: 44mm; line-height: 1; letter-spacing: -1mm; margin-bottom: 10mm; }
+.th-heatmap .yh { display: grid; grid-auto-flow: column; grid-template-rows: repeat(7, 2.6mm); grid-auto-columns: 2.6mm; gap: .55mm; }
+.th-heatmap .yh i { border-radius: .4mm; }
+.th-heatmap .yh i.x { background: none; }
+.th-heatmap .yl { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 2.1mm; color: #6B7390; margin-top: 2mm; width: 163mm; }
+.th-heatmap .cv-cap { font-family: var(--mono); font-size: 2.4mm; color: #6B7390; margin-top: 6mm; display: flex; gap: 1mm; align-items: center; }
+.th-heatmap .cv-cap i { width: 2.6mm; height: 2.6mm; border-radius: .4mm; display: inline-block; }
+.th-heatmap .rc li b, .th-heatmap .recap td { font-family: var(--mono); }
+.th-heatmap .rc li:nth-child(odd), .th-heatmap .recap tr:nth-child(even) td { background: #FFF3EA; }

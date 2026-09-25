@@ -1,0 +1,46 @@
+/* TICKET : ticket de caisse thermique, code-barres et total des dates */
+.th-ticket { --bg: #CFCAC0; --ink: #2A2826; --acc: #C8312A; --tint: #F1EFE8; --line: #BDB9B0; --paper: #FCFCF8;
+  --font: 'Courier Prime', monospace; --disp: 'Courier Prime', monospace; --dispw: 700; --evfs: 2.15mm; }
+.th-ticket .info, .th-ticket .col { background: var(--paper); }
+.th-ticket .info::after, .th-ticket .col::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 1.6mm;
+  background: linear-gradient(45deg, var(--bg) 50%, transparent 50%) 0 100% / 3mm 1.6mm repeat-x,
+              linear-gradient(-45deg, var(--bg) 50%, transparent 50%) 0 100% / 3mm 1.6mm repeat-x; }
+.th-ticket .vt { left: 10mm; width: 66mm; top: 20mm; text-align: center; font-size: 7.4mm; }
+.th-ticket .vt .ov { text-transform: uppercase; letter-spacing: .9mm; }
+.th-ticket .info { left: 10mm; top: 10mm; width: 66mm; padding: 6mm 5.5mm 8mm; gap: 3.2mm; }
+.th-ticket .info::before { content: "*** CALENDRIER SOCIAL MEDIA ***"; font-size: 2.3mm; letter-spacing: .2mm; text-align: center; margin-bottom: 10.5mm; }
+.th-ticket .meta { font-size: 2.45mm; line-height: 1.6; border-top: .3mm dashed var(--ink); border-bottom: .3mm dashed var(--ink); padding: 2mm 0; }
+.th-ticket .lbl { font-weight: 700; font-size: 2.35mm; text-transform: uppercase; letter-spacing: .3mm; margin-bottom: 1.2mm; }
+.th-ticket .tip, .th-ticket .perle p { font-size: 2.4mm; line-height: 1.36; }
+.th-ticket .perle { border-top: .3mm dashed var(--ink); padding-top: 2.6mm; }
+.th-ticket .pdate { font-size: 6.5mm; margin-bottom: 1mm; }
+.th-ticket .pname { font-weight: 700; font-size: 2.5mm; margin-bottom: 1mm; }
+.th-ticket .legend { font-size: 2.2mm; border-top: .3mm dashed var(--ink); padding-top: 2.6mm; }
+.th-ticket .legend::after { content: ""; display: block; height: 9mm; margin-top: 2.5mm;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 .3mm, transparent .3mm .7mm, var(--ink) .7mm 1.4mm, transparent 1.4mm 1.8mm, var(--ink) 1.8mm 2mm, transparent 2mm 2.7mm); }
+.th-ticket .dot::before { content: "☆"; color: var(--acc); }
+.th-ticket .dia::before { content: "▶"; }
+.th-ticket .fr, .th-ticket .num.fer { background: var(--ink); color: var(--paper); padding: 0 .8mm; font-style: normal; }
+.th-ticket .cols { left: 84mm; right: 10mm; top: 10mm; bottom: 10mm; gap: 6mm; }
+.th-ticket .col { padding: 4mm 4mm 5mm; }
+.th-ticket .wk { text-align: center; font-size: 1.95mm; color: #8A857C; text-transform: uppercase; letter-spacing: .3mm; margin: 1mm 0 .6mm; }
+.th-ticket .wk::before { content: "---- "; }
+.th-ticket .wk::after { content: " ----"; }
+.th-ticket .day { padding: .9mm 0 .5mm; border-bottom: .25mm dashed var(--line); }
+.th-ticket .num { font-weight: 700; font-size: 3.2mm; line-height: 1.1; }
+.th-ticket .wd { font-size: 1.8mm; text-transform: uppercase; color: #8A857C; margin-top: .4mm; }
+.th-ticket .day.we .wd { color: var(--acc); }
+.th-ticket .evs p.fun::before { content: "☆ "; color: var(--acc); }
+.th-ticket .evs p.perso::before { content: "▶ "; }
+.th-ticket .cover .cv-art { position: absolute; left: 34mm; top: 0; width: 86mm; }
+.th-ticket .rcpt { position: relative; background: var(--paper); padding: 12mm 8mm 14mm; font-size: 2.9mm; line-height: 1.55; }
+.th-ticket .rcpt::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 2.4mm;
+  background: linear-gradient(45deg, var(--bg) 50%, transparent 50%) 0 100% / 4mm 2.4mm repeat-x, linear-gradient(-45deg, var(--bg) 50%, transparent 50%) 0 100% / 4mm 2.4mm repeat-x; }
+.th-ticket .rh { font-weight: 700; font-size: 6mm; line-height: 1.2; text-align: center; letter-spacing: .6mm; margin-bottom: 2mm; }
+.th-ticket .rl { text-align: center; font-size: 2.5mm; }
+.th-ticket .rsep { border-top: .35mm dashed var(--ink); margin: 3mm 0; }
+.th-ticket .rr { display: flex; justify-content: space-between; }
+.th-ticket .rtot { font-weight: 700; font-size: 4.2mm; margin: 1mm 0 2mm; }
+.th-ticket .bar { height: 12mm; margin: 5mm 6mm 3mm;
+  background: repeating-linear-gradient(90deg, var(--ink) 0 .35mm, transparent .35mm .8mm, var(--ink) .8mm 1.6mm, transparent 1.6mm 2mm, var(--ink) 2mm 2.3mm, transparent 2.3mm 3mm); }
+.th-ticket .rc { background: var(--paper); padding: 4mm; }

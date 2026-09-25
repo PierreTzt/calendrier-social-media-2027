@@ -1,0 +1,46 @@
+/* DÉPARTS : tableau des départs de gare, avec un statut par jour */
+.th-departs { --bg: #15171C; --ink: #F2F1EA; --acc: #FFC600; --tint: #23262D; --line: #2C3038; --tile: #262A32; --red: #FF5A4F; --green: #37D67A;
+  --font: 'Barlow Semi Condensed', sans-serif; --disp: 'Martian Mono', monospace; --dispw: 700; --evfs: 2.3mm; }
+.th-departs .month::after { content: "✈ DÉPARTS · DEPARTURES"; position: absolute; right: 10mm; top: 13mm; font-family: 'Martian Mono', monospace; font-size: 2.8mm; font-weight: 700; letter-spacing: .5mm; color: #8C93A0; }
+.th-departs .vt { left: 10mm; top: 8mm; font-size: 11mm; }
+.th-departs .vt .ov { color: var(--acc); text-transform: uppercase; padding: .8mm 0;
+  background: repeating-linear-gradient(90deg, var(--tile) 0 calc(1ch - .5mm), transparent calc(1ch - .5mm) 1ch); }
+.th-departs .vt::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .35mm; background: var(--bg); }
+.th-departs .info { right: 10mm; top: 29mm; bottom: 9mm; width: 62mm; gap: 4mm; }
+.th-departs .meta { font-family: 'Martian Mono', monospace; font-size: 2.2mm; line-height: 1.7; color: #9BA1AD; }
+.th-departs .lbl { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 2.1mm; text-transform: uppercase; color: var(--acc); margin-bottom: 1.4mm; }
+.th-departs .blk { border: .5mm solid var(--acc); padding: 3mm; }
+.th-departs .tip, .th-departs .perle p { font-size: 2.6mm; line-height: 1.38; }
+.th-departs .perle { background: var(--tint); padding: 3mm; }
+.th-departs .pdate { font-size: 8mm; color: var(--acc); margin-bottom: 1.2mm; }
+.th-departs .pname { font-weight: 700; font-size: 2.8mm; margin-bottom: 1mm; }
+.th-departs .legend { margin-top: auto; font-size: 2.3mm; }
+.th-departs .legend i { font-family: 'Martian Mono', monospace; font-size: 1.9mm; font-weight: 700; font-style: normal; }
+.th-departs .dot::before { content: "DÉCALÉ"; color: var(--acc); }
+.th-departs .fr { font-size: 0 !important; }
+.th-departs .fr::before { content: "FÉRIÉ"; font-size: 1.9mm; color: var(--red); }
+.th-departs .dia::before { content: "◆"; color: #7FD1FF; }
+.th-departs .cols { left: 10mm; right: 78mm; top: 29mm; bottom: 9mm; gap: 3mm; }
+.th-departs .wk { font-family: 'Martian Mono', monospace; font-size: 1.9mm; color: #6C7280; text-transform: uppercase; padding: .9mm 0 .5mm; }
+.th-departs .day { grid-template-columns: 9.5mm minmax(0, 1fr) 13mm; background: var(--tile); padding: 1.1mm 1.4mm .5mm; margin-bottom: .6mm; }
+.th-departs .num { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.3mm; line-height: 1; }
+.th-departs .num.fer { color: var(--red); }
+.th-departs .wd { font-family: 'Martian Mono', monospace; font-size: 1.75mm; text-transform: uppercase; color: #8C93A0; margin-top: .6mm; }
+.th-departs .day.we .wd { color: var(--acc); }
+.th-departs .evs p { text-transform: uppercase; letter-spacing: .1mm; font-weight: 500; }
+.th-departs .evs p.perso { color: #7FD1FF; }
+.th-departs .st { display: block; font-family: 'Martian Mono', monospace; font-size: 1.75mm; font-weight: 700; text-align: right; padding-top: .4mm; }
+.th-departs .st-ok { color: var(--green); }
+.th-departs .st-fun { color: var(--acc); }
+.th-departs .st-fer { color: var(--red); }
+.th-departs .st-none { color: #4C525E; }
+.th-departs .cover .cv-art { position: absolute; left: 12mm; top: 30mm; width: 172mm; }
+.th-departs .board { background: #0E1014; padding: 7mm; }
+.th-departs .bh { display: flex; justify-content: space-between; font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 3.6mm; color: #8C93A0; letter-spacing: .5mm; margin-bottom: 5mm; }
+.th-departs .flap { font-family: 'Martian Mono', monospace; font-weight: 700; font-size: 34mm; line-height: 1.1; color: var(--acc); width: fit-content; position: relative; margin-bottom: 7mm;
+  background: repeating-linear-gradient(90deg, var(--tile) 0 calc(1ch - 1.2mm), transparent calc(1ch - 1.2mm) 1ch); }
+.th-departs .flap::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: .7mm; background: #0E1014; }
+.th-departs .brow { display: grid; grid-template-columns: 20mm 1fr 26mm; gap: 3mm; background: var(--tile); padding: 2.6mm 3mm; margin-bottom: 1.2mm; font-size: 3.4mm; text-transform: uppercase; }
+.th-departs .brow b { font-family: 'Martian Mono', monospace; }
+.th-departs .brow em { font-family: 'Martian Mono', monospace; font-style: normal; font-weight: 700; font-size: 2.8mm; text-align: right; }
+.th-departs .rc { background: var(--tint); padding: 4mm; }

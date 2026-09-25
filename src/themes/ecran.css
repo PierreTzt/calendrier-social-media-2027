@@ -1,0 +1,28 @@
+/* ÉCRAN VERROUILLÉ : le mois comme un flux de notifications sur un écran de téléphone */
+.th-ecran { --bg: #2330D9; --ink: #fff; --acc: #FFD23F; --tint: rgba(255,255,255,.12); --line: rgba(255,255,255,.18); --font: 'Albert Sans', sans-serif; --disp: 'Albert Sans', sans-serif; --dispw: 200; }
+.th-ecran .clockm { position: absolute; left: 9mm; top: 4mm; font-weight: 200; font-size: min(34mm, calc(150mm / var(--len) / .56)); line-height: 1.05; letter-spacing: -.8mm; }
+.th-ecran .date { position: absolute; left: 11mm; top: 42mm; font-weight: 500; font-size: 3.4mm; opacity: .92; display: flex; gap: 4mm; align-items: center; }
+.th-ecran .date .lg { display: inline-flex; gap: 1.2mm; align-items: center; font-size: 2.6mm; opacity: .9; }
+.th-ecran .widgets { position: absolute; left: 160mm; right: 10mm; top: 8mm; display: flex; gap: 4mm; }
+.th-ecran .wg { flex: 1; background: rgba(255,255,255,.14); border-radius: 4mm; padding: 3.2mm 3.8mm; font-size: 2.3mm; line-height: 1.36; }
+.th-ecran .wg .k { font-size: 2mm; font-weight: 700; text-transform: uppercase; letter-spacing: .3mm; opacity: .75; margin-bottom: 1.1mm; }
+.th-ecran .cols { position: absolute; left: 10mm; right: 10mm; top: 52mm; bottom: 10mm; display: grid; grid-template-columns: repeat(var(--n), minmax(0, 1fr)); gap: 3.5mm; }
+.th-ecran .col { display: flex; flex-direction: column; gap: 1.1mm; overflow: hidden; min-height: 0; }
+.th-ecran .wk { font-size: 2mm; font-weight: 600; text-transform: uppercase; letter-spacing: .3mm; opacity: .6; margin-bottom: .5mm; }
+.th-ecran .dh { font-size: calc(2.8mm * var(--k, 1)); font-weight: 700; text-transform: uppercase; letter-spacing: .2mm; margin-top: 1.4mm; }
+.th-ecran .dh.we { color: var(--acc); }
+.th-ecran .nt { display: flex; gap: 1.8mm; align-items: flex-start; background: rgba(255,255,255,.95); color: #151733; border-radius: 2mm;
+  padding: calc(1.5mm * var(--k, 1)) 2mm; font-size: calc(2.35mm * var(--k, 1)); line-height: 1.22; }
+.th-ecran .nt i { color: #6B6F95; }
+.th-ecran .nt.perso { font-weight: 700; }
+.th-ecran .ic { flex: none; width: 3.4mm; height: 3.4mm; border-radius: .8mm; background: #8C95FF; margin-top: .1mm; }
+.th-ecran .ic.fun { background: #FF6B57; }
+.th-ecran .ic.fer { background: var(--acc); }
+.th-ecran .ic.perso { background: #34D399; }
+.th-ecran .cover .clock { position: absolute; left: 12mm; top: 20mm; font-weight: 200; font-size: 62mm; line-height: 1; letter-spacing: -2.5mm; }
+.th-ecran .cover .cdate { position: absolute; left: 15mm; top: 88mm; font-size: 5mm; font-weight: 500; }
+.th-ecran .cover .nts { position: absolute; left: 14mm; top: 104mm; width: 150mm; display: flex; flex-direction: column; gap: 2.5mm; }
+.th-ecran .cover .nt { font-size: 3mm; padding: 3mm 3.5mm; border-radius: 3mm; }
+.th-ecran .cover .ic { width: 5mm; height: 5mm; border-radius: 1.3mm; }
+.th-ecran .cv-txt { background: rgba(255,255,255,.14); border-radius: 5mm; padding: 9mm 8mm; top: 30mm !important; bottom: auto !important; }
+.th-ecran .rc { background: rgba(255,255,255,.12); border-radius: 4mm; padding: 5mm; }

@@ -1,0 +1,27 @@
+/* SUISSE : sobre, un aplat de couleur par mois et le numéro du mois en filigrane */
+.th-suisse { --bg: #fff; --ink: #111; --acc: #E4572E; --tint: #F2F2F2; --line: #111; --font: 'Archivo', sans-serif; --disp: 'Archivo', sans-serif; --dispw: 800; --evfs: 2.05mm; --hh: 7mm; }
+.th-suisse .ov { font-stretch: 125%; }
+.th-suisse .month .side { position: absolute; left: 0; top: 0; bottom: 0; width: 88mm; background: var(--acc); color: #fff; padding: 11mm 9mm; display: flex; flex-direction: column; }
+.th-suisse .mt { font-size: min(10.5mm, calc(70mm / var(--len) / .82)); line-height: 1; }
+.th-suisse .my { font-weight: 300; font-size: 7mm; margin: 1.5mm 0 9mm; }
+.th-suisse .note { position: relative; z-index: 2; }
+.th-suisse .note .k { font-weight: 700; font-size: 2.3mm; letter-spacing: .4mm; text-transform: uppercase; margin-bottom: 1.4mm; opacity: .85; }
+.th-suisse .note p { font-size: 2.7mm; line-height: 1.4; margin-bottom: 6mm; max-width: 68mm; }
+.th-suisse .bignum { display: block; position: absolute; left: 0; top: 0; bottom: 0; width: 88mm; overflow: hidden; pointer-events: none; }
+.th-suisse .bignum span { position: absolute; left: -3mm; bottom: -7mm; color: rgba(0,0,0,.15); font-weight: 900; font-stretch: 62%; font-size: 50mm; line-height: 1; letter-spacing: -1.3mm; transform: scale(3); transform-origin: 0 100%; }
+.th-suisse .g { position: absolute; left: 97mm; right: 9mm; top: 10mm; bottom: 14mm; }
+.th-suisse .h { font-weight: 700; font-size: 2.2mm; letter-spacing: .5mm; text-transform: uppercase; border-bottom: .6mm solid #111; padding: 0 1.4mm; display: flex; align-items: center; }
+.th-suisse .h.we { color: var(--acc); }
+.th-suisse .c { border-bottom: .25mm solid #111; }
+.th-suisse .in { padding: 1.6mm 1.4mm; }
+.th-suisse .n { display: inline-block; font-weight: 700; font-stretch: 62%; font-size: 8mm; line-height: .9; margin-bottom: 1.3mm; }
+.th-suisse .we .n { color: var(--acc); }
+.th-suisse .fer .n { background: var(--acc); color: #fff; padding: .6mm 1.2mm .2mm; }
+.th-suisse .out .n { color: #D5D5D5; }
+.th-suisse .ev.fun::before, .th-suisse .leg .mk-fun { content: ""; display: inline-block; width: 1.4mm; height: 1.4mm; background: var(--acc); margin-right: 1mm; vertical-align: .1mm; }
+.th-suisse .leg { position: absolute; right: 9mm; bottom: 5.5mm; }
+.th-suisse .leg .mk-fer { background: var(--acc); color: #fff; font-weight: 700; padding: .3mm .8mm; }
+.th-suisse .leg .mk-perso::before { content: "◆"; color: var(--acc); }
+.th-suisse .cover .cv-art { position: absolute; left: 0; top: 0; bottom: 0; width: 168mm; background: var(--acc); overflow: hidden; }
+.th-suisse .cv-num { position: absolute; left: 6mm; top: 9mm; color: #fff; font-weight: 900; font-stretch: 62%; font-size: 40mm; line-height: .8; letter-spacing: -1mm; transform: scale(2.55); transform-origin: 0 0; }
+.th-suisse .rc li b { font-stretch: 75%; font-size: 3.4mm; }

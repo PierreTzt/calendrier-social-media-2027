@@ -1,0 +1,65 @@
+/* Commun à tous les styles sauf Riso : le conteneur #pages porte les classes « gen th-<style> ».
+   Chaque style fixe ses variables (--bg, --ink, --acc, --font, --disp…) et sa mise en page. */
+.gen .page { width: 297mm; height: 210mm; position: relative; overflow: hidden; page-break-after: always;
+  background: var(--bg); color: var(--ink); font-family: var(--font); }
+.gen .ov { position: relative; display: inline-block; line-height: 1; }
+.gen .page i { font-style: normal; }
+.gen .ov .p { display: none; }
+.gen .ov { font-family: var(--disp); font-weight: var(--dispw, 700); }
+.gen sup.ast { color: var(--acc); font-weight: 700; vertical-align: 0; }
+.gen .kpi, .gen .pd, .gen .sub, .gen .bignum, .gen .cnt, .gen .pm { display: none; }
+.gen .g { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); grid-template-rows: var(--hh) repeat(var(--rows), minmax(0, 1fr)); }
+.gen .c { position: relative; min-height: 0; min-width: 0; }
+.gen .in { height: 100%; overflow: hidden; }
+.gen .ev { font-size: calc(var(--evfs) * var(--k, 1)); line-height: 1.22; margin-bottom: .75mm; }
+.gen .ev i { opacity: .65; }
+.gen .ev.perso { font-weight: 700; }
+.gen .ev.perso::before { content: "◆ "; color: var(--acc); }
+.gen .leg { display: flex; gap: 3.5mm; align-items: center; font-size: 2.2mm; }
+.gen .leg span { display: inline-flex; align-items: center; gap: 1.2mm; }
+
+/* couverture */
+.gen .cover .cv-txt { position: absolute; right: 14mm; top: 0; bottom: 0; width: 96mm; display: flex; flex-direction: column; justify-content: center; z-index: 2; }
+.gen .cv-txt .k { font-size: 2.8mm; font-weight: 700; letter-spacing: .5mm; text-transform: uppercase; color: var(--acc); margin-bottom: 4mm; }
+.gen .cv-txt h1 { font-family: var(--disp); font-weight: var(--dispw, 700); font-size: 8.4mm; line-height: 1.12; margin-bottom: 5mm; }
+.gen .cv-txt p { font-size: 3.7mm; line-height: 1.45; margin-bottom: 7mm; }
+.gen .cv-txt ul { list-style: none; font-size: 2.9mm; line-height: 2.1; }
+.gen .cv-txt li::before { content: "→ "; color: var(--acc); }
+
+/* récap */
+.gen .recap .rtitle { position: absolute; left: 10mm; top: 9mm; font-size: 12mm; line-height: 1.25; }
+.gen .recap .rgrid { position: absolute; left: 10mm; right: 10mm; top: 34mm; bottom: 10mm; display: grid; grid-template-columns: 66mm 1fr 84mm; gap: 9mm; }
+.gen .rc { display: flex; flex-direction: column; min-height: 0; }
+.gen .rc .lbl { font-size: 2.4mm; font-weight: 700; letter-spacing: .4mm; text-transform: uppercase; color: var(--acc); margin-bottom: 2mm; }
+.gen .rc ul { list-style: none; flex: 1; display: flex; flex-direction: column; }
+.gen .rc li { flex: 1; display: flex; align-items: center; font-size: 3.3mm; border-bottom: .25mm solid var(--line); }
+.gen .rc li b { min-width: 15mm; font-weight: 700; font-size: 2.9mm; padding-left: 1mm; }
+.gen .rc li .w { min-width: 10mm; font-size: 2.2mm; opacity: .6; text-transform: uppercase; }
+.gen .big li b { min-width: 31mm; }
+.gen .recap table { width: 100%; border-collapse: collapse; font-size: 3mm; }
+.gen .recap th { font-size: 2.4mm; text-transform: uppercase; color: var(--acc); padding: 2mm 1mm; text-align: center; }
+.gen .recap td { height: 15mm; text-align: center; border-bottom: .25mm solid var(--line); font-size: 2.9mm; }
+.gen .recap td:first-child { text-align: left; font-weight: 700; padding-left: 1mm; }
+.gen .recap .small { margin-top: auto; padding-top: 5mm; font-size: 2.35mm; line-height: 1.5; opacity: .75; }
+.gen .recap .extra { display: flex; gap: 8mm; margin-top: 5mm; background: var(--tint); padding: 4mm 5mm; font-size: 2.7mm; line-height: 1.7; }
+.gen .recap .extra b { display: block; }
+
+/* dos */
+.gen .back .bmsg { position: absolute; left: 20mm; top: 48mm; font-size: 30mm; line-height: 1.1; }
+.gen .back .bfoot { position: absolute; left: 20mm; bottom: 16mm; font-size: 2.8mm; }
+
+/* ---- mise en page « liste » (Ticket, Départs, Ardoise) ---- */
+.gen .st { display: none; }
+.gen .vt { position: absolute; z-index: 2; }
+.gen .vt .ov { white-space: nowrap; }
+.gen .info { position: absolute; display: flex; flex-direction: column; }
+.gen .cols { position: absolute; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.gen .col { display: flex; flex-direction: column; min-height: 0; overflow: hidden; position: relative; }
+.gen .day { flex: 1 0 auto; display: grid; grid-template-columns: 11mm minmax(0, 1fr); column-gap: 1.2mm; }
+.gen .dn { display: flex; flex-direction: column; align-items: flex-start; }
+.gen .evs p { font-size: calc(var(--evfs, 2.2mm) * var(--k, 1)); line-height: 1.22; margin-bottom: .7mm; }
+.gen .evs p i { opacity: .65; }
+.gen .evs p.perso { font-weight: 700; }
+.gen .legend { display: flex; flex-direction: column; gap: 1.6mm; }
+.gen .legend span { display: flex; align-items: center; gap: 1.6mm; }
+.gen .pdate .ov { line-height: 1; }

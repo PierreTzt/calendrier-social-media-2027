@@ -1,0 +1,42 @@
+/* BD : bande dessinée : cases, bulles et onomatopées */
+.th-bd { --bg: #FFFFFF; --ink: #111; --acc: #E6332A; --yel: #FFE11A; --cy: #1FB6E6; --tint: #FFF6B8; --line: #111;
+  --font: 'Comic Neue', sans-serif; --disp: 'Bangers', cursive; --dispw: 400; --evfs: 2.2mm; --hh: 6mm; }
+.th-bd .page { font-weight: 700; }
+.th-bd .month .side { position: absolute; left: 8mm; top: 8mm; bottom: 8mm; width: 78mm; border: .8mm solid var(--ink); padding: 8mm 6mm; display: flex; flex-direction: column; gap: 5mm;
+  background: #D8F2FB; }
+.th-bd .mt { font-size: min(17mm, calc(64mm / var(--len) / .46)); color: var(--acc); -webkit-text-stroke: .45mm var(--ink); text-shadow: .9mm .9mm 0 var(--ink); letter-spacing: .5mm; transform: rotate(-3deg); }
+.th-bd .my { display: inline-block; width: fit-content; font-family: var(--disp); font-size: 6mm; background: var(--yel); border: .5mm solid var(--ink); padding: .3mm 2.5mm; margin-top: 3mm; transform: rotate(2deg); }
+.th-bd .note { font-size: 2.5mm; line-height: 1.36; border: .6mm solid var(--ink); padding: 3.5mm 4mm; position: relative; }
+.th-bd .tip { background: #fff; border-radius: 5mm; }
+.th-bd .tip::after { content: ""; position: absolute; left: 9mm; bottom: -2.6mm; width: 4.4mm; height: 4.4mm; background: #fff; border-right: .6mm solid var(--ink); border-bottom: .6mm solid var(--ink); transform: rotate(45deg); }
+.th-bd .idea { background: var(--yel); margin-top: 3mm; }
+.th-bd .note .k { font-family: var(--disp); font-size: 3.6mm; color: var(--acc); letter-spacing: .3mm; margin-bottom: 1mm; }
+.th-bd .g { position: absolute; left: 92mm; right: 8mm; top: 8mm; bottom: 13mm; gap: 2.2mm; }
+.th-bd .h { font-family: var(--disp); font-size: 3mm; letter-spacing: .4mm; background: var(--ink); color: #fff; display: flex; align-items: center; justify-content: center; }
+.th-bd .h.we { color: var(--yel); }
+.th-bd .c { border: .7mm solid var(--ink); background: #fff; overflow: hidden; }
+.th-bd .c.we { background: #E3F6FC; }
+.th-bd .c.out { border: .35mm dashed #C8C8C8; background: none; }
+.th-bd .in { padding: 1.4mm 1.6mm; }
+.th-bd .n { display: inline-block; font-family: var(--disp); font-size: 4.2mm; line-height: 1.1; background: var(--yel); border-right: .5mm solid var(--ink); border-bottom: .5mm solid var(--ink);
+  padding: 0 1.3mm; margin: -1.4mm 0 1.2mm -1.6mm; }
+.th-bd .out .n { background: none; border: 0; color: #C8C8C8; }
+.th-bd .ev { font-weight: 700; }
+.th-bd .ev.fun span { display: inline-block; background: var(--tint); border: .35mm solid var(--ink); border-radius: 2.4mm; padding: .2mm 1.3mm; }
+.th-bd .ev.perso::before { content: "★ "; color: var(--acc); }
+.th-bd .fer .pm { display: flex; position: absolute; right: -2mm; bottom: -2mm; width: 17mm; height: 12mm; align-items: center; justify-content: center; background: var(--acc); transform: rotate(-8deg);
+  clip-path: polygon(50% 0, 60% 22%, 82% 6%, 76% 30%, 100% 30%, 82% 48%, 100% 66%, 76% 66%, 82% 94%, 60% 76%, 50% 100%, 40% 76%, 18% 94%, 24% 66%, 0 66%, 18% 48%, 0 30%, 24% 30%, 18% 6%, 40% 22%); }
+.th-bd .pm span { font-family: var(--disp); font-size: 2.6mm; color: var(--yel); letter-spacing: .2mm; }
+.th-bd .pm span::after { content: " !"; }
+.th-bd .leg { position: absolute; left: 92mm; bottom: 5mm; font-weight: 700; }
+.th-bd .leg .mk-fun { width: 5mm; height: 3mm; background: var(--tint); border: .35mm solid var(--ink); border-radius: 1.5mm; }
+.th-bd .leg .mk-fer { font-size: 0; width: 4.4mm; height: 3.4mm; background: var(--acc); clip-path: polygon(50% 0, 62% 30%, 100% 30%, 70% 55%, 82% 100%, 50% 72%, 18% 100%, 30% 55%, 0 30%, 38% 30%); }
+.th-bd .leg .mk-perso::before { content: "★"; color: var(--acc); }
+.th-bd .cover .cv-art { position: absolute; left: 10mm; top: 14mm; width: 172mm; height: 184mm; }
+.th-bd .burst { width: 160mm; height: 128mm; background: var(--yel); display: flex; align-items: center; justify-content: center;
+  clip-path: polygon(50% 0, 58% 18%, 74% 4%, 74% 24%, 96% 16%, 86% 36%, 100% 46%, 84% 56%, 98% 76%, 76% 72%, 74% 96%, 58% 80%, 48% 100%, 40% 80%, 20% 94%, 24% 72%, 2% 76%, 16% 56%, 0 44%, 16% 36%, 4% 16%, 26% 24%, 26% 4%, 42% 18%); }
+.th-bd .burst span { font-family: var(--disp); font-size: 40mm; color: var(--acc); -webkit-text-stroke: .9mm var(--ink); text-shadow: 1.6mm 1.6mm 0 var(--ink); transform: rotate(-6deg); }
+.th-bd .bubble { position: absolute; left: 26mm; top: 134mm; width: 118mm; background: #fff; border: .8mm solid var(--ink); border-radius: 50%; padding: 9mm 12mm; font-size: 5mm; text-align: center; }
+.th-bd .cv-txt { border: .8mm solid var(--ink); padding: 8mm 7mm; top: 30mm !important; bottom: auto !important; background: #fff; }
+.th-bd .rc { border: .7mm solid var(--ink); padding: 4mm; }
+.th-bd .recap .rtitle, .th-bd .back .bmsg { color: var(--acc); -webkit-text-stroke: .4mm var(--ink); text-shadow: .8mm .8mm 0 var(--ink); }

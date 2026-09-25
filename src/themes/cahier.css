@@ -1,0 +1,43 @@
+/* CAHIER : papier Seyès, surligneur fluo et post-it */
+.th-cahier { --bg: #FDFDFB; --ink: #23232B; --acc: #D23A40; --blue: #1F2F8F; --tint: rgba(250,255,40,.55); --line: rgba(31,47,143,.25);
+  --font: 'Karla', sans-serif; --disp: 'Playwrite FR Trad', cursive; --dispw: 400; --evfs: 2.2mm; --hh: 6mm; }
+.th-cahier .page { background-image:
+    linear-gradient(90deg, transparent 27.6mm, #E4474C 27.6mm, #E4474C 28mm, transparent 28mm),
+    repeating-linear-gradient(90deg, rgba(120,110,200,.2) 0 .15mm, transparent .15mm 8mm),
+    repeating-linear-gradient(180deg, transparent 0 7.8mm, rgba(110,98,200,.38) 7.8mm 8mm),
+    repeating-linear-gradient(180deg, transparent 0 1.88mm, rgba(150,140,215,.2) 1.88mm 2mm); }
+.th-cahier .ov { color: var(--blue); }
+.th-cahier .month .side { position: absolute; left: 33mm; right: 8mm; top: 5mm; height: 35mm; display: flex; gap: 7mm; align-items: flex-start; }
+.th-cahier .ttl { flex: 1; display: flex; align-items: baseline; gap: 3mm; }
+.th-cahier .mt { font-size: min(12mm, calc(95mm / var(--len) / .78)); line-height: 1.7; }
+.th-cahier .my { font-family: var(--disp); font-size: 5mm; color: var(--blue); }
+.th-cahier .note { width: 74mm; flex: none; padding: 5mm 4.5mm 4mm; font-size: 2.4mm; line-height: 1.36; box-shadow: .6mm 1mm 2mm rgba(0,0,0,.14); position: relative; }
+.th-cahier .note::before { content: ""; position: absolute; top: -2.5mm; left: 50%; width: 18mm; height: 5mm; margin-left: -9mm; background: rgba(255,255,255,.62); transform: rotate(-3deg); }
+.th-cahier .tip { background: #FFC7DC; transform: rotate(-1.6deg); }
+.th-cahier .idea { background: #C9EFC4; transform: rotate(1.4deg); }
+.th-cahier .note .k { font-family: var(--disp); font-size: 2.6mm; color: var(--blue); margin-bottom: 1.2mm; }
+.th-cahier .g { position: absolute; left: 30mm; right: 6mm; top: 45mm; bottom: 11mm; column-gap: 2mm; }
+.th-cahier .h { font-family: var(--disp); font-size: 2.6mm; color: var(--blue); }
+.th-cahier .h.we { color: var(--acc); }
+.th-cahier .in { padding: 1mm; }
+.th-cahier .n { display: block; width: fit-content; font-weight: 800; font-size: 4.6mm; color: var(--blue); line-height: 1; margin-bottom: 1.2mm; }
+.th-cahier .n .z, .th-cahier .out .n { display: none; }
+.th-cahier .we .n { color: var(--acc); }
+.th-cahier .fer .n { border: .4mm solid var(--acc); border-radius: 50%; padding: .8mm 1.4mm; transform: rotate(-8deg); color: var(--acc); }
+.th-cahier .ev.fun span, .th-cahier .mk-fun { background: linear-gradient(transparent 12%, rgba(250,255,40,.85) 12%, rgba(250,255,40,.85) 88%, transparent 88%);
+  -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+.th-cahier .ev.perso { color: var(--blue); }
+.th-cahier .ev.perso::before { content: "→ "; color: var(--blue); }
+.th-cahier .leg { position: absolute; right: 8mm; bottom: 4mm; }
+.th-cahier .leg .mk-fun::after { content: "surligné"; }
+.th-cahier .leg .mk-fer { border: .35mm solid var(--acc); border-radius: 50%; color: var(--acc); font-weight: 800; padding: .2mm 1mm; }
+.th-cahier .leg .mk-perso::before { content: "→"; color: var(--blue); font-weight: 800; }
+.th-cahier .cover .cv-art { position: absolute; left: 34mm; top: 48mm; }
+.th-cahier .cv-cur { font-family: var(--disp); font-size: 35mm; color: var(--blue); line-height: 1.6; transform: rotate(-4deg); position: relative; }
+.th-cahier .cv-cur::after { content: ""; position: absolute; left: 4mm; right: -6mm; bottom: 12mm; height: 12mm; background: rgba(250,255,40,.7); z-index: -1; transform: rotate(1deg); }
+.th-cahier .cv-sub { font-family: var(--disp); font-size: 6mm; color: var(--acc); margin: -2mm 0 0 10mm; transform: rotate(-4deg); }
+.th-cahier .cv-txt { background: #FFC7DC; padding: 8mm 7mm; top: 34mm !important; bottom: auto !important; transform: rotate(1.5deg); box-shadow: .8mm 1.2mm 3mm rgba(0,0,0,.14); }
+.th-cahier .cv-txt .k, .th-cahier .rc .lbl { font-family: var(--disp); text-transform: none; letter-spacing: 0; color: var(--blue); font-size: 3.2mm; }
+.th-cahier .cv-txt h1 { font-family: var(--font); font-weight: 800; }
+.th-cahier .recap .rgrid { left: 33mm; }
+.th-cahier .rc li b, .th-cahier .recap th { color: var(--blue); }

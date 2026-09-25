@@ -1,0 +1,42 @@
+/* TIMBRES : chaque jour est un timbre, les fériés reçoivent un cachet de la poste */
+.th-timbres { --bg: #DFE7EC; --ink: #1F3A7A; --acc: #C8372B; --tint: #fff; --line: rgba(31,58,122,.18); --font: 'Libre Franklin', sans-serif; --disp: 'Alfa Slab One', serif; --dispw: 400; --evfs: 1.95mm; --hh: 5mm; }
+.th-timbres .month .side { position: absolute; left: 222mm; right: 9mm; top: 9mm; bottom: 20mm; display: flex; flex-direction: column; gap: 5mm; }
+.th-timbres .mt { font-size: min(11mm, calc(66mm / var(--len) / .66)); line-height: 1; }
+.th-timbres .my { font-family: var(--disp); font-size: 8mm; color: var(--acc); }
+.th-timbres .sub { display: block; font-size: 2.1mm; letter-spacing: .35mm; text-transform: uppercase; font-weight: 700; color: var(--acc); margin-top: 2mm; line-height: 1.5; }
+.th-timbres .tip { border: 2mm solid transparent; padding: 3.5mm;
+  background: linear-gradient(#fff, #fff) padding-box, repeating-linear-gradient(135deg, #C8372B 0 3mm, #fff 3mm 5mm, #1F3A7A 5mm 8mm, #fff 8mm 10mm) border-box; }
+.th-timbres .note .k { font-size: 2.1mm; font-weight: 700; letter-spacing: .35mm; text-transform: uppercase; color: var(--acc); margin-bottom: 1.4mm; }
+.th-timbres .note p { font-size: 2.45mm; line-height: 1.42; color: #26324F; }
+.th-timbres .idea .kd { display: none; }
+.th-timbres .pd { display: block; font-family: var(--disp); font-size: 10mm; line-height: 1; margin-bottom: 2mm; }
+.th-timbres .g { position: absolute; left: 9mm; top: 9mm; bottom: 10mm; width: 206mm; gap: 1.6mm; }
+.th-timbres .h { font-size: 2.1mm; font-weight: 700; letter-spacing: .3mm; text-transform: uppercase; text-align: center; }
+.th-timbres .h.we { color: var(--acc); }
+.th-timbres .c { padding: .6mm; background: #fff; border: .9mm dotted var(--bg); }
+.th-timbres .c.out { background: none; border: .3mm dashed rgba(31,58,122,.25); }
+.th-timbres .out .in { display: none; }
+.th-timbres .in { background: #fff; border: .25mm solid rgba(31,58,122,.35); padding: 1.3mm 1.5mm; }
+.th-timbres .n { display: block; font-family: var(--disp); font-size: 5mm; line-height: 1; margin-bottom: 1mm; }
+.th-timbres .n .z { display: none; }
+.th-timbres .we .n { color: var(--acc); }
+.th-timbres .ev { color: #26324F; }
+.th-timbres .ev.fun::before { content: "★ "; color: var(--acc); }
+.th-timbres .fer .pm { display: flex; position: absolute; right: -1mm; top: -1.2mm; width: 12mm; height: 12mm; border: .45mm solid var(--acc); border-radius: 50%;
+  align-items: center; justify-content: center; transform: rotate(-16deg); mix-blend-mode: multiply; opacity: .85; }
+.th-timbres .pm::before { content: ""; position: absolute; width: 8mm; height: .35mm; background: var(--acc); left: -7mm; top: 4.5mm; box-shadow: 0 1.6mm 0 var(--acc), 0 3.2mm 0 var(--acc); }
+.th-timbres .pm span { font-size: 1.9mm; font-weight: 700; letter-spacing: .2mm; color: var(--acc); }
+.th-timbres .leg { position: absolute; left: 222mm; bottom: 10mm; flex-direction: column; align-items: flex-start; gap: 1.5mm; }
+.th-timbres .leg .mk-fun::before { content: "★"; color: var(--acc); }
+.th-timbres .leg .mk-fer { border: .35mm solid var(--acc); color: var(--acc); border-radius: 3mm; font-size: 1.8mm; font-weight: 700; padding: .2mm 1mm; }
+.th-timbres .leg .mk-perso::before { content: "◆"; color: var(--acc); }
+.th-timbres .cover .cv-art { position: absolute; left: 22mm; top: 22mm; width: 128mm; height: 166mm; padding: 2.4mm;
+  background: #fff; border: 2.2mm dotted var(--bg); }
+.th-timbres .stamp { height: 100%; background: #fff; border: .5mm solid var(--ink); outline: 2mm solid #fff; outline-offset: -3mm; display: flex; flex-direction: column; justify-content: space-between; padding: 10mm 9mm; }
+.th-timbres .stamp .sv { font-size: 2.6mm; letter-spacing: .6mm; font-weight: 700; text-transform: uppercase; color: var(--acc); }
+.th-timbres .stamp .sy { font-family: var(--disp); font-size: 40mm; line-height: .9; }
+.th-timbres .stamp .sn { font-family: var(--disp); font-size: 7mm; line-height: 1.1; }
+.th-timbres .cv-pm { position: absolute; right: -16mm; top: 26mm; width: 34mm; height: 34mm; border: .7mm solid var(--acc); border-radius: 50%; transform: rotate(-14deg);
+  display: flex; align-items: center; justify-content: center; text-align: center; font-size: 2.4mm; font-weight: 700; color: var(--acc); letter-spacing: .3mm; mix-blend-mode: multiply; }
+.th-timbres .rc { background: #fff; padding: 4mm; }
+.th-timbres .rc li b { font-family: var(--disp); font-weight: 400; }

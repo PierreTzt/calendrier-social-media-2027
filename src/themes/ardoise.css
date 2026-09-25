@@ -1,0 +1,35 @@
+/* ARDOISE : menu de brasserie à la craie : suggestion du chef et plat du jour */
+.th-ardoise { --bg: #2B3632; --ink: #EEECE3; --acc: #F3C969; --pinkc: #F4A6B8; --tint: rgba(255,255,255,.07); --line: rgba(238,236,227,.2);
+  --font: 'Kalam', cursive; --disp: 'Cabin Sketch', cursive; --dispw: 700; --evfs: 2.45mm; }
+.th-ardoise .page { background: radial-gradient(ellipse at 28% 18%, rgba(255,255,255,.08), transparent 55%), radial-gradient(ellipse at 78% 82%, rgba(255,255,255,.05), transparent 50%), var(--bg);
+  box-shadow: inset 0 0 0 5mm #7A5234, inset 0 0 0 6.2mm #56381F; }
+.th-ardoise .vt { left: 0; right: 0; top: 9mm; text-align: center; font-size: 13mm; }
+.th-ardoise .vt::before, .th-ardoise .vt::after { content: "~"; font-family: var(--disp); color: var(--acc); margin: 0 4mm; }
+.th-ardoise .info { right: 14mm; top: 33mm; bottom: 14mm; width: 62mm; gap: 5mm; }
+.th-ardoise .meta { font-size: 2.6mm; line-height: 1.5; opacity: .8; text-align: center; }
+.th-ardoise .blk { border: .45mm dashed rgba(238,236,227,.55); border-radius: 3mm; padding: 3.5mm; }
+.th-ardoise .lbl { font-family: var(--disp); font-weight: 700; font-size: 4mm; color: var(--acc); margin-bottom: 1mm; }
+.th-ardoise .perle .lbl { color: var(--pinkc); }
+.th-ardoise .tip, .th-ardoise .perle p { font-size: 2.6mm; line-height: 1.35; }
+.th-ardoise .pdate { font-size: 9mm; color: var(--acc); }
+.th-ardoise .pname { font-weight: 700; font-size: 3mm; margin: 1mm 0; }
+.th-ardoise .legend { margin-top: auto; font-size: 2.4mm; }
+.th-ardoise .dot::before { content: "✿"; color: var(--pinkc); }
+.th-ardoise .fr, .th-ardoise .num.fer { border: .35mm solid var(--ink); border-radius: 50%; padding: .1mm 1mm; font-style: normal; }
+.th-ardoise .dia::before { content: "→"; color: var(--acc); }
+.th-ardoise .cols { left: 14mm; right: 84mm; top: 33mm; bottom: 14mm; gap: 6mm; }
+.th-ardoise .wk { font-family: var(--disp); font-size: 2.8mm; opacity: .5; padding: .8mm 0 .3mm; border-bottom: .3mm solid var(--line); margin-bottom: .6mm; }
+.th-ardoise .day { grid-template-columns: 12mm minmax(0, 1fr); padding: .9mm 0 .2mm; }
+.th-ardoise .num { font-family: var(--disp); font-weight: 700; font-size: 4.3mm; line-height: 1; color: var(--acc); }
+.th-ardoise .wd { font-size: 2mm; text-transform: uppercase; opacity: .7; }
+.th-ardoise .day.we .wd { color: var(--pinkc); opacity: 1; }
+.th-ardoise .evs p { line-height: 1.15; }
+.th-ardoise .evs p.fun::before { content: "✿ "; color: var(--pinkc); }
+.th-ardoise .evs p.perso::before { content: "→ "; color: var(--acc); }
+.th-ardoise .cover .cv-art { position: absolute; left: 20mm; top: 26mm; width: 160mm; text-align: center; }
+.th-ardoise .ch-t { font-family: var(--disp); font-size: 9mm; color: var(--pinkc); }
+.th-ardoise .ch-y { font-family: var(--disp); font-weight: 700; font-size: 46mm; line-height: 1.1; color: var(--acc); }
+.th-ardoise .ch-l { list-style: none; font-size: 4.2mm; line-height: 1.8; margin: 5mm auto; width: fit-content; text-align: left; }
+.th-ardoise .ch-l b { font-family: var(--disp); color: var(--acc); margin-right: 3mm; }
+.th-ardoise .ch-s { font-size: 3.2mm; opacity: .7; }
+.th-ardoise .recap .rtitle, .th-ardoise .back .bmsg { color: var(--acc); }
